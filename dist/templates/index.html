@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My custom Bulma website</title>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+
+
+  <nav>
+    <!-- Hero header: will stick at the top -->
+    <div>
+      <nav class="navbar" style="background-color: #121212;">
+        <div class="navbar-brand">
+          <a class="navbar-item" style="background-color: #121212;" href="/">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:v="https://vecta.io/nano" width="118.106" height="46.454"
+              viewBox="0 0 31.249 12.291"><text xml:space="preserve" x="76.095" y="64.88"
+                transform="matrix(.753844 0 0 1.326535 -57.917464 -73.991076)" font-size="16.719"
+                font-family="sans-serif" fill="#ac7fdb">
+                <tspan x="76.095" y="64.88" font-weight="normal" font-family="Microsoft Yi Baiti">SABRE</tspan>
+              </text></svg>
+          </a>
+          <!--
+        Need to Listen for the click event and toggle the data property showNav. Also, reactively update the class attribute 'is-active' based on the showNav property.
+        -->
+          <div class="navbar-burger" style="background-color: #121212;">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        <!--
+        Add reactively update the class attribute 'is-active' based on the showNav property.  
+        -->
+        <div class="navbar-menu" style="background-color: #121212;">
+          <div class="navbar-end">
+            <a class="navbar-item" href="/premium">
+              Premium
+            </a>
+            <a class="navbar-item" href="/support">
+              Support
+            </a>
+            <a class="navbar-item" href="/login">
+              <button class="button is-info is-outlined" style="border-radius: 30px;">Login</button>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!-- Hero content: will be in the middle -->
+    <div>
+      <div class="container has-text-centered">
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  <h1 class="title">
+    Bulma
+  </h1>
+
+  <p class="subtitle">
+    Modern CSS framework based on <a
+      href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox">Flexbox</a>
+  </p>
+
+  <div class="field">
+    <div class="control">
+      <input class="input" type="text" placeholder="Input">
+    </div>
+  </div>
+
+  <div class="field">
+    <p class="control">
+      <span class="select">
+        <select>
+          <option>Select dropdown</option>
+        </select>
+      </span>
+    </p>
+  </div>
+
+  <div class="buttons">
+    <a class="button is-primary">Primary</a>
+    <a class="button is-link">Link</a>
+  </div>
+</body>
+
+</html>

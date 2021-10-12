@@ -19,6 +19,8 @@ $link: $pink;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 
+$info: #ac7fdbff;
+
 // Update some of Bulma's component variables
 $body-background-color: $beige-lighter;
 $control-border-width: 2px;
@@ -35,3 +37,17 @@ $input-shadow: none;
 @import "../node_modules/bulma/sass/components/navbar.sass";
 @import "../node_modules/bulma/sass/layout/hero.sass";
 @import "../node_modules/bulma/sass/layout/section.sass";
+
+
+
+
+// Below Here Is General CSS Code
+
+a.navbar-item {
+    color: #cfcfcf;
+}
+
+a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.is-active {
+    background-color: transparent;
+    color: #fff;
+}
