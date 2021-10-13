@@ -1,7 +1,8 @@
 @charset "utf-8";
 
 // Import a Google Font
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
 
 // Set your brand colors
 $purple: #8A4D76;
@@ -10,22 +11,40 @@ $brown: #757763;
 $beige-light: #D0D1CD;
 $beige-lighter: #EFF0EB;
 
+$text-colour: #cfcfcf;
+
+$gray-medium: rgb(33, 33, 33);
+$gray-dark: #080808;
+$gray-light: rgb(39, 39, 39);
+
 // Update Bulma's global variables
-$family-sans-serif: "Nunito", sans-serif;
+$family-primary: 'Quicksand', sans-serif;
+$family-sans-serif: 'Quicksand', sans-serif;
 $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $purple;
 $link: $pink;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
+$text: $text-colour;
+$text-strong: #fff;
 
 $info: #ac7fdbff;
 
 // Update some of Bulma's component variables
-$body-background-color: $beige-lighter;
+$body-background-color: $gray-medium;
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
+
+//Title Properties
+
+$title-color: #fff;
+
+
+//Navbar
+
+$navbar-background-color: #121212;
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass";
@@ -44,7 +63,7 @@ $input-shadow: none;
 // Below Here Is General CSS Code
 
 a.navbar-item {
-    color: #cfcfcf;
+    color: $text-colour;
 }
 
 a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.is-active {
