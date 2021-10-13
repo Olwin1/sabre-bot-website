@@ -1,15 +1,15 @@
 @charset "utf-8";
 
 // Import a Google Font
-@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
 //@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
 
 // Set your brand colors
-$purple: #8A4D76;
-$pink: #FA7C91;
+$purple: #8a4d76;
+$pink: #fa7c91;
 $brown: #757763;
-$beige-light: #D0D1CD;
-$beige-lighter: #EFF0EB;
+$beige-light: #d0d1cd;
+$beige-lighter: #eff0eb;
 
 $text-colour: #cfcfcf;
 
@@ -18,8 +18,8 @@ $gray-dark: #080808;
 $gray-light: rgb(39, 39, 39);
 
 // Update Bulma's global variables
-$family-primary: 'Quicksand', sans-serif;
-$family-sans-serif: 'Quicksand', sans-serif;
+$family-primary: "Quicksand", sans-serif;
+$family-sans-serif: "Quicksand", sans-serif;
 $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $purple;
@@ -32,7 +32,7 @@ $text-strong: #fff;
 $info: #ac7fdbff;
 
 // Update some of Bulma's component variables
-$body-background-color: $gray-medium;
+$body-background-color: #06040B;
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
@@ -41,10 +41,9 @@ $input-shadow: none;
 
 $title-color: #fff;
 
-
 //Navbar
 
-$navbar-background-color: #121212;
+$navbar-background-color: #0d0b12;
 
 // Import only what you need from Bulma
 @import "../node_modules/bulma/sass/utilities/_all.sass";
@@ -57,16 +56,30 @@ $navbar-background-color: #121212;
 @import "../node_modules/bulma/sass/layout/hero.sass";
 @import "../node_modules/bulma/sass/layout/section.sass";
 
-
-
-
 // Below Here Is General CSS Code
 
 a.navbar-item {
-    color: $text-colour;
+  color: $text-colour;
 }
 
-a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.is-active {
-    background-color: transparent;
-    color: #fff;
+a.navbar-item:hover,
+a.navbar-item.is-active,
+.navbar-link:hover,
+.navbar-link.is-active {
+  background-color: transparent;
+  color: #fff;
+}
+
+// Here Is Wave Seperator Stuff
+
+.spacer {
+  aspect-ratio: 960/300;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.layer1 {
+  background-image: url("../images/wave1.svg");
 }
