@@ -81,8 +81,12 @@ typings/
 # Nuxt.js build / generate output
 .nuxt
 
+# Dist Files Other Than The HTML Files Directory
 /dist/*
 !/dist/templates/
+
+#SCSS Output Folder
+/public/css/*
 
 # Gatsby files
 .cache/
