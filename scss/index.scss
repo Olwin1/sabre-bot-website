@@ -12,6 +12,7 @@ $beige-light: #d0d1cd;
 $beige-lighter: #eff0eb;
 
 $text-colour: #cfcfcf;
+$upper-body-color: #15131a;
 
 $gray-medium: rgb(33, 33, 33);
 $gray-dark: #080808;
@@ -88,28 +89,40 @@ a.navbar-item.is-active,
   background-image: url("../images/wave1.svg");
 }
 
+
 .button-gradient {
   background: rgb(88,101,242);
   background: linear-gradient(90deg, rgba(88,101,242,1) 0%, rgba(78,21,146,1) 64%);
+}
+
+.button-login {
+  background: $upper-body-color;
+  box-shadow: 0 0 0 0.125em #4e1592;
+}
+
+.button-heading {
+
   padding: 0 27px;
   outline: none;
   border-radius: 8px;
-  border-color: #15131a;
+  border-color: $upper-body-color;
   top: 0;
 
   transition: all .3s ease-in-out;
+  margin-left: 0.9rem !important;
+  margin-right: 0.9rem !important;
 
 
 }
 
-.button-gradient:hover {
-  border-color: #15131a;
+.button-heading:hover {
+  border-color: $upper-body-color;
   color: #fff;
-  transform: scale(1.3);
+  transform: scale(1.2);
   top: -10px;
 }
-.button-gradient:focus {
+.button-heading:focus {
 
-  border-color: #15131a;
+  border-color: $upper-body-color;
   color: #fff;
 }
