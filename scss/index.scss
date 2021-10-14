@@ -37,6 +37,10 @@ $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
+
+//Buttons 
+$button-focus-box-shadow-color: rgba(78,21,146,1);
+
 //Title Properties
 
 $title-color: #fff;
@@ -82,4 +86,30 @@ a.navbar-item.is-active,
 
 .layer1 {
   background-image: url("../images/wave1.svg");
+}
+
+.button-gradient {
+  background: rgb(88,101,242);
+  background: linear-gradient(90deg, rgba(88,101,242,1) 0%, rgba(78,21,146,1) 64%);
+  padding: 0 27px;
+  outline: none;
+  border-radius: 8px;
+  border-color: #15131a;
+  top: 0;
+
+  transition: all .3s ease-in-out;
+
+
+}
+
+.button-gradient:hover {
+  border-color: #15131a;
+  color: #fff;
+  transform: scale(1.3);
+  top: -10px;
+}
+.button-gradient:focus {
+
+  border-color: #15131a;
+  color: #fff;
 }
