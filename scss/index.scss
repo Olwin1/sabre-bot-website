@@ -5,7 +5,7 @@
 //@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
 
 // Set your brand colors
-$purple: #8a4d76;
+$purple: rgba(78,21,146,1);
 $pink: #fa7c91;
 $brown: #757763;
 $beige-light: #d0d1cd;
@@ -40,7 +40,7 @@ $input-shadow: none;
 
 
 //Buttons 
-$button-focus-box-shadow-color: rgba(78,21,146,1);
+$button-focus-box-shadow-color: $purple;
 
 //Title Properties
 
@@ -93,7 +93,7 @@ a.navbar-item.is-active,
 
 .button-gradient {
   background: rgb(88,101,242);
-  background: linear-gradient(90deg, rgba(88,101,242,1) 0%, rgba(78,21,146,1) 64%);
+  background: linear-gradient(90deg, rgba(88,101,242,1) 0%, $purple 64%);
 }
 
 .button-login {
@@ -126,4 +126,20 @@ a.navbar-item.is-active,
 
   border-color: $upper-body-color;
   color: #fff;
+}
+
+.l-align {
+  text-align: left;
+}
+.r-align {
+  text-align: right;
+}
+.c-align {
+  text-align: center;
+}
+.is-purple {
+  color: $purple;
+}
+.is-soft-bottom {
+  margin-bottom: 35px;
 }
