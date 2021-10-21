@@ -14,6 +14,50 @@ router.get("/css/:filename", (req, res, next) => {
   // res.render('index', { title: 'Express' });
 });
 
+router.get("/ts/:filename", (req, res, next) => {
+  res.sendFile(path.join(__dirname + "/client/" + req.params.filename));
+  // res.render('index', { title: 'Express' });
+});
+router.get("/src/client/:filename", (req, res, next) => {
+  res.sendFile(path.join(__dirname + "/../src/client/" + req.params.filename));
+  // res.render('index', { title: 'Express' });
+});
+
+
+
+
+// Code For API
+
+
+router.get("/api", (req, res, next) => {
+  res.json({message: "hi :) tis a test..."});
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 router.get("/socket", (req, res, next) => {
   const client =  new net.Socket();
 
