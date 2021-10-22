@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="text"></p>
+<script>
+function parseHash(n){n=n.substring(1,n.length);var t={};return n.split("&").forEach(function(n){const s=n.split("=");t[s[0]]=s[1]}),t}
+var obj = parseHash(window.location.hash);
+var expires = (new Date(Date.now()+ 518400*1000)).toUTCString();
+document.cookie = "token=" + obj["access_token"] + "; expires=" + expires + ";path=/;";
+window.location.href = '/';
+</script>
+</body>
+</html>
