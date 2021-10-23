@@ -1,5 +1,5 @@
 import * as express from 'express';
-//import axios from 'axios';
+import * as path from 'path';
 
 const router = express.Router();
 
@@ -20,6 +20,12 @@ const clientSecret = "qskoeh4YUAc-yP2VzHyaJ9ntLPxgXH4S";
 router.get("/oauth/redirect", (req, res) => {
     res.redirect("/redirect_cookiesave.html")
     //res.redirect(`/welcome.html`);
+});
+
+//Create Login Page
+router.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname + "/../public/login.html"));
+
 });
 
 

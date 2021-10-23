@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>hi :)</p>
+<script>
+  var match = document.cookie.match(new RegExp('(^| )' + "token" + '=([^;]+)'));
+  if(!match) {
+      window.location.href = "/"
+  }
+    if(!match[2]) {
+        window.location.href = "/"
+    }
+</script>
+</body>
+</html>
