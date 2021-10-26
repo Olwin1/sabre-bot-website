@@ -50,6 +50,11 @@ $title-color: #fff;
 
 $navbar-background-color: #0d0b12;
 
+
+//Menu
+
+$menu-item-hover-background-color: darken($body-background-color, 1%);
+
 // Import only what you need from Bulma
 @import "../../../node_modules/bulma/sass/utilities/_all.sass";
 @import "../../../node_modules/bulma/sass/base/_all.sass";
@@ -58,11 +63,15 @@ $navbar-background-color: #0d0b12;
 @import "../../../node_modules/bulma/sass/elements/title.sass";
 @import "../../../node_modules/bulma/sass/form/_all.sass";
 @import "../../../node_modules/bulma/sass/components/navbar.sass";
+@import "../../../node_modules/bulma/sass/components/menu.sass";
 @import "../../../node_modules/bulma/sass/layout/hero.sass";
 @import "../../../node_modules/bulma/sass/layout/section.sass";
 @import "../../../node_modules/bulma/sass/grid/columns.sass";
 
 // Below Here Is General CSS Code
+html, body {
+  height: 100%;
+}
 
 a.navbar-item {
   color: $text-colour;
@@ -142,4 +151,42 @@ a.navbar-item.is-active,
 }
 .is-soft-bottom {
   margin-bottom: 35px;
+}
+.no-select {
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+.is-scrollable {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.is-tall {
+  height: 100%;
+}
+.is-fixed {
+  position: fixed;
+}
+#aside {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 16%;
+}
+#main {
+  margin-left: 16%;
+  margin-right: 0px;
+  background-color: #0b0715;
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  padding-right: 15px;
+  border-top-left-radius: 60px;
+  border-bottom-left-radius: 30px;
 }
