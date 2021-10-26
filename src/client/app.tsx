@@ -14,11 +14,10 @@ const App = () => {
         </aside>
         <div id="main" className="container column is-10">
           <div className="section">
-            <Main />
+            <Main user={x}/>
           </div>
         </div>
       </section>
-      <p>{JSON.stringify(x)}</p>
     </div>
   );
 };
