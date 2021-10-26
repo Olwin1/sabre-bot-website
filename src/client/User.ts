@@ -1,9 +1,7 @@
 import { getCookie, setCookie } from "./cookie-utils";
 const getUser = () => {
-  const decode = (str: string): string =>
-    Buffer.from(str, "base64").toString("binary");
-  const encode = (str: string): string =>
-    Buffer.from(str, "binary").toString("base64");
+  const decode = (str: string):string => window.atob(str);
+  const encode = (str: string):string => window.btoa(str);
   const cookie = getCookie("u");
   if (cookie == undefined) {
     fetch("https://discord.com/api/v9/users/@me", {
@@ -15,9 +13,10 @@ const getUser = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
-        setCookie("u", encode(data))
-        return JSON.parse(decode(getCookie("u")));
+        console.log('%c [SABRE API] ', 'color: #4E1592', 'User Cache Not Found... Creating...');
+        const temp = String(encode(JSON.stringify(data)))
+        setCookie("u", temp)
+        location.reload()
       })
       .catch((error) => {
         return error;
