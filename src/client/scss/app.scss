@@ -5,7 +5,7 @@
 //@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
 
 // Set your brand colors
-$purple: rgba(78,21,146,1);
+$purple: rgba(78, 21, 146, 1);
 $pink: #fa7c91;
 $brown: #757763;
 $beige-light: #d0d1cd;
@@ -33,13 +33,12 @@ $text-strong: #fff;
 $info: #ac7fdbff;
 
 // Update some of Bulma's component variables
-$body-background-color: #06040B;
+$body-background-color: #06040b;
 $control-border-width: 2px;
 $input-border-color: transparent;
 $input-shadow: none;
 
-
-//Buttons 
+//Buttons
 $button-focus-box-shadow-color: $purple;
 
 //Title Properties
@@ -49,7 +48,6 @@ $title-color: #fff;
 //Navbar
 
 $navbar-background-color: #0d0b12;
-
 
 //Menu
 
@@ -69,7 +67,8 @@ $menu-item-hover-background-color: darken($body-background-color, 1%);
 @import "../../../node_modules/bulma/sass/grid/columns.sass";
 
 // Below Here Is General CSS Code
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -99,10 +98,9 @@ a.navbar-item.is-active,
   background-image: url("../images/wave1.svg");
 }
 
-
 .button-gradient {
-  background: rgb(88,101,242);
-  background: linear-gradient(90deg, rgba(88,101,242,1) 0%, $purple 64%);
+  background: rgb(88, 101, 242);
+  background: linear-gradient(90deg, rgba(88, 101, 242, 1) 0%, $purple 64%);
 }
 
 .button-login {
@@ -111,18 +109,15 @@ a.navbar-item.is-active,
 }
 
 .button-heading {
-
   padding: 0 27px;
   outline: none;
   border-radius: 8px;
   border-color: $upper-body-color;
   top: 0;
 
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   margin-left: 0.9rem !important;
   margin-right: 0.9rem !important;
-
-
 }
 
 .button-heading:hover {
@@ -132,7 +127,6 @@ a.navbar-item.is-active,
   top: -10px;
 }
 .button-heading:focus {
-
   border-color: $upper-body-color;
   color: #fff;
 }
@@ -184,14 +178,22 @@ a.navbar-item.is-active,
   margin-right: 0px;
   background-color: #0b0715;
   width: 100%;
-  min-width: 100%;
+  min-width: fit-content;
   height: 100%;
-  padding-right: 15px;
+  padding: 12px;
   border-top-left-radius: 60px;
   border-bottom-left-radius: 30px;
+  word-break: break-all;
+  border-bottom-right-radius: 30px;
 }
+
+.is-card {
+  background-color: #0e091c;
+  border-radius: 30px;
+}
+
 ::-webkit-scrollbar {
-  width: 15px;
+  width: auto;
 }
 ::-webkit-scrollbar-thumb {
   background-color: darken($body-background-color, 2%);
@@ -204,5 +206,6 @@ a.navbar-item.is-active,
   border-style: solid;
   border-radius: 30px;
   background: none;
-  border-color: transparent;
+  //border-color: transparent;
+  border-color: #757763;
 }
