@@ -8,22 +8,32 @@ interface BtnProps {
 }
 
 const Main: FC<TyProps> = (props) => {
-  const [isOn, toggleIsOn] = useToggle();
+  let toggle = true;
 
   const Content: FC<TyProps> = (props) => {
-
     const Button: FC<BtnProps> = (props) => {
-      if(isOn) {
-        return(
-          <button onClick={() => toggleIsOn()}>On</button>
-        )
-      }
-      else {
-        return(
-          <button onClick={() => toggleIsOn()}>Off</button>
-        )
-      }
-    }
+      
+      const t = () => {
+        const x = document.getElementById("btn")
+        const y = document.getElementById("handle")
+        toggle = !toggle;
+        if(toggle) {
+        x.classList.add("is-ToggleButtonA");
+        y.classList.add("handleA");
+        }
+        else{
+        x.classList.remove("is-ToggleButtonA");
+        y.classList.remove("handleA");}
+      };
+
+      
+      
+      return (
+        <button id="btn" className="is-ToggleButton" onClick={() => t()}>
+          <div id="handle" className="handle"></div>
+        </button>
+      );
+    };
     return (
       <div>
         <h1 className="title is-4">List Of Available Modules</h1>
@@ -44,6 +54,5 @@ const Main: FC<TyProps> = (props) => {
     </div>
   );
 };
-
 
 export default Main;

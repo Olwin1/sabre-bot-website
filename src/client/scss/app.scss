@@ -196,6 +196,51 @@ a.navbar-item.is-active,
   padding-left: 10px;
 }
 
+
+
+
+.is-ToggleButton {
+  margin: 0 4rem;
+  padding: 0;
+  position: relative;
+  border: none;
+  height: 1.5rem;
+  width: 3rem;
+  border-radius: 1.5rem;
+  color: #6b7381;
+  background: #bdc1c8;
+  top: 50%;
+  transform: translateY(-50%)
+}
+
+.is-ToggleButton:focus,
+.is-ToggleButton.focus,
+.is-ToggleButton:focus.active,
+.is-ToggleButton.focus.active {
+  outline: none;
+}
+
+
+.is-ToggleButtonA {
+  transition: background-color 0.25s;
+  background-color: #29b5a8;
+}
+
+.handle {
+  position: absolute;
+  top: 0.1875rem;
+  left: 0.1875rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 1.125rem;
+  background: #fff;
+  transition: left 0.25s;
+}
+.handleA {
+  left: 1.6875rem;
+  transition: left 0.25s;
+}
+
 ::-webkit-scrollbar {
   width: auto;
 }
