@@ -190,6 +190,10 @@ a.navbar-item.is-active,
 .is-card {
   background-color: #0e091c;
   border-radius: 30px;
+  padding-left: 30px;
+}
+.is-indented {
+  padding-left: 10px;
 }
 
 ::-webkit-scrollbar {
