@@ -24,13 +24,13 @@ const Main: FC<TyProps> = (props) => {
         else{
         x.classList.remove("is-ToggleButtonA");
         y.classList.remove("handleA");}
+        
       };
 
       
-      
       return (
-        <button id="btn" className="is-ToggleButton" onClick={() => t()}>
-          <div id="handle" className="handle"></div>
+        <button id="btn" className={!toggle? "is-ToggleButton" : "is-ToggleButton is-ToggleButtonA"} onClick={() => t()}>
+          <div id="handle" className={!toggle? "handle" : "handle handleA"}></div>
         </button>
       );
     };
