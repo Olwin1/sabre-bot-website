@@ -197,9 +197,6 @@ a.navbar-item.is-active,
   padding-left: 10px;
 }
 
-
-
-
 .is-ToggleButton {
   margin: 0 4rem;
   padding: 0;
@@ -209,9 +206,9 @@ a.navbar-item.is-active,
   width: 3rem;
   border-radius: 1.5rem;
   color: #6b7381;
-  background: #bdc1c8;
+  background: #1f143f;
   top: 50%;
-  transform: translateY(-50%)
+  transform: translateY(-50%);
 }
 
 .is-ToggleButton:focus,
@@ -221,10 +218,9 @@ a.navbar-item.is-active,
   outline: none;
 }
 
-
 .is-ToggleButtonA {
   transition: background-color 0.25s;
-  background-color: #29b5a8;
+  background-color: #432b87;
 }
 
 .handle {
@@ -240,6 +236,48 @@ a.navbar-item.is-active,
 .handleA {
   left: 1.6875rem;
   transition: left 0.25s;
+}
+
+.is-ToggleButton::before {
+  opacity: 1;
+  text-align: right;
+  color: #fff;
+  letter-spacing: 0.75px;
+  left: 0.4125rem;
+  width: 2.325rem;
+  content: "Off";
+  line-height: 1.5rem;
+  font-weight: 600;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 0;
+  transition: opacity 0.25s;
+  box-sizing: inherit;
+}
+.is-ToggleButtonA::before {
+  opacity: 0;
+}
+
+.is-ToggleButton::after {
+  opacity: 0;
+  text-align: left;
+  color: #fff;
+  letter-spacing: 0.75px;
+  left: 0.4125rem;
+  width: 2.325rem;
+  content: "On";
+  line-height: 1.5rem;
+  font-weight: 600;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 0;
+  transition: opacity 0.25s;
+  box-sizing: inherit;
+}
+.is-ToggleButtonA::after {
+  opacity: 1;
 }
 
 ::-webkit-scrollbar {
