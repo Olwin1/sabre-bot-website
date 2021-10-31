@@ -3,34 +3,39 @@ import useToggle from "./hooks/toggle";
 interface TyProps {
   user: JSON;
 }
+interface CardProps {
+  user: JSON;
+}
 interface BtnProps {
   type: string;
 }
 
 const Main: FC<TyProps> = (props) => {
-  let toggle = true;
 
-  const Content: FC<TyProps> = (props) => {
+  const Content: FC<CardProps> = (props) => {
+
+
     const Button: FC<BtnProps> = (props) => {
-      
-      const t = () => {
-        const x = document.getElementById("btn")
-        const y = document.getElementById("handle")
+      let toggle = false;
+      const t = (type:string) => {
+        const x = document.getElementById("btn" + type);
+        const y = document.getElementById("handle" + type);
         toggle = !toggle;
-        if(toggle) {
-        x.classList.add("is-ToggleButtonA");
-        y.classList.add("handleA");
+        if (toggle) {
+          x.classList.add("is-ToggleButtonA");
+          y.classList.add("handleA");
+        } else {
+          x.classList.remove("is-ToggleButtonA");
+          y.classList.remove("handleA");
         }
-        else{
-        x.classList.remove("is-ToggleButtonA");
-        y.classList.remove("handleA");}
-        
       };
 
-      
       return (
-        <button id="btn" className={!toggle? "is-ToggleButton" : "is-ToggleButton is-ToggleButtonA"} onClick={() => t()}>
-          <div id="handle" className={!toggle? "handle" : "handle handleA"}></div>
+        <button id={"btn" + props.type} className={!toggle ? "is-ToggleButton" : "is-ToggleButton is-ToggleButtonA"} onClick={() => t(props.type)}>
+          <div
+            id={"handle" + props.type}
+            className={!toggle ? "handle" : "handle handleA"}
+          ></div>
         </button>
       );
     };
@@ -38,12 +43,34 @@ const Main: FC<TyProps> = (props) => {
       <div>
         <h1 className="title is-4">List Of Available Modules</h1>
         <p>What Modules Do You Want To Use?</p>
+        
+
+
+
 
         <div className="is-card">
+          <div className="float-right">
+            <Button type="Leveling" />
+          </div>
           <h1 className="title is-5">Leveling</h1>
-          <p className="subtitle is-6 is-indented">USe This To Lvlup</p>
-          <Button type="" />
+          <p className="subtitle is-6 is-indented">Change Your Leveles</p>
         </div>
+
+
+        <div className="is-card">
+          <div className="float-right">
+            <Button type="Moderation" />
+          </div>
+          <h1 className="title is-5">Moderation</h1>
+          <p className="subtitle is-6 is-indented">Do Mod Stuff.</p>
+        </div>
+
+
+
+
+
+
+
         <p>{JSON.stringify(props.user)}</p>
       </div>
     );
