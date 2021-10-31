@@ -192,6 +192,8 @@ a.navbar-item.is-active,
   border-radius: 30px;
   padding-left: 30px;
   padding-top: 20px;
+  margin-bottom: 50 px;
+  padding-bottom: 20 px;
 }
 .is-indented {
   padding-left: 10px;
@@ -278,6 +280,10 @@ a.navbar-item.is-active,
 }
 .is-ToggleButtonA::after {
   opacity: 1;
+}
+
+.float-right {
+  float: right;
 }
 
 ::-webkit-scrollbar {
