@@ -60,26 +60,27 @@ const Main: FC<TyProps> = (props) => {
         </button>
       );
     };
+    interface CardProps {
+      data:Array<string>
+    }
+    const Card: FC<CardProps> = (props) => {
+      return(
+        <div className="is-card">
+          <div className="float-right">
+            <Button type={props.data[0]} />
+          </div>
+          <h1 className="title is-5">{props.data[0]}</h1>
+          <p className="subtitle is-6 is-indented">{props.data[1]}</p>
+        </div>
+      )
+    }
     return (
       <div>
         <h1 className="title is-4">List Of Available Modules</h1>
         <p>What Modules Do You Want To Use?</p>
 
-        <div className="is-card">
-          <div className="float-right">
-            <Button type="Leveling" />
-          </div>
-          <h1 className="title is-5">Leveling</h1>
-          <p className="subtitle is-6 is-indented">Change Your Leveles</p>
-        </div>
 
-        <div className="is-card">
-          <div className="float-right">
-            <Button type="Moderation" />
-          </div>
-          <h1 className="title is-5">Moderation</h1>
-          <p className="subtitle is-6 is-indented">Do Mod Stuff.</p>
-        </div>
+        <Card data={new Array("Moderation", "Adds Commands ")} />
 
         <p>{JSON.stringify(props.user)}</p>
       </div>
