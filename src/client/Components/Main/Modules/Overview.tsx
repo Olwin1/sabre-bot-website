@@ -34,8 +34,8 @@ const Main: FC<TyProps> = (props) => {
         <button id={"btn" + props.type} className={!toggle ? "is-ToggleButton" : "is-ToggleButton is-ToggleButtonA"} onClick={() => t(props.type)}>
           <div
             id={"handle" + props.type}
-            className={!toggle ? "handle" : "handle handleA"}
-          ></div>
+            className={!toggle ? "handle lds-ring" : "handle lds-ring handleA"}
+          ><div></div></div>
         </button>
       );
     };
