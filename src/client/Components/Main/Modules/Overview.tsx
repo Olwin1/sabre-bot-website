@@ -80,7 +80,15 @@ const Main: FC<TyProps> = (props) => {
         <p>What Modules Do You Want To Use?</p>
 
 
-        <Card data={new Array("Moderation", "Adds Commands ")} />
+        <Card data={new Array("Moderation", "Adds Commands That Allow You To Punish Wrong-doers")} />
+        <Card data={new Array("Auto-Mod", "Reduce The Stress On Your Mods By Letting Sabre Take On Some Of The Work.  Block Bad Words, Invite Links, Spam, and More!")} />
+        <Card data={new Array("Welcomer", "Give New Users A Warm Welcome With Sabre's Welcomer.  Customize Your Welcome Message To Suit Your Server!")} />
+        <Card data={new Array("Auto-Responder", "Respond To Specific Messages Automatically With Configurable Messages From Saying Hi To Telling The Time!")} />
+        <Card data={new Array("Leveling", "Sabre's Leveling Is Just Like The Big Blue Boi's Leveling But With Free Role Rewards Added On!")} />
+        <Card data={new Array("Auto-Role", "Give New Members Roles Automatically With Sabre's Auto-Role.")} />
+        <Card data={new Array("Reaction-Roles", "Let Your Users Give Themselves Roles.  From Colour Roles To Pinging Roles You Can Configure Anything With Sabre!")} />
+        <Card data={new Array("Music", "Play Music With Sabre's High Quality Music Module! It Ain't Dead Yet!")} />
+        <Card data={new Array("Modlog", "Dedicate A Channel For Sabre To Record What Goes On On Your Server.  From Detecting Deleted Messages To Showing Who Banned Your Friend.")} />
 
         <p>{JSON.stringify(props.user)}</p>
       </div>
