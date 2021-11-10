@@ -1,5 +1,4 @@
 import React, { FC, useState } from "react";
-import { ProgressPlugin } from "webpack";
 
 interface TyProps {
   user: JSON;
