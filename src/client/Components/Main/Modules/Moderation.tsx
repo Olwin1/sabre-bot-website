@@ -23,13 +23,16 @@ const Card: FC<CardProps> = (props) => {
 };
 
 const Main: FC<TyProps> = (props) => {
-  const [pane, setPane] = useToggle();
+  var pane = false
   const Button: FC<BtnProps> = (props) => {
     let toggle = false;
+
     const t = (type: string) => {
       const x = document.getElementById("btn" + type);
-      const y = document.getElementById("handle" + type);
+      const y = document.getElementById("Modulehandle" + type);
       toggle = !toggle;
+      pane = !pane
+      console.log(pane)
 
       //Send Click Data To API.
       const apiGet = async (type: string, toggle: boolean) => {
@@ -45,26 +48,30 @@ const Main: FC<TyProps> = (props) => {
           });
       };
       apiGet(props.type, toggle);
-
+      const helper = document.getElementById("helper") as HTMLInputElement
+      helper.disabled = !helper.disabled;
+      const mod = document.getElementById("mod") as HTMLInputElement
+      mod.disabled = !mod.disabled;
       if (toggle) {
-        x.classList.add("is-ToggleButtonA");
-        y.classList.add("handleA");
+        x.classList.add("is-ModuleButtonA");
+        y.classList.add("ModulehandleA");
+        
       } else {
-        x.classList.remove("is-ToggleButtonA");
-        y.classList.remove("handleA");
+        x.classList.remove("is-ModuleButtonA");
+        y.classList.remove("ModulehandleA");
       }
     };
     return (
       <button
         id={"btn" + props.type}
         className={
-          !toggle ? "is-ToggleButton" : "is-ToggleButton is-ToggleButtonA"
+          !toggle ? "is-ModuleButton" : "is-ModuleButton is-ModuleButtonA"
         }
         onClick={() => t(props.type)}
       >
         <div
-          id={"handle" + props.type}
-          className={!toggle ? "handle" : "handle handleA"}
+          id={"Modulehandle" + props.type}
+          className={!toggle ? "Modulehandle" : "Modulehandle ModulehandleA"}
         >
           <div></div>
         </div>
@@ -76,10 +83,10 @@ const Main: FC<TyProps> = (props) => {
     <div>
       <h1 className="title is-4">Moderation</h1>
       <div className="is-card">
-        <div className={pane ? "is-blocked" : ""}>f</div>
+        <div /*className={pane ? "is-blocked" : ""}*/></div>
         <div className="columns">
           <div className="column">
-            <button onClick={() => setPane()}>Click for tioggle</button>
+            <h2>Toggle Module</h2>
           </div>
           <div>
             <Button type="toggle_moderation" />
@@ -93,7 +100,7 @@ const Main: FC<TyProps> = (props) => {
               Here.
             </p>
             <div className="select is-rounded is-primary">
-              <select name="languages" id="languages">
+              <select name="languages" id="helper">
                 <option value="helper">Helper</option>
               </select>
             </div>
@@ -107,7 +114,7 @@ const Main: FC<TyProps> = (props) => {
               This Role.  
             </p>
             <div className="select is-rounded is-primary">
-              <select name="languages" id="languages">
+              <select name="languages" id="mod">
                 <option value="moderator">Moderator</option>
               </select>
             </div>
