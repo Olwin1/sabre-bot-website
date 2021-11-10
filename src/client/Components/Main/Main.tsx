@@ -17,20 +17,20 @@ const Main: FC<TyProps> = (props) => {
   return (
     <div>
       {component.toLowerCase() === "#overview" && <modules.Overview user={props.user}/>}
-      {component.toLowerCase() === "#settings" && <modules.Settings />}
-      {component.toLowerCase() === "#embed" && <modules.Settings />}
+      {component.toLowerCase() === "#settings" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#embed" && <modules.Settings user={props.user}/>}
 
-      {component.toLowerCase() === "#moderation" && <modules.Settings />}
-      {component.toLowerCase() === "#automod" && <modules.Settings />}
-      {component.toLowerCase() === "#welcomer" && <modules.Settings />}
-      {component.toLowerCase() === "#autoresponder" && <modules.Settings />}
-      {component.toLowerCase() === "#leveling" && <modules.Settings />}
-      {component.toLowerCase() === "#autorole" && <modules.Settings />}
-      {component.toLowerCase() === "#reeactionroles" && <modules.Settings />}
-      {component.toLowerCase() === "#music" && <modules.Settings />}
+      {component.toLowerCase() === "#moderation" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#automod" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#welcomer" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#autoresponder" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#leveling" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#autorole" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#reeactionroles" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#music" && <modules.Settings user={props.user}/>}
 
 
-      {component.toLowerCase() === "#modlog" && <modules.Settings />}
+      {component.toLowerCase() === "#modlog" && <modules.Settings user={props.user}/>}
 
 
 
