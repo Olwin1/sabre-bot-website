@@ -23,7 +23,6 @@ const Card: FC<CardProps> = (props) => {
 };
 
 const Main: FC<TyProps> = (props) => {
-  var pane = false
   const Button: FC<BtnProps> = (props) => {
     let toggle = false;
 
@@ -31,8 +30,6 @@ const Main: FC<TyProps> = (props) => {
       const x = document.getElementById("btn" + type);
       const y = document.getElementById("Modulehandle" + type);
       toggle = !toggle;
-      pane = !pane
-      console.log(pane)
 
       //Send Click Data To API.
       const apiGet = async (type: string, toggle: boolean) => {
@@ -48,14 +45,13 @@ const Main: FC<TyProps> = (props) => {
           });
       };
       apiGet(props.type, toggle);
-      const helper = document.getElementById("helper") as HTMLInputElement
+      const helper = document.getElementById("helper") as HTMLInputElement;
       helper.disabled = !helper.disabled;
-      const mod = document.getElementById("mod") as HTMLInputElement
+      const mod = document.getElementById("mod") as HTMLInputElement;
       mod.disabled = !mod.disabled;
       if (toggle) {
         x.classList.add("is-ModuleButtonA");
         y.classList.add("ModulehandleA");
-        
       } else {
         x.classList.remove("is-ModuleButtonA");
         y.classList.remove("ModulehandleA");
@@ -83,7 +79,6 @@ const Main: FC<TyProps> = (props) => {
     <div>
       <h1 className="title is-4">Moderation</h1>
       <div className="is-card">
-        <div /*className={pane ? "is-blocked" : ""}*/></div>
         <div className="columns">
           <div className="column">
             <h2>Toggle Module</h2>
@@ -94,32 +89,28 @@ const Main: FC<TyProps> = (props) => {
         </div>
 
         <h2 className="title is-5">Helper Role</h2>
-            <p className="subtitle is-6">
-              The Most Basic Of Moderation Commands. In Order To Use Commands
-              Such as Warn and Mute You Will Need To Have The Role Specified
-              Here.
-            </p>
-            <div className="select is-rounded is-primary">
-              <select name="languages" id="helper">
-                <option value="helper">Helper</option>
-              </select>
-            </div>
-            <br />
-            <br />
-            <hr />
-            <h2 className="title is-5">Mod Role</h2>
-            <p className="subtitle is-6">
-              The More Powerful Moderation Commands. Commands Such as Bans,
-              Channel Locks and Kicks Will Only Be Available To Members With
-              This Role.  
-            </p>
-            <div className="select is-rounded is-primary">
-              <select name="languages" id="mod">
-                <option value="moderator">Moderator</option>
-              </select>
-            </div>
-
-
+        <p className="subtitle is-6">
+          The Most Basic Of Moderation Commands. In Order To Use Commands Such
+          as Warn and Mute You Will Need To Have The Role Specified Here.
+        </p>
+        <div className="select is-rounded is-primary">
+          <select name="languages" id="helper">
+            <option value="helper">Helper</option>
+          </select>
+        </div>
+        <br />
+        <br />
+        <hr />
+        <h2 className="title is-5">Mod Role</h2>
+        <p className="subtitle is-6">
+          The More Powerful Moderation Commands. Commands Such as Bans, Channel
+          Locks and Kicks Will Only Be Available To Members With This Role.
+        </p>
+        <div className="select is-rounded is-primary">
+          <select name="languages" id="mod">
+            <option value="moderator">Moderator</option>
+          </select>
+        </div>
       </div>
     </div>
   );
