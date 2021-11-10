@@ -319,10 +319,102 @@ a.navbar-item.is-active,
   }
 }
 
+//MODULE BUTTON
+.is-ModuleButton {
+  margin: 0 4rem;
+  padding: 0;
+  position: relative;
+  border: none;
+  height: 6rem;
+  width: 6rem;
+  border-radius: 3rem;
+  color: #6b7381;
+  background: #1f143f;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+.is-ModuleButton:focus,
+.is-ModuleButton.focus,
+.is-ModuleButton:focus.active,
+.is-ModuleButton.focus.active {
+  outline: none;
+}
+
+.is-ModuleButtonA {
+  transition: background-color 0.25s;
+  background-color: #432b87;
+}
+
+.Modulehandle {
+  position: absolute;
+  top: 0.375rem;
+  left: 0.375rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 1.125rem;
+  background: #fff;
+  transition: left 0.25s;
+}
+.ModulehandleA {
+  left: 3.375rem;
+  transition: left 0.25s;
+}
+
+.is-ModuleButton::before {
+  opacity: 1;
+  text-align: right;
+  color: #fff;
+  letter-spacing: 0.75px;
+  width: 2.325rem;
+  content: "Off";
+  line-height: 1.5rem;
+  font-weight: 600;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 0;
+  transition: opacity 0.25s;
+  box-sizing: inherit;
+}
+.is-ModuleButtonA::before {
+  opacity: 0;
+}
+
+.is-ModuleButton::after {
+  opacity: 0;
+  text-align: left;
+  color: #fff;
+  letter-spacing: 0.75px;
+  left: 0.4125rem;
+  width: 2.325rem;
+  content: "On";
+  line-height: 1.5rem;
+  font-weight: 600;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  position: absolute;
+  bottom: 0;
+  transition: opacity 0.25s;
+  box-sizing: inherit;
+}
+.is-ModuleButtonA::after {
+  opacity: 1;
+}
+
+
+
 .is-padded {
   padding: 15px;
   padding-bottom: 5px;
   padding-right: 4vw;
+}
+
+hr {
+  background-color: #1e1337;
+
 }
 
 //Scrollbar Setup
