@@ -20,7 +20,7 @@ const Main: FC<TyProps> = (props) => {
       {component.toLowerCase() === "#settings" && <modules.Settings user={props.user}/>}
       {component.toLowerCase() === "#embed" && <modules.Settings user={props.user}/>}
 
-      {component.toLowerCase() === "#moderation" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#moderation" && <modules.Moderation user={props.user}/>}
       {component.toLowerCase() === "#automod" && <modules.Settings user={props.user}/>}
       {component.toLowerCase() === "#welcomer" && <modules.Settings user={props.user}/>}
       {component.toLowerCase() === "#autoresponder" && <modules.Settings user={props.user}/>}
