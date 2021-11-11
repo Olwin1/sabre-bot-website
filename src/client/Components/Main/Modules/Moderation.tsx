@@ -23,8 +23,9 @@ const Card: FC<CardProps> = (props) => {
 };
 
 const Main: FC<TyProps> = (props) => {
+  const toggled = false
   const Button: FC<BtnProps> = (props) => {
-    let toggle = false;
+    let toggle = toggled;
 
     const t = (type: string) => {
       const x = document.getElementById("btn" + type);
@@ -75,6 +76,22 @@ const Main: FC<TyProps> = (props) => {
     );
   };
 
+
+  const roleSet = async (type: string, role: string, element: string) => {
+    const y = document.getElementById(element)
+    y.classList.add("is-loading");
+    return window
+      .fetch("https://jsonplaceholder.typicode.com/users/1")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        y.classList.remove("is-loading");
+        console.log(type, role)
+        return response.json();
+      });
+  };
+
   return (
     <div>
       <h1 className="title is-4">Moderation</h1>
@@ -93,9 +110,10 @@ const Main: FC<TyProps> = (props) => {
           The Most Basic Of Moderation Commands. In Order To Use Commands Such
           as Warn and Mute You Will Need To Have The Role Specified Here.
         </p>
-        <div className="select is-rounded is-primary">
-          <select name="languages" id="helper">
+        <div className="select is-rounded is-primary" id="helper-select">
+          <select name="languages" id="helper" disabled={toggled? false : true} onChange={(e) => roleSet("helper",e.target.value,"helper-select")}>
             <option value="helper">Helper</option>
+            <option value="helper2">Helper2</option>
           </select>
         </div>
         <br />
@@ -106,9 +124,10 @@ const Main: FC<TyProps> = (props) => {
           The More Powerful Moderation Commands. Commands Such as Bans, Channel
           Locks and Kicks Will Only Be Available To Members With This Role.
         </p>
-        <div className="select is-rounded is-primary">
-          <select name="languages" id="mod">
+        <div className="select is-rounded is-primary" id="mod-select">
+          <select name="languages" id="mod" disabled={toggled? false : true} onChange={(e) => roleSet("mod",e.target.value,"mod-select")}>
             <option value="moderator">Moderator</option>
+            <option value="moderator">Moderator2</option>
           </select>
         </div>
       </div>
