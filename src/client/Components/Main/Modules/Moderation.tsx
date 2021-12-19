@@ -5,22 +5,69 @@ interface TyProps {
   user: JSON;
 }
 interface CardProps {
-  data: JSON;
+  data: Array<string>;
 }
 interface BtnProps {
   type: string;
 }
-const Card: FC<CardProps> = (props) => {
+const Button: FC<BtnProps> = (props) => {
+  let toggle = false;
+  const t = (type: string) => {
+    const x = document.getElementById("btn" + type);
+    const y = document.getElementById("handle" + type);
+    toggle = !toggle;
+
+    //Send Click Data To API.
+    const apiGet = async (type:string, toggle:boolean) => {
+        y.classList.add("lds-ring");
+        return window.fetch("https://jsonplaceholder.typicode.com/users/1")
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(response.statusText)
+            }
+            y.classList.remove("lds-ring");
+            return response.json()
+          })
+    };
+    apiGet(props.type, toggle);
+
+    if (toggle) {
+      x.classList.add("is-ToggleButtonA");
+      y.classList.add("handleA");
+    } else {
+      x.classList.remove("is-ToggleButtonA");
+      y.classList.remove("handleA");
+    }
+  };
+
   return (
-    <div className="float-right is-padded">
-      <div className="select is-rounded is-primary">
-        <select name="languages" id="languages">
-          <option value="english">English</option>
-        </select>
+    <button
+      id={"btn" + props.type}
+      className={
+        !toggle ? "is-ToggleButton" : "is-ToggleButton is-ToggleButtonA"
+      }
+      onClick={() => t(props.type)}
+    >
+      <div
+        id={"handle" + props.type}
+        className={!toggle ? "handle" : "handle handleA"}
+      >
+        <div></div>
       </div>
-    </div>
+    </button>
   );
 };
+const CommandsList: FC<CardProps> = (props) => {
+  return(
+    <div>
+      <div className="float-right">
+        <Button type={props.data[0]} />
+      </div>
+      <h1 className="title is-6">{props.data[0]}</h1>
+      <p className="subtitle is-6 is-indented">{props.data[1]}</p>
+    </div>
+  )
+}
 
 const Main: FC<TyProps> = (props) => {
   const toggled = false
@@ -130,6 +177,28 @@ const Main: FC<TyProps> = (props) => {
             <option value="moderator">Moderator2</option>
           </select>
         </div>
+
+
+        <br />
+        <br />
+        <hr />
+        <br />
+        <br />
+        <h2 className="title is-5">Commands</h2>
+        <p className="subtitle is-6">
+          The More Powerful Moderation Commands. Commands Such as Bans, Channel
+          Locks and Kicks Will Only Be Available To Members With This Role.
+        </p>
+        <div className="is-list is-100" id="mod-select">
+          <ul>
+            <li><CommandsList data={new Array("/ban", "Pretty Self Explanitory")} /></li>
+
+          </ul>
+        </div>
+
+
+
+
       </div>
     </div>
   );

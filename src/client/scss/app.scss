@@ -96,6 +96,11 @@ a.navbar-item.is-active,
   background-size: cover;
 }
 
+.is-100 {
+  width: 100%;
+  height: 100%;
+}
+
 .layer1 {
   background-image: url("../images/wave1.svg");
 }
@@ -191,6 +196,15 @@ a.navbar-item.is-active,
 
 .is-card {
   background-color: #0e091c;
+  border-radius: 30px;
+  padding-left: 30px;
+  padding-top: 20px;
+  margin-bottom: 50px;
+  padding-bottom: 20px;
+}
+
+.is-list {
+  background-color: #0b0716;
   border-radius: 30px;
   padding-left: 30px;
   padding-top: 20px;
