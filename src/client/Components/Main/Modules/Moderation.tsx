@@ -9,6 +9,7 @@ interface CardProps {
 }
 interface BtnProps {
   type: string;
+  yorn: boolean
 }
 const Button: FC<BtnProps> = (props) => {
   let toggle = false;
@@ -61,10 +62,11 @@ const CommandsList: FC<CardProps> = (props) => {
   return(
     <div>
       <div className="float-right">
-        <Button type={props.data[0]} />
+        <Button type={props.data[0]} yorn={true}/>
       </div>
       <h1 className="title is-6">{props.data[0]}</h1>
       <p className="subtitle is-6 is-indented">{props.data[1]}</p>
+      <br />
     </div>
   )
 }
@@ -97,6 +99,35 @@ const Main: FC<TyProps> = (props) => {
       helper.disabled = !helper.disabled;
       const mod = document.getElementById("mod") as HTMLInputElement;
       mod.disabled = !mod.disabled;
+
+
+      var command = document.getElementById("btn/ban") as HTMLInputElement;
+      command.disabled = !command.disabled;
+
+      command = document.getElementById("btn/kick") as HTMLInputElement;
+      command.disabled = !command.disabled;
+
+      command = document.getElementById("btn/mute") as HTMLInputElement;
+      command.disabled = !command.disabled;
+
+      command = document.getElementById("btn/unmute") as HTMLInputElement;
+      command.disabled = !command.disabled;
+
+      command = document.getElementById("btn/clear") as HTMLInputElement;
+      command.disabled = !command.disabled;
+
+      command = document.getElementById("btn/slowmode") as HTMLInputElement;
+      command.disabled = !command.disabled;
+
+      command = document.getElementById("btn/warn") as HTMLInputElement;
+      command.disabled = !command.disabled;
+
+      command = document.getElementById("btn/infractions") as HTMLInputElement;
+      command.disabled = !command.disabled;
+
+      command = document.getElementById("btn/clear-infractions") as HTMLInputElement;
+      command.disabled = !command.disabled;
+
       if (toggle) {
         x.classList.add("is-ModuleButtonA");
         y.classList.add("ModulehandleA");
@@ -112,6 +143,7 @@ const Main: FC<TyProps> = (props) => {
           !toggle ? "is-ModuleButton" : "is-ModuleButton is-ModuleButtonA"
         }
         onClick={() => t(props.type)}
+        disabled={!props.yorn}
       >
         <div
           id={"Modulehandle" + props.type}
@@ -148,7 +180,7 @@ const Main: FC<TyProps> = (props) => {
             <h2>Toggle Module</h2>
           </div>
           <div>
-            <Button type="toggle_moderation" />
+            <Button type="toggle_moderation" yorn={true}/>
           </div>
         </div>
 
@@ -191,7 +223,15 @@ const Main: FC<TyProps> = (props) => {
         </p>
         <div className="is-list is-100" id="mod-select">
           <ul>
-            <li><CommandsList data={new Array("/ban", "Pretty Self Explanitory")} /></li>
+            <li><CommandsList data={new Array("/ban", "Temporarily Or Permanently Ban A Member.")} /></li>
+            <li><CommandsList data={new Array("/kick", "Kick A Member From Your Server.")} /></li>
+            <li><CommandsList data={new Array("/mute", "Shut Irritating Pricks Up.")} /></li>
+            <li><CommandsList data={new Array("/unmute", "For Some Reason People Want This?")} /></li>
+            <li><CommandsList data={new Array("/clear", "Censor Your Discord Just Like The Government and Bulk Delete Messages.")} /></li>
+            <li><CommandsList data={new Array("/slowmode", "Add a Channel Cooldown.")} /></li>
+            <li><CommandsList data={new Array("/warn", "When You Just Need To Give Your Helpers Something To Do.")} /></li>
+            <li><CommandsList data={new Array("/infractions", "Show Infractions Of A Member")} /></li>
+            <li><CommandsList data={new Array("/clear-infractions", "Pretty Self Explanitory")} /></li>
 
           </ul>
         </div>
