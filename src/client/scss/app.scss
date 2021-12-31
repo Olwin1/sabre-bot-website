@@ -449,3 +449,180 @@ hr {
   background: none;
   border-color: transparent;
 }
+
+
+
+
+/*Below Is Embed Generator CSS*/
+
+
+
+textarea.resize {
+  padding: 5.5px 9px;
+  min-height: 36px;
+  resize: vertical;
+}
+
+.general {
+  height: 36px;
+  min-width: 0px;
+  max-width: 100%;
+  color: rgb(220, 221, 222);
+  font-size: 16px;
+  unicode-bidi: plaintext;
+  padding: 0px 9px;
+  background: rgb(41, 43, 47);
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-image: initial;
+  border-radius: 3px;
+  outline: none;
+  transition: background-color 150ms ease 0s, border-color, color;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+textarea:focus-visible {
+  outline-offset: 0px;
+}
+
+textarea {
+  -webkit-writing-mode: horizontal-tb !important;
+  writing-mode: horizontal-tb !important;
+  /*font-style: ;*/
+  font-family: monospace;
+  text-rendering: auto;
+  color: -internal-light-dark(black, white);
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  appearance: auto;
+  resize: auto;
+  cursor: text;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+  column-count: initial !important;
+  margin: 0em;
+  border-width: 1px;
+  border-style: solid;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
+  padding: 2px;
+}
+
+
+
+::-webkit-resizer {
+  background-image: url(https://discohook.org/static/resizer-dark.svg);
+  background-repeat: no-repeat;
+  background-position: right bottom;
+}
+
+/*
+::-webkit-scrollbar {
+  height: 16px;
+  width: 16px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(32, 34, 37);
+  border: 4px solid transparent;
+  border-radius: 8px;
+  min-height: 40px;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(46, 51, 56);
+  border: 4px solid transparent;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background-clip: padding-box;
+}
+
+
+
+
+*/
+
+
+.flex {
+  min-width: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* This Is Expander Area */
+.accordion {
+  background-color: #fff;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+    padding-left: 5px;
+
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+  vertical-align: middle;
+  margin-left: -8px;
+
+}
+
+
+.accordion:after {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M12 10L8 6L4 10' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: -2.5px;
+
+  content:"⠀⠀";
+  color: #777;
+  font-weight: bold;
+  float: left;
+  margin-left: 5px;
+transition: transform 150ms ease 0s;
+transform-origin: 30% 50%;
+    transition-property: transform;
+    transition-duration: 150ms;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    transform: rotate(90deg);
+    align-self: end;
+    vertical-align: middle
+
+}
+
+.active:after {
+  transform: rotate(180deg);
+  transform: translate(15);
+  transition: transform 150ms ease 0s;
+    transition-property: transform;
+    transition-duration: 150ms;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}
+
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+
+}
