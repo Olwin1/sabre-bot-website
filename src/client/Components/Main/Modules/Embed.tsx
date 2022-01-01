@@ -7,37 +7,57 @@ interface CardProps {
   data: JSON;
 }
 interface DropProps {
-    iter: string;
-  }
+  iter: string;
+  children: JSX.Element;
+  name: string;
+}
+interface DropWrapperProps {
+  iter: string;
+  name: string;
+}
+interface TxtProps {
+    isSmall: boolean;
+    isLocked: boolean;
+}
 const Dropdown: FC<DropProps> = (props) => {
-    const handleClick = () => {
-        let element = document.getElementById("accordion-" + props.iter)
-        if (element.classList.length == 1) {
-            element.classList.add("active")
-        }
-        else {
-            element.classList.remove("active")
-        }
-
-        var panel = document.getElementById(element.nextElementSibling.id);
-        if (panel.style.maxHeight) {
-          panel.style.maxHeight = null;
-        } else {
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        } 
-        
+  const handleClick = () => {
+    let element = document.getElementById("accordion-" + props.iter);
+    if (element.classList.length == 1) {
+      element.classList.add("active");
+    } else {
+      element.classList.remove("active");
     }
+
+    var panel = document.getElementById(element.nextElementSibling.id);
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  };
   return (
-    <div>
-      <button className="accordion" id={"accordion-" + props.iter} onClick={() => handleClick()}>Section 1</button>
+    <div id={"div-" + props.iter}>
+      <button
+        className="accordion"
+        id={"accordion-" + props.iter}
+        onClick={() => handleClick()}
+      >
+        {props.name}
+      </button>
       <div className="panel" id={"panel-" + props.iter}>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </p>
+        {props.children}
       </div>
+    </div>
+  );
+};
+const Textbox: FC<TxtProps> = (props) => {
+  let classes = "resize general"
+  const general = props.isSmall?" general-2":""
+  const locked = props.isLocked?" resize-lock":""
+  classes += general + locked
+  return (
+    <div className="flex">
+      <textarea className={classes}></textarea>
     </div>
   );
 };
@@ -67,6 +87,91 @@ const Card: FC<CardProps> = (props) => {
 };
 
 const Main: FC<TyProps> = (props) => {
+  const DropdownWrapper: FC<DropWrapperProps> = (props) => {
+    const handleClick = () => {
+      let element = document.getElementById("accordion-" + props.iter);
+      if (element.classList.length == 1) {
+        element.classList.add("active");
+      } else {
+        element.classList.remove("active");
+      }
+
+      var panel = document.getElementById(element.nextElementSibling.id);
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        var second = document.getElementById(
+          document.getElementById(panel.firstElementChild.id).firstElementChild
+            .id
+        );
+        console.log(typeof (<div></div>));
+        console.log(
+          second.parentElement.nextElementSibling.firstElementChild.id
+        );
+        var third = document.getElementById(
+          second.parentElement.nextElementSibling.firstElementChild.id
+        );
+        var fourth = document.getElementById(
+          third.parentElement.nextElementSibling.firstElementChild.id
+        );
+        var fifth = document.getElementById(
+          fourth.parentElement.nextElementSibling.firstElementChild.id
+        );
+        var sixth = document.getElementById(
+          fifth.parentElement.nextElementSibling.firstElementChild.id
+        );
+        panel.style.maxHeight =
+          panel.scrollHeight +
+          second.scrollHeight +
+          third.scrollHeight +
+          fourth.scrollHeight +
+          fifth.scrollHeight +
+          sixth.scrollHeight +
+          "px";
+        console.log(panel.style.maxHeight);
+      }
+    };
+    return (
+      <div className="embed-preview">
+        <button
+          className="accordion"
+          id={"accordion-" + props.iter}
+          onClick={() => handleClick()}
+        >
+          {props.name}
+        </button>
+        <div className="panel" id={"panel-" + props.iter}>
+          {/*Here Is The Main Part*/}
+          <Dropdown iter="1" name="Author">
+            <div>
+              <Textbox isSmall={true} isLocked={true}></Textbox>
+              <div className="columns">
+                <div className="column">
+                  <input className="input-embed" />
+                </div>
+                <div className="column">
+                  <input className="input-embed" />
+                </div>
+              </div>
+            </div>
+          </Dropdown>
+          <Dropdown iter="2" name="Body">
+            <div>Oi m8 Clix Meh</div>
+          </Dropdown>
+          <Dropdown iter="3" name="Fields">
+            <div>Oi m8 Clix Meh</div>
+          </Dropdown>
+          <Dropdown iter="4" name="Images">
+            <div>Oi m8 Clix Meh</div>
+          </Dropdown>
+          <Dropdown iter="5" name="Footer">
+            <div>Oi m8 Clix Meh</div>
+          </Dropdown>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       <h1 className="title is-4">Create Message</h1>
@@ -74,10 +179,13 @@ const Main: FC<TyProps> = (props) => {
         <div className="columns">
           <div className="column">
             <Card data={props.user} />
+            <br />
+            <br />
+            <br />
+            <br />
+            <DropdownWrapper iter="1001" name="Embed"></DropdownWrapper>
           </div>
-          <div className="column">
-            <Dropdown iter="1"/>
-          </div>
+          <div className="column"></div>
         </div>
       </div>
     </div>

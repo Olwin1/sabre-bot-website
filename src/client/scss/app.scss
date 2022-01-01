@@ -6,6 +6,7 @@
 
 // Set your brand colors
 $purple: rgba(78, 21, 146, 1);
+$purple-light:#0e091c;
 $pink: #fa7c91;
 $brown: #757763;
 $beige-light: #d0d1cd;
@@ -464,7 +465,7 @@ textarea.resize {
 }
 
 .general {
-  height: 36px;
+  height: 360px;
   min-width: 0px;
   max-width: 100%;
   color: rgb(220, 221, 222);
@@ -479,6 +480,12 @@ textarea.resize {
   border-radius: 3px;
   outline: none;
   transition: background-color 150ms ease 0s, border-color, color;
+}
+.general-2 {
+  height: 120px !important;
+}
+.resize-lock {
+  resize: none;
 }
 
 * {
@@ -518,6 +525,7 @@ textarea {
   border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
   border-image: initial;
   padding: 2px;
+  margin-bottom: 20px;
 }
 
 
@@ -568,8 +576,8 @@ textarea {
 
 /* This Is Expander Area */
 .accordion {
-  background-color: #fff;
-  color: #444;
+  background-color: $purple-light;
+  color: #cfcfcf;
   cursor: pointer;
   padding: 18px;
     padding-left: 5px;
@@ -581,18 +589,18 @@ textarea {
   font-size: 15px;
   transition: 0.4s;
   vertical-align: middle;
-  margin-left: -8px;
+
 
 }
 
 
 .accordion:after {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M12 10L8 6L4 10' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:v='https://vecta.io/nano' width='16' height='16' fill='none'%3E%3Cpath d='M12 10L8 6L4 10' stroke='%23cfcfcf' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: -2.5px;
 
   content:"⠀⠀";
-  color: #777;
+  color: rgb(185, 187, 190);;
   font-weight: bold;
   float: left;
   margin-left: 5px;
@@ -620,9 +628,39 @@ transform-origin: 30% 50%;
 
 .panel {
   padding: 0 18px;
-  background-color: white;
+  background-color: $purple-light;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 
+}
+
+
+
+.embed-preview {
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 30%) 0px 8px 8px;
+  border-color: #58b9ff !important;
+  border-width: 5px;
+  border-radius: 4px;
+  border-left: 4px solid #202225;
+}
+
+
+.input-embed {
+  height: 36px;
+  min-width: 0px;
+  max-width: 100%;
+  color: rgb(220, 221, 222);
+  font-size: 16px;
+  unicode-bidi: plaintext;
+  padding: 0px 9px;
+  background: rgb(41, 43, 47);
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-image: initial;
+  border-radius: 3px;
+  outline: none;
+  transition: background-color 150ms ease 0s, border-color, color;
 }
