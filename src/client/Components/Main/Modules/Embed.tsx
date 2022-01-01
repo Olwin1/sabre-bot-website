@@ -16,23 +16,53 @@ interface DropWrapperProps {
   name: string;
 }
 interface TxtProps {
-    isSmall: boolean;
-    isLocked: boolean;
+  isSmall: boolean;
+  isLocked: boolean;
 }
+
 const Dropdown: FC<DropProps> = (props) => {
-  const handleClick = () => {
+  const handleClick2 = () => {
     let element = document.getElementById("accordion-" + props.iter);
     if (element.classList.length == 1) {
       element.classList.add("active");
     } else {
       element.classList.remove("active");
     }
-
-    var panel = document.getElementById(element.nextElementSibling.id);
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
+    // Do Own Panel
+    var panel_parent = document.getElementById(element.nextElementSibling.id);
+    if (panel_parent.style.maxHeight) {
+      panel_parent.style.maxHeight = null;
     } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
+      panel_parent.style.maxHeight = panel_parent.scrollHeight + "px";
+
+      //Do Rest Of Panels
+      var panel = document.getElementById(
+        element.parentElement.parentElement.id
+      );
+      var second = document.getElementById(
+        document.getElementById(panel.firstElementChild.id).firstElementChild.nextElementSibling.id
+      );
+      var third = document.getElementById(
+        second.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
+      );
+      var fourth = document.getElementById(
+        third.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
+      );
+      var fifth = document.getElementById(
+        fourth.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
+      );
+      var sixth = document.getElementById(
+        fifth.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
+      );
+      panel.style.maxHeight =
+        panel.scrollHeight +
+        second.scrollHeight +
+        third.scrollHeight +
+        fourth.scrollHeight +
+        fifth.scrollHeight +
+        sixth.scrollHeight +
+        "px";
+      console.log("running " + panel_parent.id.replace("panel-", ""));
     }
   };
   return (
@@ -40,7 +70,7 @@ const Dropdown: FC<DropProps> = (props) => {
       <button
         className="accordion"
         id={"accordion-" + props.iter}
-        onClick={() => handleClick()}
+        onClick={() => handleClick2()}
       >
         {props.name}
       </button>
@@ -51,10 +81,10 @@ const Dropdown: FC<DropProps> = (props) => {
   );
 };
 const Textbox: FC<TxtProps> = (props) => {
-  let classes = "resize general"
-  const general = props.isSmall?" general-2":""
-  const locked = props.isLocked?" resize-lock":""
-  classes += general + locked
+  let classes = "resize general";
+  const general = props.isSmall ? " general-2" : "";
+  const locked = props.isLocked ? " resize-lock" : "";
+  classes += general + locked;
   return (
     <div className="flex">
       <textarea className={classes}></textarea>
@@ -95,30 +125,26 @@ const Main: FC<TyProps> = (props) => {
       } else {
         element.classList.remove("active");
       }
-
+    
       var panel = document.getElementById(element.nextElementSibling.id);
       if (panel.style.maxHeight) {
         panel.style.maxHeight = null;
       } else {
         var second = document.getElementById(
-          document.getElementById(panel.firstElementChild.id).firstElementChild
-            .id
+          panel.firstElementChild.firstElementChild.nextElementSibling.id
         );
-        console.log(typeof (<div></div>));
-        console.log(
-          second.parentElement.nextElementSibling.firstElementChild.id
-        );
+    
         var third = document.getElementById(
-          second.parentElement.nextElementSibling.firstElementChild.id
+          second.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
         );
         var fourth = document.getElementById(
-          third.parentElement.nextElementSibling.firstElementChild.id
+          third.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
         );
         var fifth = document.getElementById(
-          fourth.parentElement.nextElementSibling.firstElementChild.id
+          fourth.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
         );
         var sixth = document.getElementById(
-          fifth.parentElement.nextElementSibling.firstElementChild.id
+          fifth.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
         );
         panel.style.maxHeight =
           panel.scrollHeight +
@@ -156,10 +182,21 @@ const Main: FC<TyProps> = (props) => {
             </div>
           </Dropdown>
           <Dropdown iter="2" name="Body">
-            <div>Oi m8 Clix Meh</div>
+            <div>
+              <input className="input-embed" />
+              <Textbox isSmall={false} isLocked={true}></Textbox>
+              <div className="columns">
+                <div className="column">
+                  <input className="input-embed" />
+                </div>
+                <div className="column">
+                  <input className="input-embed" />
+                </div>
+              </div>
+            </div>
           </Dropdown>
           <Dropdown iter="3" name="Fields">
-            <div>Oi m8 Clix Meh</div>
+            <div></div>
           </Dropdown>
           <Dropdown iter="4" name="Images">
             <div>Oi m8 Clix Meh</div>
