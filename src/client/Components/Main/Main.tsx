@@ -6,7 +6,11 @@ interface TyProps {
 }
 
 const Main: FC<TyProps> = (props) => {
-  const [component, setComponent] = useState("#overview");
+  let page = window.location.hash
+  if(page == "" ) {
+    page = "#overview"
+  }
+  const [component, setComponent] = useState(page);
 
   const locationHashChanged = () => {
     setComponent(window.location.hash);
