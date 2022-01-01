@@ -182,13 +182,10 @@ a.navbar-item.is-active,
   width: 16%;
 }
 #main {
-  margin-left: 16%;
-  margin-right: 0px;
   background-color: #0b0715;
 
   min-width: fit-content;
-  height: 110%;
-  padding: 12px;
+  height: fit-content;
   border-top-left-radius: 60px;
   border-bottom-left-radius: 30px;
   word-break: break-all;
