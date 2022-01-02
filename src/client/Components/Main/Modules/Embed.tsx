@@ -1,4 +1,5 @@
-import React, { FC, useState } from "react";
+import e from "express";
+import React, { FC, useState, useReducer } from "react";
 
 interface TyProps {
   user: JSON;
@@ -10,6 +11,7 @@ interface DropProps {
   iter: string;
   children: JSX.Element;
   name: string;
+  isNested: boolean;
 }
 interface DropWrapperProps {
   iter: string;
@@ -35,34 +37,48 @@ const Dropdown: FC<DropProps> = (props) => {
     } else {
       panel_parent.style.maxHeight = panel_parent.scrollHeight + "px";
 
-      //Do Rest Of Panels
-      var panel = document.getElementById(
-        element.parentElement.parentElement.id
-      );
-      var second = document.getElementById(
-        document.getElementById(panel.firstElementChild.id).firstElementChild.nextElementSibling.id
-      );
-      var third = document.getElementById(
-        second.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
-      );
-      var fourth = document.getElementById(
-        third.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
-      );
-      var fifth = document.getElementById(
-        fourth.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
-      );
-      var sixth = document.getElementById(
-        fifth.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
-      );
-      panel.style.maxHeight =
-        panel.scrollHeight +
-        second.scrollHeight +
-        third.scrollHeight +
-        fourth.scrollHeight +
-        fifth.scrollHeight +
-        sixth.scrollHeight +
-        "px";
-      console.log("running " + panel_parent.id.replace("panel-", ""));
+      if (!props.isNested) {
+        //Do Rest Of Panels
+        var panel = document.getElementById(
+          element.parentElement.parentElement.id
+        );
+        var second = document.getElementById(
+          document.getElementById(panel.firstElementChild.id).firstElementChild
+            .nextElementSibling.id
+        );
+        var third = document.getElementById(
+          second.parentElement.nextElementSibling.firstElementChild
+            .nextElementSibling.id
+        );
+        var fourth = document.getElementById(
+          third.parentElement.nextElementSibling.firstElementChild
+            .nextElementSibling.id
+        );
+        var fifth = document.getElementById(
+          fourth.parentElement.nextElementSibling.firstElementChild
+            .nextElementSibling.id
+        );
+        var sixth = document.getElementById(
+          fifth.parentElement.nextElementSibling.firstElementChild
+            .nextElementSibling.id
+        );
+        panel.style.maxHeight =
+          panel.scrollHeight +
+          second.scrollHeight +
+          third.scrollHeight +
+          fourth.scrollHeight +
+          fifth.scrollHeight +
+          sixth.scrollHeight +
+          "px";
+        console.log("running " + panel_parent.id.replace("panel-", ""));
+      } else {
+        let panel = document.getElementById(
+          "panel-" + props.iter.split("-")[0]
+        );
+        panel.style.maxHeight = panel.scrollHeight + "px";
+        let temp = parseInt(panel.style.maxHeight) + panel_parent.scrollHeight;
+        panel.style.maxHeight = temp + "px";
+      }
     }
   };
   return (
@@ -125,7 +141,7 @@ const Main: FC<TyProps> = (props) => {
       } else {
         element.classList.remove("active");
       }
-    
+
       var panel = document.getElementById(element.nextElementSibling.id);
       if (panel.style.maxHeight) {
         panel.style.maxHeight = null;
@@ -133,18 +149,22 @@ const Main: FC<TyProps> = (props) => {
         var second = document.getElementById(
           panel.firstElementChild.firstElementChild.nextElementSibling.id
         );
-    
+
         var third = document.getElementById(
-          second.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
+          second.parentElement.nextElementSibling.firstElementChild
+            .nextElementSibling.id
         );
         var fourth = document.getElementById(
-          third.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
+          third.parentElement.nextElementSibling.firstElementChild
+            .nextElementSibling.id
         );
         var fifth = document.getElementById(
-          fourth.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
+          fourth.parentElement.nextElementSibling.firstElementChild
+            .nextElementSibling.id
         );
         var sixth = document.getElementById(
-          fifth.parentElement.nextElementSibling.firstElementChild.nextElementSibling.id
+          fifth.parentElement.nextElementSibling.firstElementChild
+            .nextElementSibling.id
         );
         panel.style.maxHeight =
           panel.scrollHeight +
@@ -168,43 +188,82 @@ const Main: FC<TyProps> = (props) => {
         </button>
         <div className="panel" id={"panel-" + props.iter}>
           {/*Here Is The Main Part*/}
-          <Dropdown iter="1" name="Author">
+          <Dropdown iter="1" name="Author" isNested={false}>
             <div>
+              <p>Author</p>
               <Textbox isSmall={true} isLocked={true}></Textbox>
               <div className="columns">
                 <div className="column">
+                  <p>Author Hyperlink</p>
                   <input className="input-embed" />
                 </div>
                 <div className="column">
+                  <p>Author Icon URL</p>
                   <input className="input-embed" />
                 </div>
               </div>
             </div>
           </Dropdown>
-          <Dropdown iter="2" name="Body">
+          <Dropdown iter="2" name="Body" isNested={false}>
             <div>
+              <p>Title</p>
               <input className="input-embed" />
+              <p>Description</p>
               <Textbox isSmall={false} isLocked={true}></Textbox>
               <div className="columns">
                 <div className="column">
+                  <p>Hyperlink</p>
                   <input className="input-embed" />
                 </div>
                 <div className="column">
+                  <p>Embed Colour</p>
                   <input className="input-embed" />
                 </div>
               </div>
             </div>
           </Dropdown>
-          <Dropdown iter="3" name="Fields">
-            <div></div>
+          <Dropdown iter="3" name="Fields" isNested={false}>
+            <Fields />
           </Dropdown>
-          <Dropdown iter="4" name="Images">
+          <Dropdown iter="4" name="Images" isNested={false}>
             <div>Oi m8 Clix Meh</div>
           </Dropdown>
-          <Dropdown iter="5" name="Footer">
+          <Dropdown iter="5" name="Footer" isNested={false}>
             <div>Oi m8 Clix Meh</div>
           </Dropdown>
         </div>
+      </div>
+    );
+  };
+  const Fields = () => {
+    const [fields, setFields] = useState([{ name: "Field 1", "iter": "3-1" }]);
+    const listItems = fields.map((field) => (
+      <Dropdown iter={field.iter} name={field.name} isNested={true} key={field.iter}>
+      <div>
+        <p>Heyo</p>
+      </div>
+    </Dropdown>
+
+    ));
+    const addField = () => {
+    const count = fields.length + 1
+    let f = { name: "Field "+count, "iter": "3-"+count }
+      setFields([...fields,f])
+      let element = document.getElementById("accordion-3");
+      let panel_parent = document.getElementById(element.nextElementSibling.id)
+      let panel = document.getElementById(
+        "panel-3"
+      );
+      panel.style.maxHeight = panel.scrollHeight + "px";
+      let temp = parseInt(panel.style.maxHeight) + panel_parent.scrollHeight;
+      panel.style.maxHeight = temp + "px";
+    }
+
+
+    return (
+      <div>
+        {listItems}
+        <button className="button is-primary" onClick={()=>addField()}>Add Field</button>
       </div>
     );
   };
@@ -213,17 +272,12 @@ const Main: FC<TyProps> = (props) => {
     <div>
       <h1 className="title is-4">Create Message</h1>
       <div className="is-card">
-        <div className="columns">
-          <div className="column">
-            <Card data={props.user} />
-            <br />
-            <br />
-            <br />
-            <br />
-            <DropdownWrapper iter="1001" name="Embed"></DropdownWrapper>
-          </div>
-          <div className="column"></div>
-        </div>
+        <Card data={props.user} />
+        <br />
+        <br />
+        <br />
+        <br />
+        <DropdownWrapper iter="1001" name="Embed"></DropdownWrapper>
       </div>
     </div>
   );
