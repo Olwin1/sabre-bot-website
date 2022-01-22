@@ -261,6 +261,10 @@ const Main: FC<TyProps> = (props) => {
       panel.style.maxHeight = panel.scrollHeight + "px";
       let temp = parseInt(panel.style.maxHeight) + panel_parent.scrollHeight;
       panel.style.maxHeight = temp + "px";
+
+      let panel2 = document.getElementById("panel-1001");
+      let temp2 = parseInt(panel2.style.maxHeight) + panel_parent.scrollHeight;
+      panel2.style.maxHeight = temp2 + "px";
     };
 
     return (
