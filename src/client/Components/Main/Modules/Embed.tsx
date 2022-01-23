@@ -22,6 +22,7 @@ interface TxtProps {
   isLocked: boolean;
 }
 const Main: FC<TyProps> = (props) => {
+  let embedFields = []
   const Dropdown: FC<DropProps> = (props) => {
     const handleClick2 = () => {
       let element = document.getElementById("accordion-" + props.iter);
@@ -246,11 +247,19 @@ const Main: FC<TyProps> = (props) => {
         key={field.iter}
       >
         <div>
-          <input className="nameChanger" />
+          <input className="nameChanger" onChange={(e) => handleChange(e)} id={field.iter}/>
           <p>Heyo</p>
         </div>
       </Dropdown>
     ));
+    const handleChange = (e:any) => {
+      console.log("changing")
+      let id = e.target.id
+      id = id.split("-")[1]
+      id = parseInt(id)
+      embedFields[id-1] = e.target.value
+      console.log(embedFields)
+    }
     const addField = () => {
       const count = fields.length + 1;
       let f = { name: "Field " + count, iter: "3-" + count };
