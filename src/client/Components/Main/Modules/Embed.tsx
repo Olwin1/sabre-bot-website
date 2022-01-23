@@ -22,6 +22,7 @@ interface TxtProps {
   isLocked: boolean;
 }
 const Main: FC<TyProps> = (props) => {
+  let embedFieldsTitle = []
   let embedFields = []
   const Dropdown: FC<DropProps> = (props) => {
     const handleClick2 = () => {
@@ -247,17 +248,24 @@ const Main: FC<TyProps> = (props) => {
         key={field.iter}
       >
         <div>
-          <input className="nameChanger" onChange={(e) => handleChange(e)} id={field.iter}/>
+          <input className="nameChanger" onChange={(e) => handleChange(e, true)} id={field.iter}/>
           <p>Heyo</p>
+          <input className="nameChanger" onChange={(e) => handleChange(e, false)} id={field.iter+"-desc"}/>
         </div>
       </Dropdown>
     ));
-    const handleChange = (e:any) => {
+    const handleChange = (e:any, isTitle:boolean) => {
       console.log("changing")
       let id = e.target.id
       id = id.split("-")[1]
       id = parseInt(id)
+      if(isTitle){
+      embedFieldsTitle[id-1] = e.target.value
+      }
+      else {
       embedFields[id-1] = e.target.value
+      }
+      console.log(embedFieldsTitle)
       console.log(embedFields)
     }
     const addField = () => {
