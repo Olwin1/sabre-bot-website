@@ -22,8 +22,8 @@ interface TxtProps {
   isLocked: boolean;
 }
 const Main: FC<TyProps> = (props) => {
-  let embedFieldsTitle = []
-  let embedFields = []
+  let embedFieldsTitle = [];
+  let embedFields = [];
   const Dropdown: FC<DropProps> = (props) => {
     const handleClick2 = () => {
       let element = document.getElementById("accordion-" + props.iter);
@@ -248,26 +248,34 @@ const Main: FC<TyProps> = (props) => {
         key={field.iter}
       >
         <div>
-          <input className="nameChanger" onChange={(e) => handleChange(e, true)} id={field.iter}/>
-          <p>Heyo</p>
-          <input className="nameChanger" onChange={(e) => handleChange(e, false)} id={field.iter+"-desc"}/>
+          <p>Field Name</p>
+          <input
+            className="input-embed"
+            onChange={(e) => handleChange(e, true)}
+            id={field.iter}
+          />
+          <p>Field Value</p>
+          <input
+            className="input-embed"
+            onChange={(e) => handleChange(e, false)}
+            id={field.iter + "-desc"}
+          />
         </div>
       </Dropdown>
     ));
-    const handleChange = (e:any, isTitle:boolean) => {
-      console.log("changing")
-      let id = e.target.id
-      id = id.split("-")[1]
-      id = parseInt(id)
-      if(isTitle){
-      embedFieldsTitle[id-1] = e.target.value
+    const handleChange = (e: any, isTitle: boolean) => {
+      console.log("changing");
+      let id = e.target.id;
+      id = id.split("-")[1];
+      id = parseInt(id);
+      if (isTitle) {
+        embedFieldsTitle[id - 1] = e.target.value;
+      } else {
+        embedFields[id - 1] = e.target.value;
       }
-      else {
-      embedFields[id-1] = e.target.value
-      }
-      console.log(embedFieldsTitle)
-      console.log(embedFields)
-    }
+      console.log(embedFieldsTitle);
+      console.log(embedFields);
+    };
     const addField = () => {
       const count = fields.length + 1;
       let f = { name: "Field " + count, iter: "3-" + count };
