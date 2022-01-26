@@ -469,14 +469,18 @@ textarea.resize {
   font-size: 16px;
   unicode-bidi: plaintext;
   padding: 0px 9px;
-  background: rgb(41, 43, 47);
-  border-width: 2px;
+  background: #0b0715;
+  border-width: 1px;
   border-style: solid;
   border-color: transparent;
   border-image: initial;
   border-radius: 3px;
   outline: none;
-  transition: background-color 150ms ease 0s, border-color, color;
+  transition: 0.4s ease-out 0s;
+  //transition: background-color 150ms ease 0s, border-color, color;
+}
+.general:hover, .general:focus {
+  border-color: #4e1592;
 }
 .general-2 {
   height: 120px !important;
@@ -652,18 +656,23 @@ transform-origin: 30% 50%;
   font-size: 16px;
   unicode-bidi: plaintext;
   padding: 0px 9px;
-  background: rgb(41, 43, 47);
-  border-width: 2px;
+  background: #0b0715;
+  border-width: 1px;
   border-style: solid;
   border-color: transparent;
   border-image: initial;
   border-radius: 3px;
   outline: none;
-  transition: background-color 150ms ease 0s, border-color, color;
+  transition: 0.4s ease-out 0s;
+  //transition: background-color 150ms ease 0s, border-color, color;
   margin-bottom: 15px;
+}
+.input-embed:hover, .input-embed:focus {
+  border-color: #4e1592;
 }
 .edit-link {
   margin-top: 35px;
+  //color: #cfed3c; fits it. 
 }
 .edit-input {
   width: 90%;
