@@ -22,8 +22,8 @@ interface TxtProps {
   isLocked: boolean;
 }
 const Main: FC<TyProps> = (props) => {
-  let embedFieldsTitle = [];
-  let embedFields = [];
+   let embedFieldsTitle = [] as string[];
+  let embedFields = [] as string[];
   const Dropdown: FC<DropProps> = (props) => {
     const handleClick2 = () => {
       let element = document.getElementById("accordion-" + props.iter);
@@ -72,7 +72,6 @@ const Main: FC<TyProps> = (props) => {
             fifth.scrollHeight +
             sixth.scrollHeight +
             "px";
-          console.log("running " + panel_parent.id.replace("panel-", ""));
         } else {
           let panel = document.getElementById(
             "panel-" + props.iter.split("-")[0]
@@ -177,7 +176,7 @@ const Main: FC<TyProps> = (props) => {
           fifth.scrollHeight +
           sixth.scrollHeight +
           "px";
-        console.log(panel.style.maxHeight);
+
       }
     };
     return (
@@ -264,7 +263,6 @@ const Main: FC<TyProps> = (props) => {
       </Dropdown>
     ));
     const handleChange = (e: any, isTitle: boolean) => {
-      console.log("changing");
       let id = e.target.id;
       id = id.split("-")[1];
       id = parseInt(id);
@@ -273,8 +271,6 @@ const Main: FC<TyProps> = (props) => {
       } else {
         embedFields[id - 1] = e.target.value;
       }
-      console.log(embedFieldsTitle);
-      console.log(embedFields);
     };
     const addField = () => {
       const count = fields.length + 1;
@@ -312,6 +308,12 @@ const Main: FC<TyProps> = (props) => {
         <br />
         <br />
         <DropdownWrapper iter="1001" name="Embed"></DropdownWrapper>
+        <br />
+        <br />
+        <p className="edit-link">Message Link</p>
+        <input className="edit-input input-embed" placeholder="https://discord.com/channels/..."/>
+        <br />
+        <em>Only Enter If You Want To Edit a Message Sent By Sabre Bot. If Blank New Message Will Be Sent.</em>
       </div>
     </div>
   );
