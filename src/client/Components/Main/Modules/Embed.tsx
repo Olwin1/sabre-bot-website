@@ -302,6 +302,7 @@ const Main: FC<TyProps> = (props) => {
     <div>
       <h1 className="title is-4">Create Message</h1>
       <div className="is-card">
+        <p>Content</p>
         <Card data={props.user} />
         <br />
         <br />
