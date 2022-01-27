@@ -6,7 +6,7 @@
 
 // Set your brand colors
 $purple: rgba(78, 21, 146, 1);
-$purple-light:#0e091c;
+$purple-light: #0e091c;
 $pink: #fa7c91;
 $brown: #757763;
 $beige-light: #d0d1cd;
@@ -348,7 +348,6 @@ a.navbar-item.is-active,
   cursor: pointer;
 }
 
-
 .is-ModuleButton:focus,
 .is-ModuleButton.focus,
 .is-ModuleButton:focus.active,
@@ -417,8 +416,6 @@ a.navbar-item.is-active,
   opacity: 1;
 }
 
-
-
 .is-padded {
   padding: 15px;
   padding-bottom: 5px;
@@ -427,7 +424,6 @@ a.navbar-item.is-active,
 
 hr {
   background-color: #1e1337;
-
 }
 
 //Scrollbar Setup
@@ -448,12 +444,7 @@ hr {
   border-color: transparent;
 }
 
-
-
-
 /*Below Is Embed Generator CSS*/
-
-
 
 textarea.resize {
   padding: 5.5px 9px;
@@ -479,7 +470,8 @@ textarea.resize {
   transition: 0.4s ease-out 0s;
   //transition: background-color 150ms ease 0s, border-color, color;
 }
-.general:hover, .general:focus {
+.general:hover,
+.general:focus {
   border-color: #4e1592;
 }
 .general-2 {
@@ -529,8 +521,6 @@ textarea {
   margin-bottom: 20px;
 }
 
-
-
 ::-webkit-resizer {
   background-image: url(https://discohook.org/static/resizer-dark.svg);
   background-repeat: no-repeat;
@@ -568,7 +558,6 @@ textarea {
 
 */
 
-
 .flex {
   min-width: 0px;
   display: flex;
@@ -581,7 +570,7 @@ textarea {
   color: #cfcfcf;
   cursor: pointer;
   padding: 18px;
-    padding-left: 5px;
+  padding-left: 5px;
 
   width: 100%;
   border: none;
@@ -590,41 +579,37 @@ textarea {
   font-size: 15px;
   transition: 0.4s;
   vertical-align: middle;
-
-
 }
-
 
 .accordion:after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:v='https://vecta.io/nano' width='16' height='16' fill='none'%3E%3Cpath d='M12 10L8 6L4 10' stroke='%23cfcfcf' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: -2.5px;
 
-  content:"⠀⠀";
-  color: rgb(185, 187, 190);;
+  content: "⠀⠀";
+  color: rgb(185, 187, 190);
   font-weight: bold;
   float: left;
   margin-left: 5px;
-transition: transform 150ms ease 0s;
-transform-origin: 30% 50%;
-    transition-property: transform;
-    transition-duration: 150ms;
-    transition-timing-function: ease;
-    transition-delay: 0s;
-    transform: rotate(90deg);
-    align-self: end;
-    vertical-align: middle
-
+  transition: transform 150ms ease 0s;
+  transform-origin: 30% 50%;
+  transition-property: transform;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+  transition-delay: 0s;
+  transform: rotate(90deg);
+  align-self: end;
+  vertical-align: middle;
 }
 
 .active:after {
   transform: rotate(180deg);
   transform: translate(15);
   transition: transform 150ms ease 0s;
-    transition-property: transform;
-    transition-duration: 150ms;
-    transition-timing-function: ease;
-    transition-delay: 0s;
+  transition-property: transform;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+  transition-delay: 0s;
 }
 
 .panel {
@@ -633,10 +618,7 @@ transform-origin: 30% 50%;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
-
 }
-
-
 
 .embed-preview {
   border-radius: 4px;
@@ -646,7 +628,6 @@ transform-origin: 30% 50%;
   border-radius: 4px;
   border-left: 4px solid #202225;
 }
-
 
 .input-embed {
   height: 36px;
@@ -667,12 +648,13 @@ transform-origin: 30% 50%;
   //transition: background-color 150ms ease 0s, border-color, color;
   margin-bottom: 15px;
 }
-.input-embed:hover, .input-embed:focus {
+.input-embed:hover,
+.input-embed:focus {
   border-color: #4e1592;
 }
 .edit-link {
   margin-top: 35px;
-  //color: #cfed3c; fits it. 
+  //color: #cfed3c; fits it.
 }
 .edit-input {
   width: 90%;
@@ -680,5 +662,68 @@ transform-origin: 30% 50%;
 em {
   color: #afafaf;
   font-size: 0.9em;
-
 }
+
+//Below Is Styles For A Loading Spinner
+.spinner,
+.spinner:before,
+.spinner:after {
+  border-radius: 50%;
+  width: 0.5em;
+  height: 0.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+.spinner {
+  color: #ffffff;
+  font-size: 10px;
+  margin-right: 80px;
+  margin-top: -13px;
+  position: absolute;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.spinner:before,
+.spinner:after {
+  content: "";
+  position: absolute;
+  top: 0;
+}
+.spinner:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.spinner:after {
+  left: 1.5em;
+}
+@-webkit-keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+@keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+.padded-button-text-loader {
+  padding-left: 25px;
+}
+
+//End Of Spinner

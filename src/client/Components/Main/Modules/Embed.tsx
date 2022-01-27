@@ -22,8 +22,17 @@ interface TxtProps {
   isLocked: boolean;
 }
 const Main: FC<TyProps> = (props) => {
-   let embedFieldsTitle = [] as string[];
+  let embedFieldsTitle = [] as string[];
   let embedFields = [] as string[];
+  let content = "" as string;
+  let author = "" as string;
+  let authorHyperlink = "" as string;
+  let authorIcon = "" as string;
+  let title = "" as string;
+  let description = "" as string;
+  let titleHyperlink = "" as string;
+  let embedColor = "" as string;
+
   const Dropdown: FC<DropProps> = (props) => {
     const handleClick2 = () => {
       let element = document.getElementById("accordion-" + props.iter);
@@ -176,7 +185,6 @@ const Main: FC<TyProps> = (props) => {
           fifth.scrollHeight +
           sixth.scrollHeight +
           "px";
-
       }
     };
     return (
@@ -297,6 +305,19 @@ const Main: FC<TyProps> = (props) => {
       </div>
     );
   };
+  const sendData = () => {
+    console.log("fuck");
+    let btn = document.getElementById("sendData");
+    let spinner = document.getElementById("sendDataSpinner");
+    // @ts-ignore: Unknown Property Error
+    btn.disabled = true;
+    spinner.style.visibility = "visible";
+    setTimeout(() => {
+      // @ts-ignore: Unknown Property Error
+      btn.disabled = false;
+      spinner.style.visibility = "hidden";
+    }, 3000);
+  };
 
   return (
     <div>
@@ -312,9 +333,33 @@ const Main: FC<TyProps> = (props) => {
         <br />
         <br />
         <p className="edit-link">Message Link</p>
-        <input className="edit-input input-embed" placeholder="https://discord.com/channels/..."/>
+        <input
+          className="edit-input input-embed"
+          placeholder="https://discord.com/channels/..."
+        />
         <br />
-        <em>Only Enter If You Want To Edit a Message Sent By Sabre Bot. If Blank New Message Will Be Sent.</em>
+        <em>
+          Only Enter If You Want To Edit a Message Sent By Sabre Bot. If Blank
+          New Message Will Be Sent.
+        </em>
+        <br />
+        <br />
+        <br />
+        <br />
+        <button
+          className="button is-primary"
+          onClick={() => sendData()}
+          id="sendData"
+        >
+          <div>
+            <div
+              className="spinner"
+              id="sendDataSpinner"
+              style={{ visibility: "hidden" }}
+            ></div>
+            <p className="padded-button-text-loader">Send Message</p>
+          </div>
+        </button>
       </div>
     </div>
   );
