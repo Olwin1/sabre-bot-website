@@ -32,6 +32,7 @@ const Main: FC<TyProps> = (props) => {
   let description = "" as string;
   let titleHyperlink = "" as string;
   let embedColor = "" as string;
+  let editLink = "" as string
 
   const Dropdown: FC<DropProps> = (props) => {
     const handleClick2 = () => {
@@ -112,28 +113,43 @@ const Main: FC<TyProps> = (props) => {
     const general = props.isSmall ? " general-2" : "";
     const locked = props.isLocked ? " resize-lock" : "";
     classes += general + locked;
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      if (e.target.id == "author-txt") {
+        author = e.target.value;
+      } else if (e.target.id == "description-txt") {
+        description = e.target.value;
+      } else {
+        content = e.target.value;
+      }
+    };
+
     return (
       <div className="flex">
-        <textarea className={classes}></textarea>
+        <textarea
+          className={classes}
+          id={props.isSmall ? "author-txt" : "description-txt"}
+          onChange={(e) => handleChange(e)}
+        />
       </div>
     );
   };
   const Card: FC<CardProps> = (props) => {
     const Textbox = () => {
+      const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if (e.target.id == "author-txt") {
+          author = e.target.value;
+        } else if (e.target.id == "description-txt") {
+          description = e.target.value;
+        } else {
+          content = e.target.value;
+        }
+      };
       return (
         <div className="flex">
-          <textarea className="resize general">
-            Hey, welcome to &lt;:discohook:736648398081622016&gt; Discohook! The
-            easiest way to build and send Discord messages with embeds using
-            webhooks. The embeds below explain a bit more, but you're not
-            required to read them. If you're ready, click on the "Clear All"
-            button in the editor to start making your own messages. Discohook
-            has [a support server](https://discohook.app/discord)! Feel free to
-            join and ask any questions you may have, or suggest things you'd
-            like to see. There's also [a complementary
-            bot](https://discohook.app/bot), it's completely optional but you
-            may want it. _ _
-          </textarea>
+          <textarea
+            className="resize general"
+            onChange={(e) => handleChange(e)}
+          />
         </div>
       );
     };
@@ -187,6 +203,22 @@ const Main: FC<TyProps> = (props) => {
           "px";
       }
     };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.id == "author") {
+        author = e.target.value;
+      } else if (e.target.id == "authorHyper") {
+        authorHyperlink = e.target.value;
+      } else if (e.target.id == "authorIcon") {
+        authorIcon = e.target.value;
+      } else if (e.target.id == "title") {
+        title = e.target.value;
+      } else if (e.target.id == "hyperlink") {
+        titleHyperlink = e.target.value;
+      } else if (e.target.id == "embedColour") {
+        embedColor = e.target.value;
+      }
+    };
+
     return (
       <div className="embed-preview">
         <button
@@ -205,11 +237,19 @@ const Main: FC<TyProps> = (props) => {
               <div className="columns">
                 <div className="column">
                   <p>Author Hyperlink</p>
-                  <input className="input-embed" />
+                  <input
+                    className="input-embed"
+                    id="authorHyper"
+                    onChange={(e) => handleChange(e)}
+                  />
                 </div>
                 <div className="column">
                   <p>Author Icon URL</p>
-                  <input className="input-embed" />
+                  <input
+                    className="input-embed"
+                    id="authorIcon"
+                    onChange={(e) => handleChange(e)}
+                  />
                 </div>
               </div>
             </div>
@@ -217,17 +257,29 @@ const Main: FC<TyProps> = (props) => {
           <Dropdown iter="2" name="Body" isNested={false}>
             <div>
               <p>Title</p>
-              <input className="input-embed" />
+              <input
+                className="input-embed"
+                id="title"
+                onChange={(e) => handleChange(e)}
+              />
               <p>Description</p>
               <Textbox isSmall={false} isLocked={true}></Textbox>
               <div className="columns">
                 <div className="column">
                   <p>Hyperlink</p>
-                  <input className="input-embed" />
+                  <input
+                    className="input-embed"
+                    id="hyperlink"
+                    onChange={(e) => handleChange(e)}
+                  />
                 </div>
                 <div className="column">
                   <p>Embed Colour</p>
-                  <input className="input-embed" />
+                  <input
+                    className="input-embed"
+                    id="embedColour"
+                    onChange={(e) => handleChange(e)}
+                  />
                 </div>
               </div>
             </div>
@@ -311,6 +363,7 @@ const Main: FC<TyProps> = (props) => {
     let spinner = document.getElementById("sendDataSpinner");
     // @ts-ignore: Unknown Property Error
     btn.disabled = true;
+    console.log(content, author, authorHyperlink, authorIcon, title, description, titleHyperlink, embedColor, editLink);
     spinner.style.visibility = "visible";
     setTimeout(() => {
       // @ts-ignore: Unknown Property Error
@@ -318,6 +371,9 @@ const Main: FC<TyProps> = (props) => {
       spinner.style.visibility = "hidden";
     }, 3000);
   };
+  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    editLink = e.target.value
+  }
 
   return (
     <div>
@@ -336,6 +392,7 @@ const Main: FC<TyProps> = (props) => {
         <input
           className="edit-input input-embed"
           placeholder="https://discord.com/channels/..."
+          onChange={(e)=>handleChange(e)}
         />
         <br />
         <em>
