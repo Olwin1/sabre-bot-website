@@ -623,10 +623,9 @@ textarea {
 .embed-preview {
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 30%) 0px 8px 8px;
-  border-color: #58b9ff !important;
   border-width: 5px;
   border-radius: 4px;
-  border-left: 4px solid #202225;
+  border-left: 4px solid #58b9ff;
 }
 
 .input-embed {
@@ -727,3 +726,33 @@ em {
 }
 
 //End Of Spinner
+.erroneousInput {
+  font-size: 0.8em;
+}
+.sketch-picker {
+    background: #0b0715 !important;
+
+}
+#rc-editable-input-1, #rc-editable-input-2, #rc-editable-input-3, #rc-editable-input-4, #rc-editable-input-5 {
+    width: 90% !important;
+    color: rgb(220, 221, 222) !important;
+    background: #040207 !important;
+    box-shadow: none !important;
+    border-radius: 6px !important;
+    outline: none !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    transition: 0.4s ease-out 0s !important;
+    border-color: transparent !important;
+  }
+  #rc-editable-input-1:hover,
+  #rc-editable-input-1:focus,  #rc-editable-input-2:hover,
+  #rc-editable-input-2:focus,  #rc-editable-input-3:hover,
+  #rc-editable-input-3:focus,  #rc-editable-input-4:hover,
+  #rc-editable-input-4:focus,  #rc-editable-input-5:hover,
+  #rc-editable-input-5:focus {
+    border-color: #4e1592 !important;
+  }
+label {
+  color: #fff !important;
+}
