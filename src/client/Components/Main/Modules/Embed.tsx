@@ -1,6 +1,6 @@
 import e from "express";
 import React, { FC, useState, useReducer } from "react";
-
+import { SketchPicker } from "react-color";
 interface TyProps {
   user: JSON;
 }
@@ -32,7 +32,9 @@ const Main: FC<TyProps> = (props) => {
   let description = "" as string;
   let titleHyperlink = "" as string;
   let embedColor = "" as string;
-  let editLink = "" as string
+  let editLink = "" as string;
+  const [editUrlCheck, setEditUrlCheck] = React.useState(false);
+  let colour = "#cfcfcf";
 
   const Dropdown: FC<DropProps> = (props) => {
     const handleClick2 = () => {
@@ -161,6 +163,10 @@ const Main: FC<TyProps> = (props) => {
   };
 
   const DropdownWrapper: FC<DropWrapperProps> = (props) => {
+    const [authorHyperlinkCheck, setAuthorHyperlinkCheck] =
+      React.useState(false);
+    const [authorIconCheck, setAuthorIconCheck] = React.useState(false);
+    const [bodyHyperlinkCheck, setBodyHyperlinkCheck] = React.useState(false);
     const handleClick = () => {
       let element = document.getElementById("accordion-" + props.iter);
       if (element.classList.length == 1) {
@@ -208,19 +214,79 @@ const Main: FC<TyProps> = (props) => {
         author = e.target.value;
       } else if (e.target.id == "authorHyper") {
         authorHyperlink = e.target.value;
+        let url: URL;
+        try {
+          url = new URL(authorHyperlink);
+          setAuthorHyperlinkCheck(false);
+        } catch (_) {
+          if (authorHyperlink != "") {
+            setAuthorHyperlinkCheck(true);
+          } else {
+            setAuthorHyperlinkCheck(false);
+          }
+        }
       } else if (e.target.id == "authorIcon") {
         authorIcon = e.target.value;
+        let url: URL;
+        try {
+          url = new URL(authorIcon);
+          setAuthorIconCheck(false);
+        } catch (_) {
+          if (authorIcon != "") {
+            setAuthorIconCheck(true);
+          } else {
+            setAuthorIconCheck(false);
+          }
+        }
       } else if (e.target.id == "title") {
         title = e.target.value;
       } else if (e.target.id == "hyperlink") {
         titleHyperlink = e.target.value;
-      } else if (e.target.id == "embedColour") {
-        embedColor = e.target.value;
+        let url: URL;
+        try {
+          url = new URL(titleHyperlink);
+          setBodyHyperlinkCheck(false);
+        } catch (_) {
+          if (titleHyperlink != "") {
+            setBodyHyperlinkCheck(true);
+          } else {
+            setBodyHyperlinkCheck(false);
+          }
+        }
       }
     };
 
+    const ColorPicker = () => {
+      const [embedColour, setEmbedColour] = React.useState(colour);
+      const [embedColourVisible, setEmbedColourVisible] = React.useState(false);
+
+      const handleColourChange = (color: any) => {
+        setEmbedColour(color.hex);
+        document.getElementById("colourChange").style.borderColor = color.hex;
+        //@ts-ignore: Property Does Not Exist.  
+        document.getElementById("embedColour").value = color.hex
+        embedColor = color.hex;
+      };
+      return (
+        <div>
+          <input
+            className="input-embed"
+            id="embedColour"
+            onClick={() => setEmbedColourVisible(!embedColourVisible)}
+            readOnly={true}
+          />
+          <div style={{visibility: embedColourVisible?"visible":"hidden", position: "absolute"}}>
+          <SketchPicker
+            color={embedColour}
+            onChange={(c:any) => handleColourChange(c)}
+          />
+          </div>
+        </div>
+      );
+    };
+
     return (
-      <div className="embed-preview">
+      <div className="embed-preview" id="colourChange">
         <button
           className="accordion"
           id={"accordion-" + props.iter}
@@ -242,6 +308,14 @@ const Main: FC<TyProps> = (props) => {
                     id="authorHyper"
                     onChange={(e) => handleChange(e)}
                   />
+                  <span
+                    className="erroneousInput"
+                    style={{
+                      visibility: authorHyperlinkCheck ? "visible" : "hidden",
+                    }}
+                  >
+                    Eroor
+                  </span>
                 </div>
                 <div className="column">
                   <p>Author Icon URL</p>
@@ -250,6 +324,14 @@ const Main: FC<TyProps> = (props) => {
                     id="authorIcon"
                     onChange={(e) => handleChange(e)}
                   />
+                  <span
+                    className="erroneousInput"
+                    style={{
+                      visibility: authorIconCheck ? "visible" : "hidden",
+                    }}
+                  >
+                    Eroor
+                  </span>
                 </div>
               </div>
             </div>
@@ -272,14 +354,19 @@ const Main: FC<TyProps> = (props) => {
                     id="hyperlink"
                     onChange={(e) => handleChange(e)}
                   />
+                  <span
+                    className="erroneousInput"
+                    style={{
+                      visibility: bodyHyperlinkCheck ? "visible" : "hidden",
+                    }}
+                  >
+                    Eroor
+                  </span>
                 </div>
                 <div className="column">
                   <p>Embed Colour</p>
-                  <input
-                    className="input-embed"
-                    id="embedColour"
-                    onChange={(e) => handleChange(e)}
-                  />
+
+                  <ColorPicker />
                 </div>
               </div>
             </div>
@@ -363,7 +450,17 @@ const Main: FC<TyProps> = (props) => {
     let spinner = document.getElementById("sendDataSpinner");
     // @ts-ignore: Unknown Property Error
     btn.disabled = true;
-    console.log(content, author, authorHyperlink, authorIcon, title, description, titleHyperlink, embedColor, editLink);
+    console.log(
+      content,
+      author,
+      authorHyperlink,
+      authorIcon,
+      title,
+      description,
+      titleHyperlink,
+      embedColor,
+      editLink
+    );
     spinner.style.visibility = "visible";
     setTimeout(() => {
       // @ts-ignore: Unknown Property Error
@@ -371,9 +468,20 @@ const Main: FC<TyProps> = (props) => {
       spinner.style.visibility = "hidden";
     }, 3000);
   };
-  const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    editLink = e.target.value
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    editLink = e.target.value;
+    let url: URL;
+    try {
+      url = new URL(editLink);
+      setEditUrlCheck(false);
+    } catch (_) {
+      if (editLink != "") {
+        setEditUrlCheck(true);
+      } else {
+        setEditUrlCheck(false);
+      }
+    }
+  };
 
   return (
     <div>
@@ -392,8 +500,14 @@ const Main: FC<TyProps> = (props) => {
         <input
           className="edit-input input-embed"
           placeholder="https://discord.com/channels/..."
-          onChange={(e)=>handleChange(e)}
+          onChange={(e) => handleChange(e)}
         />
+        <span
+          className="erroneousInput"
+          style={{ visibility: editUrlCheck ? "visible" : "hidden" }}
+        >
+          Eroor
+        </span>
         <br />
         <em>
           Only Enter If You Want To Edit a Message Sent By Sabre Bot. If Blank
