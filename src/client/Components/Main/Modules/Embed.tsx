@@ -263,23 +263,52 @@ const Main: FC<TyProps> = (props) => {
       const handleColourChange = (color: any) => {
         setEmbedColour(color.hex);
         document.getElementById("colourChange").style.borderColor = color.hex;
-        //@ts-ignore: Property Does Not Exist.  
-        document.getElementById("embedColour").value = color.hex
+        //@ts-ignore: Property Does Not Exist.
+        document.getElementById("embedColour").value = color.hex;
         embedColor = color.hex;
+      };
+      const handleClickOutside = (event: any) => {
+        const inside = event
+          .composedPath()
+          .includes(document.getElementById("colorPickerWrapper"));
+        if (!inside) {
+          document.removeEventListener("mousedown", handleClickOutside);
+
+          if (event.target.id != "embedColour") {
+            setEmbedColourVisible(false);
+          }
+        }
+      };
+      const handleToggleClick = () => {
+        console.log(1);
+
+        if (!embedColourVisible) {
+          document.addEventListener("mousedown", handleClickOutside);
+          setEmbedColourVisible(true);
+        } else {
+          document.removeEventListener("mousedown", handleClickOutside);
+          setEmbedColourVisible(false);
+        }
       };
       return (
         <div>
           <input
             className="input-embed"
             id="embedColour"
-            onClick={() => setEmbedColourVisible(!embedColourVisible)}
+            onClick={() => handleToggleClick()}
             readOnly={true}
           />
-          <div style={{visibility: embedColourVisible?"visible":"hidden", position: "absolute"}}>
-          <SketchPicker
-            color={embedColour}
-            onChange={(c:any) => handleColourChange(c)}
-          />
+          <div
+            id="colorPickerWrapper"
+            style={{
+              visibility: embedColourVisible ? "visible" : "hidden",
+              position: "absolute",
+            }}
+          >
+            <SketchPicker
+              color={embedColour}
+              onChange={(c: any) => handleColourChange(c)}
+            />
           </div>
         </div>
       );
