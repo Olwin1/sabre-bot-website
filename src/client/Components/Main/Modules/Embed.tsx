@@ -29,6 +29,8 @@ const Main: FC<TyProps> = (props) => {
   let authorHyperlink = "" as string;
   let authorIcon = "" as string;
   let title = "" as string;
+  let footer = "" as string;
+  let imageURL = "" as string;
   let description = "" as string;
   let titleHyperlink = "" as string;
   let embedColor = "" as string;
@@ -240,6 +242,10 @@ const Main: FC<TyProps> = (props) => {
         }
       } else if (e.target.id == "title") {
         title = e.target.value;
+      } else if (e.target.id == "footer") {
+        footer = e.target.value;
+      } else if (e.target.id == "imageURL") {
+        imageURL = e.target.value;
       } else if (e.target.id == "hyperlink") {
         titleHyperlink = e.target.value;
         let url: URL;
@@ -404,10 +410,20 @@ const Main: FC<TyProps> = (props) => {
             <Fields />
           </Dropdown>
           <Dropdown iter="4" name="Images" isNested={false}>
-            <div>Oi m8 Clix Meh</div>
+          <div>
+            <p>Image URL</p>          <input
+            className="input-embed"
+            onChange={(e) => handleChange(e)}
+            id="imageURL"
+          /></div>
           </Dropdown>
           <Dropdown iter="5" name="Footer" isNested={false}>
-            <div>Oi m8 Clix Meh</div>
+            <div>
+            <p>Footer</p>          <input
+            className="input-embed"
+            onChange={(e) => handleChange(e)}
+            id="footer"
+          /></div>
           </Dropdown>
         </div>
       </div>
@@ -479,17 +495,22 @@ const Main: FC<TyProps> = (props) => {
     let spinner = document.getElementById("sendDataSpinner");
     // @ts-ignore: Unknown Property Error
     btn.disabled = true;
-    console.log(
-      content,
-      author,
-      authorHyperlink,
-      authorIcon,
-      title,
-      description,
-      titleHyperlink,
-      embedColor,
-      editLink
-    );
+    const embedJSON = {
+      "title": title,
+      "url": titleHyperlink,
+      "desc": description,
+      "a_url": authorHyperlink,
+      "a_ico": authorIcon,
+      "a": author,
+      "colour": embedColor,
+      "footer": footer,
+      "img": imageURL,
+      "edit": editLink,
+      "fields": embedFields,
+      "fields_t": embedFieldsTitle,
+      "content": content
+    }
+    console.log(embedJSON)
     spinner.style.visibility = "visible";
     setTimeout(() => {
       // @ts-ignore: Unknown Property Error
