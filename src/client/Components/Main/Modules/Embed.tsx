@@ -1,6 +1,8 @@
 import e from "express";
 import React, { FC, useState, useReducer } from "react";
 import { SketchPicker } from "react-color";
+import axios from "axios";
+import {getCookie} from "../../../cookie-utils";
 interface TyProps {
   user: JSON;
 }
@@ -511,6 +513,16 @@ const Main: FC<TyProps> = (props) => {
       "content": content
     }
     console.log(embedJSON)
+    axios
+    .get("http://localhost:3000/api/embed", {headers: {"token": "Bearer " + getCookie("token")}})
+    .then((resu) => {
+      console.log(`statusCode: ${resu.status}`);
+      //console.log(resu);
+      console.log(resu)
+    })
+    .catch((error) => {
+      console.error(error);
+    });
     spinner.style.visibility = "visible";
     setTimeout(() => {
       // @ts-ignore: Unknown Property Error
