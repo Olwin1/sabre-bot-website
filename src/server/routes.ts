@@ -1,9 +1,17 @@
-import * as express from "express";
+import e, * as express from "express";
 import * as path from "path";
 import axios from "axios";
 import * as net from "net";
+import {json,urlencoded} from 'body-parser';
 
 const router = express.Router();
+
+
+// create application/json parser
+var jsonParser = json()
+ 
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = urlencoded({ extended: false })
 
   const sendPayloadToSabre = (data:String) => {
   const client =  new net.Socket();
@@ -23,45 +31,46 @@ const router = express.Router();
   client.on("data", (data) => {
     console.log("Received: " + data);
     client.destroy(); // kill client after server's response
+    return {"success": true}
   });
   client.on("error", (exception) => {
     console.log(exception);
+    return {"success": false}
 
   console.log(1)
 });
+return {"success": true}
   }
 
 
 
-router.get("/api/embed", (req, res, next) => {
+router.post("/api/embed", jsonParser, (req, res, next) => {
   const token_b = req.header("token");
   const token = token_b.replace("Bearer ", "");
-  axios
-    .get("https://discord.com/api/v9/oauth2/@me", {headers: {"Authorization": token_b}})
-    .then((resu) => {
-      console.log(`statusCode: ${resu.status}`);
+      console.log(`statusCode: ${res.status}`);
       //console.log(resu);
-      console.log(resu.data)
-      res.json(resu.data)
-      sendPayloadToSabre(JSON.stringify({
-        "title": "",
-        "url": "",
-        "desc": "",
-        "a_url": "",
-        "a_ico": "",
-        "a": "",
-        "colour": "",
-        "footer": "",
-        "img": "",
-        "edit": "",
-        "fields": [],
-        "fields_t": [],
-        "content": ""
-    }))
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      const embed = req.body
+      
+      res.json(sendPayloadToSabre(JSON.stringify({
+        "token": token,
+        "title": embed.title,
+        "url": embed.url,
+        "desc": embed.desc,
+        "a_url": embed.a_url,
+        "a_ico": embed.a_ico,
+        "a": embed.a,
+        "colour": embed.colour,
+        "footer": embed.footer,
+        "img": embed.img,
+        "edit": embed.edit,
+        "fields": embed.fields,
+        "fields_t": embed.fields_t,
+        "content": embed.content
+    })))
+
+    
+
+
 });
 
 // This is the client ID and client secret that you obtained
