@@ -514,7 +514,7 @@ const Main: FC<TyProps> = (props) => {
     }
     console.log(embedJSON)
     axios
-    .get("http://localhost:3000/api/embed", {headers: {"token": "Bearer " + getCookie("token")}})
+    .post("http://localhost:3000/api/embed", embedJSON, {headers: {"token": "Bearer " + getCookie("token")}})
     .then((resu) => {
       console.log(`statusCode: ${resu.status}`);
       //console.log(resu);
