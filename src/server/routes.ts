@@ -13,7 +13,8 @@ var jsonParser = json()
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = urlencoded({ extended: false })
 
-  const sendPayloadToSabre = (data:String) => {
+  const sendPayloadToSabre = async (data:String, type:String) => {
+    return new Promise((resolve, reject) => {
   const client =  new net.Socket();
   console.log(1)
 
@@ -22,6 +23,7 @@ var urlencodedParser = urlencoded({ extended: false })
   console.log("Connected");
     const payload:JSON = {
       "data": data,
+      "type": type,
     } as unknown as JSON
   console.log(1)
   client.write(JSON.stringify(payload));
@@ -30,6 +32,7 @@ var urlencodedParser = urlencoded({ extended: false })
 
   client.on("data", (data) => {
     console.log("Received: " + data);
+    resolve(data);
     client.destroy(); // kill client after server's response
     return {"success": true}
   });
@@ -39,19 +42,19 @@ var urlencodedParser = urlencoded({ extended: false })
 
   console.log(1)
 });
-return {"success": true}
-  }
+//return {"success": true}
+  })}
 
 
 
-router.post("/api/embed", jsonParser, (req, res, next) => {
+router.post("/api/embed", jsonParser, async (req, res, next) => {
   const token_b = req.header("token");
   const token = token_b.replace("Bearer ", "");
       console.log(`statusCode: ${res.status}`);
       //console.log(resu);
       const embed = req.body
       
-      res.json(sendPayloadToSabre(JSON.stringify({
+      await sendPayloadToSabre(JSON.stringify({
         "token": token,
         "title": embed.title,
         "url": embed.url,
@@ -66,12 +69,26 @@ router.post("/api/embed", jsonParser, (req, res, next) => {
         "fields": embed.fields,
         "fields_t": embed.fields_t,
         "content": embed.content
-    })))
-
-    
-
+    }), "sendEmbed").then((r) => {
+    res.json(r)
+    console.log(r + " || respon")
+  })
 
 });
+
+router.get("/api/guilds", (req, res) => {
+  const token_b = req.header("token");
+  const token = token_b.replace("Bearer ", "");
+  const response = sendPayloadToSabre(JSON.stringify({
+    "token": token
+  }), "getGuilds").then((r) => {
+    res.json(r)
+    console.log(r + " || respon")
+  })
+});
+
+
+
 
 // This is the client ID and client secret that you obtained
 // while registering the application
