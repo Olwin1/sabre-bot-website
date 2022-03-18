@@ -76,10 +76,10 @@ router.post("/api/embed", jsonParser, async (req, res, next) => {
 
 });
 
-router.get("/api/guilds", (req, res) => {
+router.get("/api/guilds", async (req, res) => {
   const token_b = req.header("token");
   const token = token_b.replace("Bearer ", "");
-  const response = sendPayloadToSabre(JSON.stringify({
+  await sendPayloadToSabre(JSON.stringify({
     "token": token
   }), "getGuilds").then((r) => {
     res.json(r)
