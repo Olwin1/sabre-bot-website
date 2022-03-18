@@ -2,6 +2,9 @@ import * as React from "react";
 import getUser from "./User";
 import { Sidebar } from "./Components/Side";
 import { Main } from "./Components/Main";
+import axios from "axios";
+import { getCookie } from "./cookie-utils";
+import { Buffer } from 'buffer';
 
 /* HOOK REACT EXAMPLE */
 const App = () => {
@@ -27,6 +30,36 @@ const App = () => {
     "749037230533640194": "Platypus",
     "749037140851032075": "Wombat"
   }
+  const checkTime = () => {
+    const t = window.localStorage.getItem("timestamp")
+    if(t) {
+      const diff = Date.now() - parseInt(t)
+      if (Math.floor(diff / 1000) > 86400) {
+        return true
+      }
+    }
+    return false
+  }
+  if(!window.localStorage.getItem("guilds") || checkTime()) {
+    
+    axios
+    .get("http://localhost:3000/api/guilds", {headers: {"token": "Bearer " + getCookie("token")}})
+    .then((resu) => {
+      console.log(`statusCode: ${resu.status}`);
+      //console.log(resu);
+      console.log(resu + "result" + typeof(resu))
+        const bufferOriginal = Buffer.from(resu.data);
+        window.localStorage.setItem('guilds', bufferOriginal.toString('utf8'));
+        console.log("setted")
+        window.localStorage.setItem('timestamp', Date.now().toString());
+
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+
+  }
   console.log(x, "x is load");
   return (
     <div className="is-tall">
@@ -37,10 +70,12 @@ const App = () => {
         >
           <Sidebar />
         </aside>
+        <div className="wrapperThing">
         <div id="main" className="container column is-10">
           <div className="section">
             <Main user={x} />
           </div>
+        </div>
         </div>
       </section>
     </div>
