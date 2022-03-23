@@ -73,7 +73,7 @@ const App = () => {
         <div className="wrapperThing">
         <div id="main" className="container column is-10">
           <div className="section">
-            <Main user={x} />
+            <Main user={x} guildId={"704255331680911402"}/>
           </div>
         </div>
         </div>

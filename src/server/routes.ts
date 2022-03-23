@@ -3,8 +3,10 @@ import * as path from "path";
 import axios from "axios";
 import * as net from "net";
 import {json,urlencoded} from 'body-parser';
+import getToken from "../../token";
 
 const router = express.Router();
+const bot_token = getToken()
 
 
 // create application/json parser
@@ -86,6 +88,74 @@ router.get("/api/guilds", async (req, res) => {
     console.log(r + " || respon")
   })
 });
+
+router.get("/api/user", async (req, res) => {
+  const token_b = req.header("token");
+  const guild = req.header("guildId");
+  axios
+  .get("https://discord.com/api/v9/users/@me/guilds", {headers: {"Authorization": token_b}})
+  .then((resu) => {
+    console.log(`statusCode: ${resu.status}`);
+    //console.log(resu);
+
+    res.json(resu.data)
+  })
+  .catch((error) => {
+    //console.error(error);
+  });
+})
+
+router.get("/api/guild", async (req, res) => {
+  const token_b = req.header("token");
+  const guild = req.header("guildId");
+  const token = token_b.replace("Bearer ", "");
+  let retval = {"guild": {}, "member": {}}
+  axios
+  .get("https://discord.com/api/v9/users/@me/guilds", {headers: {"Authorization": token_b}})
+  .then((resu) => {
+    let found = false;
+    if(resu.status != 200) {
+      res.json({"error": resu.status})
+      return;
+    }
+    for(let i in resu.data) {
+      if(resu.data[i]["id"] == guild) {
+        found = true;
+      }
+
+
+    }
+    if(!found) {
+      res.json({"error": 804})
+      return
+    }
+  axios
+  .get("https://discord.com/api/v9/guilds/" + guild + "/members/416617058248425473", {headers: {"Authorization": "Bot " + bot_token}})
+  .then((resu) => {
+    console.log(`statusCode: ${resu.status}`);
+    //console.log(resu);
+    retval["guild"] = resu.data
+    axios
+  .get("https://discord.com/api/v9/guilds/" + guild + "/members/416617058248425473", {headers: {"Authorization": "Bot " + bot_token}})
+  .then((resu) => {
+    console.log(`statusCode: ${resu.status}`);
+    //console.log(resu);
+    retval["member"] = resu.data
+    res.json(retval)
+  })
+  .catch((error) => {
+    //console.error(error);
+  });
+  })
+  .catch((error) => {
+    //console.error(error);
+  });
+})
+.catch((error) => {
+  //console.error(error);
+});
+})
+
 
 
 
