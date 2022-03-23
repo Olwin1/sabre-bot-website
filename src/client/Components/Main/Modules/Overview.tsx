@@ -75,7 +75,7 @@ const Main: FC<TyProps> = (props) => {
       )
     }
     return (
-      <div>
+      /*<div>
         <h1 className="title is-4">List Of Available Modules</h1>
         <p>What Modules Do You Want To Use?</p>
 
@@ -91,6 +91,44 @@ const Main: FC<TyProps> = (props) => {
         <Card data={new Array("Modlog", "Dedicate A Channel For Sabre To Record What Goes On On Your Server.  From Detecting Deleted Messages To Showing Who Banned Your Friend.")} />
 
         <p>{JSON.stringify(props.user)}</p>
+      </div>*/
+      <div>
+        <h1 className="title is-4">Hello, Olwin1</h1>
+        <p>Currently Configuring: TheSabreGuild</p>
+        <br />
+        <br />
+      <div className="columns">
+                <div className="is-card column margin-15">
+          <h1 className="title is-5">Total Members</h1>
+          <p className="subtitle is-6 is-indented">633</p>
+            </div>
+            <div className="is-card column margin-15">
+          <h1 className="title is-5">Total Online Members</h1>
+          <p className="subtitle is-6 is-indented">45</p>
+            </div>
+            </div>
+
+            <div className="is-card margin-15">
+          <h1 className="title is-5">Get Premium</h1>
+          <p className="subtitle is-6 is-indented">Support The Continued Development Of Sabre Bot and Get Some Sweet Cosmetic Upgrades. (Coming Soon)</p>
+            </div>
+            <div className="columns">
+                <div className="is-card column margin-15">
+          <h1 className="title is-5">Prefix</h1>
+          <p className="qs"><input className="field control inputnew thirty" type="text" placeholder="Enter The Prefix You Want Here (e.g !)" maxLength={3} value="!" /></p><span className="svae"></span><br /><button className="button purple is-grun qs">Save</button>
+            </div>
+            <div className="is-card column margin-15">
+            <h1 className="title is-5">Language</h1>
+          <p className="qs"><input className="field control inputnew thirty" type="text" placeholder="Enter The Prefix You Want Here (e.g !)" maxLength={3} value="!" /></p><span className="svae"></span><br /><button className="button purple is-grun qs">Save</button>
+            </div>
+            </div>
+
+            <div className="is-card margin-15">
+          <h1 className="title is-5">Need Help?</h1>
+          <p className="subtitle is-6 is-indented">Need help Setting Up Sabre Bot? No Worries We Have Your Back! Just Join Our Support Server And We Will Be Happy To Help!</p>
+          <button className="button purple is-purple qs">Join The Support Server</button>
+            </div>
+
       </div>
     );
   };
