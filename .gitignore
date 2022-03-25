@@ -7,3 +7,4 @@ public/js/app.js
 
 #Hide Sabre Token
 token.ts
+redisPass.ts
