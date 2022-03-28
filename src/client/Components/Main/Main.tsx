@@ -12,26 +12,21 @@ const Main: FC<TyProps> = (props) => {
   if(page == "" ) {
     page = "#overview"
   }
+  const [guild, setGuild] = useState({});
   const [component, setComponent] = useState(page);
-  if(props.guildId != "") {
+  console.log("ckeck" + props.guildId != "" && Object.keys(guild).length === 0)
+  console.log(guild)
+  if(props.guildId != "" && Object.keys(guild).length === 0) {
     axios
     .get("http://localhost:3000/api/guild", {headers: {"token": "Bearer " + getCookie("token"), "guildId": props.guildId}})
     .then((resu) => {
-      //console.log(`statusCode: ${resu.status}`);
-      //console.log(resu);
-      console.log("---------------")
-      console.log("---------------")
-      console.log("---------------")
       console.log(resu.data)
-      console.log("---------------")
-      console.log("---------------")
-      console.log("---------------")
+      setGuild(resu.data)
     })
     .catch((error) => {
       //console.error(error);
     });
   }
-  const [guild, setGuild] = useState({});
 
   const locationHashChanged = () => {
     setComponent(window.location.hash);
