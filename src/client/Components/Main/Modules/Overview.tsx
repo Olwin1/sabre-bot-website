@@ -115,11 +115,11 @@ const Main: FC<TyProps> = (props) => {
             <div className="columns">
                 <div className="is-card column margin-15">
           <h1 className="title is-5">Prefix</h1>
-          <p className="qs"><input className="field control inputnew thirty" type="text" placeholder="Enter The Prefix You Want Here (e.g !)" maxLength={3} value="!" /></p><span className="svae"></span><br /><button className="button purple is-grun qs">Save</button>
+          <p className="qs"><input className="field control inputnew thirty" type="text" placeholder="Enter The Prefix You Want Here (e.g !)" maxLength={3} defaultValue="!" /></p><span className="svae"></span><br /><button className="button purple is-grun qs">Save</button>
             </div>
             <div className="is-card column margin-15">
             <h1 className="title is-5">Language</h1>
-          <p className="qs"><input className="field control inputnew thirty" type="text" placeholder="Enter The Prefix You Want Here (e.g !)" maxLength={3} value="!" /></p><span className="svae"></span><br /><button className="button purple is-grun qs">Save</button>
+          <p className="qs"><input className="field control inputnew thirty" type="text" placeholder="Enter The Prefix You Want Here (e.g !)" maxLength={3} defaultValue="!" /></p><span className="svae"></span><br /><button className="button purple is-grun qs">Save</button>
             </div>
             </div>
 
