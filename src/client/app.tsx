@@ -40,18 +40,16 @@ const App = () => {
     }
     return false
   }
-  if(!window.localStorage.getItem("guilds") || checkTime()) {
-    
+  const [guilds, setGuilds] = React.useState({})
+
     axios
     .get("http://localhost:3000/api/guilds", {headers: {"token": "Bearer " + getCookie("token")}})
     .then((resu) => {
       console.log(`statusCode: ${resu.status}`);
       //console.log(resu);
       console.log(resu + "result" + typeof(resu))
-        const bufferOriginal = Buffer.from(resu.data);
-        window.localStorage.setItem('guilds', bufferOriginal.toString('utf8'));
-        console.log("setted")
-        window.localStorage.setItem('timestamp', Date.now().toString());
+      const bufferOriginal = Buffer.from(resu.data);
+      setGuilds(JSON.parse(bufferOriginal.toString('utf8')))
 
     })
     .catch((error) => {
@@ -59,7 +57,7 @@ const App = () => {
     });
 
 
-  }
+  
   console.log(x, "x is load");
   return (
     <div className="is-tall">
@@ -68,7 +66,7 @@ const App = () => {
           id="aside"
           className="column is-2 is-narrow-mobile is-tall section is-hidden-mobile is-scrollable"
         >
-          <Sidebar />
+          <Sidebar guilds={guilds}/>
         </aside>
         <div className="wrapperThing">
         <div id="main" className="container column is-10">
