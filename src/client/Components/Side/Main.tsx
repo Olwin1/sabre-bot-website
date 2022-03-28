@@ -5,6 +5,12 @@ interface TyProp {
     link: string,
     text: string,
 }
+interface SideProp {
+  guilds: any,
+}
+interface GProp {
+  uid: string,
+}
 const Subitem: FC<TyProp> = (props): JSX.Element => {
   return (
     <li>
@@ -14,10 +20,26 @@ const Subitem: FC<TyProp> = (props): JSX.Element => {
     </li>
   );
 };
-
-const Sidebar = () => {
+const Guilditem: FC<GProp> = (props): JSX.Element => {
   return (
-    <div className="is-tall">
+    <li>
+      <img src={"https://i.imgur.com/tq6xGet.png"} width="64" className="no-select bordered">
+      </img>
+    </li>
+  );
+};
+
+const Sidebar: FC<SideProp> = (props) => {
+  return (
+    <div className="columns">
+      <div className="is-tall column is-72px">
+      <ul className="menu-list serverList">
+        <Guilditem uid="704255331680911402" />
+
+      </ul>
+
+    </div>    
+    <div className="is-tall column">
       <p>Dashboard</p>
       <ul className="menu-list">
         <Subitem link="overview" text="Overview" />
@@ -40,6 +62,8 @@ const Sidebar = () => {
         <Subitem link="modlog" text="Mod-Log" />
 
       </ul>
+    </div>
+
     </div>
   );
 };

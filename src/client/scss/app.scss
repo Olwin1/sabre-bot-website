@@ -96,6 +96,14 @@ a.navbar-item.is-active,
   background-position: center;
   background-size: cover;
 }
+.bordered {
+  border-radius: 15px;
+}
+.is-72px {
+  flex: none;
+  width: 72px;
+
+}
 
 .wrapperThing {
   flex: 1;
@@ -781,4 +789,7 @@ em {
   }
 label {
   color: #fff !important;
+}
+.serverList {
+  padding-top: 15px;
 }
