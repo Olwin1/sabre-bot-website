@@ -25,6 +25,7 @@
     "express": "^4.17.1",
     "net": "^1.0.2",
     "pg": "^8.7.3",
+    "pgtools": "^0.3.2",
     "react": "^17.0.2",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.2",
@@ -39,6 +40,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
+    "@types/pg": "^8.6.5",
     "@types/react-color": "^3.0.6",
     "bulma": "^0.9.3",
     "nodemon": "^2.0.12",
