@@ -59,7 +59,10 @@ const Sidebar: FC<SideProp> = (props) => {
     </div>
   );
 };
+
 const SidebarOptions = () => {
+  const h = window.location.hash.toLowerCase()
+  let tmp = h == "#profile"||h == "#credits"||h == "#background"||h == "#reward"||h == "#logout"?true:false
   const [type, setType] = React.useState(tmp)
   if(!type) {
   return(
