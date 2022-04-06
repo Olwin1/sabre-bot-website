@@ -60,6 +60,8 @@ const Sidebar: FC<SideProp> = (props) => {
   );
 };
 const SidebarOptions = () => {
+  const [type, setType] = React.useState(tmp)
+  if(!type) {
   return(
     <div className="is-tall column">
     <p>Dashboard</p>
@@ -86,6 +88,26 @@ const SidebarOptions = () => {
     </ul>
   </div>
   )
+  }
+  else {
+    return (
+      <div className="is-tall column">
+      <p>User</p>
+      <ul className="menu-list">
+        <Subitem link="profile" text="Profile" />
+        <Subitem link="credits" text="Credits" />
+  
+        <br />
+  
+        <Subitem link="background" text="Rank Backgrounds" />
+        <Subitem link="reward" text="Daily Gift" />
+        <br /><br />
+        <Subitem link="logout" text="Logout" />
+  
+      </ul>
+    </div>
+    )
+  }
 }
 
 export default Sidebar;
