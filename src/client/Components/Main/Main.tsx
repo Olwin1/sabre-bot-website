@@ -52,6 +52,11 @@ const Main: FC<TyProps> = (props) => {
       {component.toLowerCase() === "#reeactionroles" && <modules.Settings user={props.user}/>}
       {component.toLowerCase() === "#music" && <modules.Settings user={props.user}/>}
 
+      {component.toLowerCase() === "#profile" && <modules.Profile user={props.user}/>}
+      {component.toLowerCase() === "#credits" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#background" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#reward" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#logout" && <modules.Settings user={props.user}/>}
 
       {component.toLowerCase() === "#modlog" && <modules.Settings user={props.user}/>}
 
