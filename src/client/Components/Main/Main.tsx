@@ -39,26 +39,31 @@ const Main: FC<TyProps> = (props) => {
 
   return (
     <div>
-      {component.toLowerCase() === "#overview" && <modules.Overview user={props.user}/>}
-      {component.toLowerCase() === "#settings" && <modules.Settings user={props.user}/>}
-      {component.toLowerCase() === "#embed" && <modules.Embed user={props.user}/>}
+      {component.toLowerCase() === "#overview" && <modules.Overview user={props.guild}/>}
+      {component.toLowerCase() === "#settings" && <modules.Settings user={props.guild}/>}
+      {component.toLowerCase() === "#embed" && <modules.Embed user={props.guild}/>}
 
-      {component.toLowerCase() === "#moderation" && <modules.Moderation user={props.user}/>}
-      {component.toLowerCase() === "#automod" && <modules.Settings user={props.user}/>}
-      {component.toLowerCase() === "#welcomer" && <modules.Settings user={props.user}/>}
-      {component.toLowerCase() === "#autoresponder" && <modules.Settings user={props.user}/>}
-      {component.toLowerCase() === "#leveling" && <modules.Settings user={props.user}/>}
-      {component.toLowerCase() === "#autorole" && <modules.Settings user={props.user}/>}
-      {component.toLowerCase() === "#reeactionroles" && <modules.Settings user={props.user}/>}
-      {component.toLowerCase() === "#music" && <modules.Settings user={props.user}/>}
+      {component.toLowerCase() === "#moderation" && <modules.Moderation user={props.guild}/>}
+      {component.toLowerCase() === "#automod" && <modules.Settings user={props.guild}/>}
+      {component.toLowerCase() === "#welcomer" && <modules.Settings user={props.guild}/>}
+      {component.toLowerCase() === "#autoresponder" && <modules.Settings user={props.guild}/>}
+      {component.toLowerCase() === "#leveling" && <modules.Settings user={props.guild}/>}
+      {component.toLowerCase() === "#autorole" && <modules.Settings user={props.guild}/>}
+      {component.toLowerCase() === "#reeactionroles" && <modules.Settings user={props.guild}/>}
+      {component.toLowerCase() === "#music" && <modules.Settings user={props.guild}/>}
 
+
+      {component.toLowerCase() === "#modlog" && <modules.Settings user={props.guild}/>}
+
+
+
+      
       {component.toLowerCase() === "#profile" && <modules.Profile user={props.user}/>}
       {component.toLowerCase() === "#credits" && <modules.Settings user={props.user}/>}
       {component.toLowerCase() === "#background" && <modules.Settings user={props.user}/>}
       {component.toLowerCase() === "#reward" && <modules.Settings user={props.user}/>}
       {component.toLowerCase() === "#logout" && <modules.Settings user={props.user}/>}
 
-      {component.toLowerCase() === "#modlog" && <modules.Settings user={props.user}/>}
 
 
 

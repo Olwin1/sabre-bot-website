@@ -9,8 +9,11 @@ import { Buffer } from 'buffer';
 /* HOOK REACT EXAMPLE */
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 const App = () => {
-  var x = getUser();
-  x.modules = {
+  let x = getUser();
+  x.credits = 321
+  x.background = 1
+  let y = {} as any
+  y.modules = {
     "moderation": {"toggle": true, "helper_role": "749037230533640194", "mod_role": "749037140851032075"},
     "automod": {"toggle": true},
     "welcomer": {"toggle": true},
@@ -21,12 +24,12 @@ const App = () => {
     "music": {"toggle": true},
     "modlog": {"toggle": true},
   };
-  x.channels = {
+  y.channels = {
     "704255332234297436": "【🌐】general",
     "746500764633006150": "【🤖】bot-commands",
     "749015960274599946": "【📷】media"
   }
-  x.roles = {
+  y.roles = {
     "873594402428289105": "SeXy PinKy, LoVer",
     "749037230533640194": "Platypus",
     "749037140851032075": "Wombat"
@@ -90,7 +93,7 @@ const App = () => {
         <div className="wrapperThing">
         <div id="main" className="container column is-10">
           <div className="section">
-            <Main user={x} guildId={"704255331680911402"} guild={guild}/>
+            <Main user={x} guildId={"704255331680911402"} guild={y}/>
           </div>
         </div>
         </div>
