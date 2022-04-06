@@ -7,6 +7,7 @@ import { getCookie } from "./cookie-utils";
 import { Buffer } from 'buffer';
 
 /* HOOK REACT EXAMPLE */
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 const App = () => {
   var x = getUser();
   x.modules = {
@@ -41,15 +42,33 @@ const App = () => {
     return false
   }
   const [guilds, setGuilds] = React.useState({})
-
+  const [guild, setGuild] = React.useState({})
+  const guild_tmp = guild
     axios
     .get("http://localhost:3000/api/guilds", {headers: {"token": "Bearer " + getCookie("token")}})
-    .then((resu) => {
-      console.log(`statusCode: ${resu.status}`);
+    .then(async (resu) => {
+      let wait = 0
+      if(resu.headers["x-ratelimit-remaining"] == "0") {
+        wait = parseInt(resu.headers["x-ratelimit-reset-after"])
+      }
+      await delay(wait * 1000)
+      console.log(`statusCode Guilds Request: ${resu.status}`);
       //console.log(resu);
+      console.log("guild : " + guild)
+      /*if(guild == guild_tmp) {
+      axios
+      .get("http://localhost:3000/api/guild", {headers: {"token": "Bearer " + getCookie("token"), "guildId": "704255331680911402"}})
+      .then((resu) => {
+        console.log(resu.data)
+        setGuild(resu.data)
+      })
+      .catch((error) => {
+        //console.error(error);
+      });}*/
       console.log(resu + "result" + typeof(resu))
       const bufferOriginal = Buffer.from(resu.data);
       setGuilds(JSON.parse(bufferOriginal.toString('utf8')))
+
 
     })
     .catch((error) => {
@@ -71,7 +90,7 @@ const App = () => {
         <div className="wrapperThing">
         <div id="main" className="container column is-10">
           <div className="section">
-            <Main user={x} guildId={"704255331680911402"}/>
+            <Main user={x} guildId={"704255331680911402"} guild={guild}/>
           </div>
         </div>
         </div>
