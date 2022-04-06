@@ -14,7 +14,7 @@ const pg = new Client({
 pg.connect();
 
 import { createClient } from "redis";
-
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 const red = createClient({
   url: "redis://default:" + getRedisPass() + "@161.97.86.11:6379",
 });
@@ -59,7 +59,7 @@ router.get("/api/guilds", async (req, res) => {
       headers: { Authorization: token_b },
     })
     .then(async (resu) => {
-      console.log(`statusCodde: ${resu.status}`);
+      console.log(`statusCode Line 62: ${resu.status}`);
       let guilds = [] as any[];
 
       const g = resu.data;
@@ -100,7 +100,7 @@ router.get("/api/user", async (req, res) => {
       headers: { Authorization: token_b },
     })
     .then((resu) => {
-      console.log(`statusCode: ${resu.status}`);
+      console.log(`statusCode Line 103: ${resu.status}`);
       //console.log(resu);
 
       res.json(resu.data);
@@ -111,16 +111,27 @@ router.get("/api/user", async (req, res) => {
 });
 
 router.get("/api/guild", async (req, res) => {
+  console.log(0)
   const token_b = req.header("token");
+  console.log(1)
   const guild = req.header("guildId");
+  console.log(2)
   const token = token_b.replace("Bearer ", "");
   let retval = { guild: {}, member: {} };
+  console.log(3)
+  await delay(1000)
   axios
     .get("https://discord.com/api/v9/users/@me/guilds", {
       headers: { Authorization: token_b },
     })
-    .then((resu) => {
-      let found = false;
+    .then(async (resu) => {
+      let wait = 0
+      if(resu.headers["x-ratelimit-remaining"] == "0") {
+        wait = parseInt(resu.headers["x-ratelimit-reset-after"])
+      }
+      await delay(wait * 1000)
+  console.log(4)
+  let found = false;
       if (resu.status != 200) {
         res.json({ error: resu.status });
         return;
@@ -131,44 +142,63 @@ router.get("/api/guild", async (req, res) => {
         }
       }
       if (!found) {
-        res.json({ error: 804 });
+  console.log(5)
+  res.json({ error: 804 });
         return;
       }
-      axios
+  console.log(6)
+  axios
         .get(
           "https://discord.com/api/v9/guilds/" +
             guild +
             "/members/416617058248425473",
           { headers: { Authorization: "Bot " + bot_token } }
         )
-        .then((resu) => {
-          console.log(`statusCode: ${resu.status}`);
+        .then(async (resu) => {
+          let wait = 0
+          if(resu.headers["x-ratelimit-remaining"] == "0") {
+            wait = parseInt(resu.headers["x-ratelimit-reset-after"])
+          }
+          await delay(wait * 1000)
+  console.log(7)
+  console.log(`statusCode Line 152: ${resu.status}`);
           //console.log(resu);
           retval["guild"] = resu.data;
-          axios
+  console.log(8)
+  axios
             .get(
               "https://discord.com/api/v9/guilds/" +
                 guild +
                 "/members/416617058248425473",
               { headers: { Authorization: "Bot " + bot_token } }
             )
-            .then((resu) => {
-              console.log(`statusCode: ${resu.status}`);
+            .then(async (resu) => {
+              let wait = 0
+              if(resu.headers["x-ratelimit-remaining"] == "0") {
+                wait = parseInt(resu.headers["x-ratelimit-reset-after"])
+              }
+              await delay(wait * 1000)
+  console.log(9)
+  console.log(`statusCode Line 165: ${resu.status}`);
               //console.log(resu);
               retval["member"] = resu.data;
               res.json(retval);
-            })
+  console.log(10)
+})
             .catch((error) => {
-              //console.error(error);
-            });
+              console.error(error);
+  console.log(11)
+});
         })
         .catch((error) => {
-          //console.error(error);
-        });
+          console.error(error);
+  console.log(12)
+});
     })
     .catch((error) => {
-      //console.error(error);
-    });
+      console.error(error);
+  console.log(13)
+});
 });
 
 // This is the client ID and client secret that you obtained

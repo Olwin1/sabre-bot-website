@@ -5,7 +5,9 @@ import {getCookie} from "../../cookie-utils"
 interface TyProps {
   user: JSON;
   guildId: string;
+  guild: any;
 }
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 const Main: FC<TyProps> = (props) => {
   let page = window.location.hash
@@ -16,7 +18,7 @@ const Main: FC<TyProps> = (props) => {
   const [component, setComponent] = useState(page);
   console.log("ckeck" + props.guildId != "" && Object.keys(guild).length === 0)
   console.log(guild)
-  if(props.guildId != "" && Object.keys(guild).length === 0) {
+  /*if(props.guildId != "" && Object.keys(guild).length === 0) {
     axios
     .get("http://localhost:3000/api/guild", {headers: {"token": "Bearer " + getCookie("token"), "guildId": props.guildId}})
     .then((resu) => {
@@ -26,7 +28,8 @@ const Main: FC<TyProps> = (props) => {
     .catch((error) => {
       //console.error(error);
     });
-  }
+
+  }*/
 
   const locationHashChanged = () => {
     setComponent(window.location.hash);
