@@ -128,6 +128,7 @@ const Main: FC<TyProps> = (props) => {
           <p className="subtitle is-6 is-indented">Need help Setting Up Sabre Bot? No Worries We Have Your Back! Just Join Our Support Server And We Will Be Happy To Help!</p>
           <button className="button purple is-purple qs">Join The Support Server</button>
             </div>
+            <p>{JSON.stringify(props.user)}</p>
 
       </div>
     );

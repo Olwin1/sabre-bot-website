@@ -14,7 +14,7 @@ const pg = new Client({
 pg.connect();
 
 import { createClient } from "redis";
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 const red = createClient({
   url: "redis://default:" + getRedisPass() + "@161.97.86.11:6379",
 });
@@ -115,6 +115,7 @@ router.get("/api/guild", async (req, res) => {
   const token_b = req.header("token");
   console.log(1)
   const guild = req.header("guildId");
+  const user = req.header("userId");
   console.log(2)
   const token = token_b.replace("Bearer ", "");
   let retval = { guild: {}, member: {} };
@@ -151,7 +152,7 @@ router.get("/api/guild", async (req, res) => {
         .get(
           "https://discord.com/api/v9/guilds/" +
             guild +
-            "/members/416617058248425473",
+            "/members/" + user,
           { headers: { Authorization: "Bot " + bot_token } }
         )
         .then(async (resu) => {
@@ -169,7 +170,7 @@ router.get("/api/guild", async (req, res) => {
             .get(
               "https://discord.com/api/v9/guilds/" +
                 guild +
-                "/members/416617058248425473",
+                "/members/" + user,
               { headers: { Authorization: "Bot " + bot_token } }
             )
             .then(async (resu) => {
