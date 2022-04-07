@@ -12,7 +12,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 const Main: FC<TyProps> = (props) => {
   let page = window.location.hash
   if(page == "" ) {
-    page = "#overview"
+    page = "#profile"
   }
   const [guild, setGuild] = useState({});
   const [component, setComponent] = useState(page);
