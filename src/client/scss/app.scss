@@ -793,3 +793,35 @@ label {
 .serverList {
   padding-top: 15px;
 }
+.userBanner {
+  background-repeat:"no-repeat";
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 16px;
+}
+.userBannerText {
+  background-color: #1e1337;
+  opacity: 0.9;
+  position: absolute;
+  top: 50%;
+  right: 45%;
+  margin: -25px 0 0 -25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 32px;
+}
+.userName {
+  font-size: 1.5rem;
+}
+
+.listImage {
+  border-radius: 32px;
+  transition: 0.4s;
+}
+.listImage:hover {
+  border-radius: 16px;
+  cursor: pointer;
+}
