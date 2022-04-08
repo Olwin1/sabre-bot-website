@@ -1,10 +1,17 @@
 import e, * as express from "express";
 import * as path from "path";
-import axios from "axios";
+import axios, { responseEncoding } from "axios";
 import { json } from "body-parser";
 import getToken from "../../token";
 import getRedisPass from "../../redisPass";
 import { Client } from "pg";
+type members = {
+  u_id: string
+  g_id: string
+  exp: number
+  infraction_description: string
+  infraction_date: string
+}
 const pg = new Client({
   user: "postgres",
   host: "localhost",
@@ -40,7 +47,75 @@ const checkExists = async (guildId: any) => {
     return true;
   }
 };
+const get_guild = async (guild_id: any) => {
+    const value = await red.get(guild_id)
+    if(!value) {
+      let res = await pg.query("SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick FROM guilds WHERE id=$1", [guild_id])
+        if(!res.rows){// If Guild Is Not Found... Create It
+            await pg.query("INSERT INTO guilds (id) VALUES ($1)", [guild_id])
+            res = await pg.query("SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick FROM guilds WHERE id=$1", [guild_id])
+        }
+    
+            
+            
+            console.log("res is: " +JSON.stringify(res))
+        const guild = {
+            "id": guild_id, 
+            "role_rewards": res.rows[0]["role_rewards"],
+            "toggle": {
+                "moderation": res.rows[0]["toggle_moderation"], 
+                "automod": res.rows[0]["toggle_automod"], 
+                "welcomer": res.rows[0]["toggle_welcomer"], 
+                "autoresponder": res.rows[0]["toggle_autoresponder"], 
+                "leveling": res.rows[0]["toggle_leveling"], 
+                "autorole": res.rows[0]["toggle_autorole"], 
+                "reactionroles": res.rows[0]["toggle_reactionroles"], 
+                "music": res.rows[0]["toggle_music"], 
+                "modlog": res.rows[0]["toggle_modlog"]
+                },
+            "automod": {
+                "links": res.rows[0]["automod_links"],
+                "invites": res.rows[0]["automod_invites"],
+                "mention": res.rows[0]["automod_mention"],
+                "swears": res.rows[0]["automod_swears"]
+                },
+            "welcome": {
+                "join": {
+                    "channel": res.rows[0]["welcome_join_channel"],
+                    "message": res.rows[0]["welcome_join_message"],
+                    "role": res.rows[0]["welcome_join_role"],
+                    "private": res.rows[0]["welcome_join_message_p"]
+                },
+                "leave": {
+                    "message": res.rows[0]["welcome_leave_message"],
+                    "channel": res.rows[0]["welcome_leave_channel"]
+                }
+                },
+            "modlog": {
+                "channel": res.rows[0]["modlog_channel"],
+                "bans": res.rows[0]["modlog_bans"],
+                "warns": res.rows[0]["modlog_warns"],
+                "mutes": res.rows[0]["modlog_mutes"],
+                "purge": res.rows[0]["modlog_purge"],
+                "lock": res.rows[0]["modlog_lock"],
+                "kick": res.rows[0]["modlog_kick"],
+            },
+            "members": [] as members[]
+            }
+    
+        
+        res = await pg.query("SELECT user_id, exp, infraction_description, infraction_date FROM members WHERE guild_id=$1", [guild_id])
+        for(let member of res.rows){
+            guild["members"].push({"u_id": member.user_id, "g_id": guild_id, "exp": member.exp, "infraction_description": member.infraction_description, "infraction_date": member.infraction_date})
+        }
+        red.set(guild.id, JSON.stringify(guild))
 
+            
+        return guild
+          }
+    return JSON.parse(value)
+          
+          }
 // create application/json parser
 var jsonParser = json();
 
@@ -118,7 +193,17 @@ router.get("/api/guild", async (req, res) => {
   const user = req.header("userId");
   console.log(2)
   const token = token_b.replace("Bearer ", "");
-  let retval = { guild: {}, member: {} };
+  let retval = { guild: {}, member: {}, db_guild: {} };
+  let tmp = await get_guild(guild)
+  for (let member of tmp.members) {
+    let new_members = []
+    if(member.u_id == user) {
+      new_members.push(member)
+      tmp.members = new_members
+      break
+    }
+  }
+  retval.db_guild = tmp
   console.log(3)
   await delay(1000)
   axios
