@@ -11,7 +11,6 @@ interface CardProps {
 interface WelcomeProps {
     channelText: string
     defaultValue: string
-    endpoint: string
     type: string
     guild: string
 }
@@ -122,13 +121,14 @@ let items = {
 
     //}
     const handleClick = () => {
-        const body = {"type": props.type,"endpoint":props.endpoint,"message": textAreaValue,"channel": optionsAreaValue,"guild":props.guild}
+        const body = {"type": props.type,"message": textAreaValue,"channel": optionsAreaValue,"guild":props.guild}
         axios
         .post("http://localhost:3000/api/welcome", body, {headers: {"token": "Bearer " + getCookie("token")}})
         .then(async (resu) => {
             setMessage(<Checkcomponent />)
         })
         .catch((error) => {
+          setMessage2(<Failcomponent />)
           console.error(error);
         });
     }
@@ -136,26 +136,18 @@ let items = {
 
     return (
         <div className="columns harlemshake">
-            <div className="column">
+            {props.type != "join_r"?<div className="column">
                 <h1 className="sub-header">Leave Message</h1>
-                <textarea id="joinmsginput" rows={4} cols={50} maxLength={2000} className="" onChange={(e) => textAreaValue = e.target.value} defaultValue={"items." + props.type + "_message"}></textarea>
-                <br /><br />
-                <h3 className="smolltitle">List Of Variables</h3>
-                <ul>
-                    <li className="smolltxt">{"{"}user{"}"}</li>
-                    <li className="smolltxt">{"{"}server{"}"}</li>
-                    <li className="smolltxt">{"{"}time{"}"}, {"{"}time.gmt{"}"}, {"{"}time.bst{"}"}, {"{"}time.est{"}"}, {"{"}time.utc{"}"}, {"{"}time.sgt{"}"}</li>
-                </ul>
-            </div>
+                <textarea id="joinmsginput" rows={4} cols={50} maxLength={2000} className="" onChange={(e) => textAreaValue = e.target.value} defaultValue={props.defaultValue}></textarea>
+
+            </div>:""}
 
 
             <div className="column">
 
                 <div>
                     <br /><br /><br /><br />
-                    <button className="button purple is-purple qs center-btn" onClick={() => handleClick()}>Submit</button>
-                    <p className="red-p">*To Remove Join Messages Just Remove All Text In The Text Box and Press Submit</p>
-
+                    <button className="button is-primary center-btn" onClick={() => handleClick()}>Save</button>
                     {message}
                     {message2}
 
@@ -172,7 +164,6 @@ let items = {
 
                     <div className="selectnew">
                         <select defaultValue={defchannel} className="selectnew2" onChange={e => optionsAreaValue = e.target.selectedOptions[0].value}>
-                            <option value="" style={{ background: '#000' }} disabled>Select Your Channel</option>
                             {channels.map(channel => (
                                 <option style={{ color: '#cfcfcf', background: '#000' }} value={channel.id} key={channel.id} key-id={channel.id}>
                                     {channel.name}
@@ -206,7 +197,10 @@ const Main: FC<TyProps> = (props) => {
             <p>{JSON.stringify(props.user)}</p>
             
 
-            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="LEave Message" defaultValue="Bye Bye." endpoint="/welcome/leavemessage" type="leave" guild={props.user["db_guild"]["id"]}/> : ""}
+            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Join Message" defaultValue="join" type="join" guild={props.user["db_guild"]["id"]}/> : ""}
+            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Leave Message" defaultValue="leav" type="leave" guild={props.user["db_guild"]["id"]}/> : ""}
+            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Join Private Message" defaultValue="DM"  type="join_p" guild={props.user["db_guild"]["id"]}/> : ""}
+            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Join Role" defaultValue="shuld not show" type="join_r" guild={props.user["db_guild"]["id"]}/> : ""}
 
     </div>
   );
