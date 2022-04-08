@@ -1,4 +1,6 @@
 import React, { FC, useState } from "react";
+import axios from "axios"
+import { getCookie } from "../../../cookie-utils";
 
 interface TyProps {
   user: any;
@@ -118,6 +120,17 @@ let items = {
     //    defchannel = items.leave_channel
 
     //}
+    const handleClick = () => {
+        const body = {"type": props.type,"endpoint":props.endpoint,"message": textAreaValue,"channel": optionsAreaValue,"guild":props.guild}
+        axios
+        .post("http://localhost:3000/api/welcome", body, {headers: {"token": "Bearer " + getCookie("token")}})
+        .then(async (resu) => {
+            setMessage(<Checkcomponent />)
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
 
 
     return (
@@ -139,7 +152,7 @@ let items = {
 
                 <div>
                     <br /><br /><br /><br />
-                    <button className="button purple is-purple qs center-btn" /*onClick={everythinTonight}*/>Submit</button>
+                    <button className="button purple is-purple qs center-btn" onClick={() => handleClick()}>Submit</button>
                     <p className="red-p">*To Remove Join Messages Just Remove All Text In The Text Box and Press Submit</p>
 
                     {message}
