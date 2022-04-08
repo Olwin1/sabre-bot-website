@@ -13,6 +13,7 @@ interface WelcomeProps {
     defaultValue: string
     endpoint: string
     type: string
+    guild: string
 }
 const Card: FC<CardProps> = (props) => {
   return (
@@ -203,8 +204,9 @@ const Main: FC<TyProps> = (props) => {
             <Card><p>Rank: {323}</p></Card>
           </div>
             <p>{JSON.stringify(props.user)}</p>
+            
 
-            <WelcomeComponentEntry  channelText="LEave Message" defaultValue="Bye Bye." endpoint="/welcome/leavemessage" type="leave"/>
+            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="LEave Message" defaultValue="Bye Bye." endpoint="/welcome/leavemessage" type="leave" guild={props.user["db_guild"]["id"]}/> : ""}
 
     </div>
   );
