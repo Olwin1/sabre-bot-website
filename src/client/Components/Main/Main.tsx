@@ -45,7 +45,7 @@ const Main: FC<TyProps> = (props) => {
 
       {component.toLowerCase() === "#moderation" && <modules.Moderation user={props.guild}/>}
       {component.toLowerCase() === "#automod" && <modules.Settings user={props.guild}/>}
-      {component.toLowerCase() === "#welcomer" && <modules.Settings user={props.guild}/>}
+      {component.toLowerCase() === "#welcomer" && <modules.Welcome user={props.guild}/>}
       {component.toLowerCase() === "#autoresponder" && <modules.Settings user={props.guild}/>}
       {component.toLowerCase() === "#leveling" && <modules.Settings user={props.guild}/>}
       {component.toLowerCase() === "#autorole" && <modules.Settings user={props.guild}/>}
