@@ -287,6 +287,46 @@ router.get("/api/guild", async (req, res) => {
 });
 });
 
+
+
+//Welcome API Endpoints
+
+router.post("/api/welcome", jsonParser, async (req, res, next) => {
+  const token_b = req.header("token");
+  console.log(req.body + " || BODY");
+  const guild = await get_guild(req.body.guild)
+  if(req.body.type == "join") {
+    if(req.body.endpoint == "message") {
+
+    }
+    else if(req.body.endpoint == "message_p") {
+      
+    }
+  }
+  else if (req.body.type == "leave") {
+
+  }
+  res.sendStatus(200)
+  //console.log(resu);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // This is the client ID and client secret that you obtained
 // while registering the application
 const clientID = "764794183083884546";
