@@ -193,7 +193,7 @@ router.get("/api/guild", async (req, res) => {
   const user = req.header("userId");
   console.log(2)
   const token = token_b.replace("Bearer ", "");
-  let retval = { guild: {}, member: {}, db_guild: {} };
+  let retval = { guild: {}, roles: {}, db_guild: {} };
   let tmp = await get_guild(guild)
   for (let member of tmp.members) {
     let new_members = []
@@ -255,7 +255,7 @@ router.get("/api/guild", async (req, res) => {
             .get(
               "https://discord.com/api/v9/guilds/" +
                 guild +
-                "/members/" + user,
+                "/roles",
               { headers: { Authorization: "Bot " + bot_token } }
             )
             .then(async (resu) => {
@@ -267,7 +267,7 @@ router.get("/api/guild", async (req, res) => {
   console.log(9)
   console.log(`statusCode Line 165: ${resu.status}`);
               //console.log(resu);
-              retval["member"] = resu.data;
+              retval["roles"] = resu.data;
               res.json(retval);
   console.log(10)
 })
