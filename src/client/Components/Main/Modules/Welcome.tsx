@@ -10,7 +10,7 @@ interface CardProps {
 }
 interface WelcomeProps {
     channelText: string
-    defaultValue: string
+    defVal: string
     type: string
     guild: string
 }
@@ -24,12 +24,12 @@ const Card: FC<CardProps> = (props) => {
 type welcomeItem = {
     join_message: string
     join_channel: string
-    join_private_message: string
-    join_role: string
+    private: string
+    role: string
     leave_message: string
     leave_channel: string
   };
-  type welcomeType = "join_message"|"leave_message"|"join_private_message"|"join_channel"|"leave_channel"
+  type welcomeType = "join_message"|"leave_message"|"private"|"join_channel"|"leave_channel"|"role"
 
 type role = {
     id: string
@@ -43,6 +43,20 @@ type role = {
     icon: string
     unicode_emoji: string
 }
+type welcome = {
+    join: join
+    leave: leave
+}
+type join = {
+    channel: string
+    message: string
+    private: string
+    role: string
+}
+type leave = {
+channel: string
+message: string
+}
 
 
 
@@ -52,18 +66,15 @@ type role = {
 const Main: FC<TyProps> = (props) => {
     const roles = props.user.roles as role[]
     roles?roles.shift():null
+    let welcome: welcome
 
-
+    if(Object.keys(props.user).length != 0) {
+    welcome = {"join": props.user.db_guild.welcome.join as join, "leave": props.user.db_guild.welcome.join as leave} as welcome
+    }
     const WelcomeComponentEntry: FC<WelcomeProps> = (props) => {
+        console.log("def val" + props.defVal)
 
-        let items = {
-            "join_message":"Welcome hi hello yes. {user}",
-            "join_channel":"704255332234297436",
-            "join_private_message": null,
-             "join_role":"749036857970655292",
-            "leave_message":"Fucking retard left. ({user})",
-            "leave_channel":"704255332234297436"
-         } as welcomeItem
+
          let channels = [{
             "id": "41771983423143937",
             "guild_id": "41771983423143937",
@@ -92,9 +103,25 @@ const Main: FC<TyProps> = (props) => {
             "parent_id": "399942396007890945",
             "default_auto_archive_duration": 60
           }]
-        
-            var textAreaValue = props.type!="join_r"?items[props.type + "_message" as welcomeType]:roles[0].id
-            var optionsAreaValue = items[props.type + "_channel" as welcomeType]
+          let textAreaValue: string
+          let optionsAreaValue: string
+            if(props.type == "join") {
+            textAreaValue = welcome.join.message
+            optionsAreaValue = welcome.join.channel
+            }
+            else if(props.type=="leave") {
+                textAreaValue = welcome.leave.message
+                optionsAreaValue = welcome.leave.channel
+                }
+            else if(props.type=="join_p") {
+                textAreaValue = welcome.join.private
+                optionsAreaValue = null
+            }
+            else {
+                let t = "role"
+                textAreaValue = welcome.join.role
+                optionsAreaValue = null
+            }
         
             const [message, setMessage] = React.useState(null);
             const [message2, setMessage2] = React.useState(null);
@@ -159,11 +186,11 @@ const Main: FC<TyProps> = (props) => {
         
             return (
                 <div className="columns harlemshake">
-                    <div className="column">
-                        <h1 className="sub-header">{props.channelText}</h1>
-                        {props.type != "join_r"?<textarea id="joinmsginput" rows={4} cols={50} maxLength={2000} className="" onChange={(e) => textAreaValue = e.target.value} defaultValue={props.defaultValue} />:
+                    <div className={props.type=="join"||props.type=="leave"?"column":"column is-two-thirds"}>
+                        <h1 className="sub-header">{props.channelText}{props.defVal}</h1>
+                        {props.type != "join_r"?<textarea id="joinmsginput" className="input is-primary resize-lock auto-height" rows={4} cols={50} maxLength={2000} onChange={(e) => textAreaValue = e.target.value} defaultValue={props.defVal} />:
                                              <div className="select is-primary">
-                                            <select defaultValue={roles[0].id} onChange={e => textAreaValue = e.target.selectedOptions[0].value}>
+                                            <select defaultValue={props.defVal} onChange={e => textAreaValue = e.target.selectedOptions[0].value}>
                                                 {roles.map(role => (
                                                     <option style={{ color: role.color!=0?"#" + role.color.toString(16):"#cfcfcf" }} value={role.id} key={role.id} key-id={role.id}>
                                                         {role.name}
@@ -176,10 +203,10 @@ const Main: FC<TyProps> = (props) => {
                     </div>
         
         
-                    <div className="column">
+                    <div className={props.type=="join"||props.type=="leave"?"column":"column is-one-third"}>
         
                         <div>
-                            <br /><br /><br /><br />
+                            <br />
                             <button className="button is-primary center-btn" onClick={() => handleClick()}>Save</button>
                             {message}
                             {message2}
@@ -190,7 +217,7 @@ const Main: FC<TyProps> = (props) => {
         
         
         
-                    {props.type!="join_r"?<div className="column">
+                    {props.type=="join"||props.type=="leave"?<div className="column">
                         <h1 className="sub-header">{props.channelText.split(" ").length ==2?props.channelText.split(" ")[0] + " Channel":props.channelText.split(" ")[0] + " " + props.channelText.split(" ")[1] + " Channel"}</h1>
                         <div>
         
@@ -227,10 +254,10 @@ const Main: FC<TyProps> = (props) => {
             <p>{JSON.stringify(props.user)}</p>
             
 
-            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Join Message" defaultValue="join" type="join" guild={props.user["db_guild"]["id"]}/> : ""}
-            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Leave Message" defaultValue="leav" type="leave" guild={props.user["db_guild"]["id"]}/> : ""}
-            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Join Private Message" defaultValue="DM"  type="join_p" guild={props.user["db_guild"]["id"]}/> : ""}
-            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Join Role" defaultValue="shuld not show" type="join_r" guild={props.user["db_guild"]["id"]}/> : ""}
+            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Join Message" defVal={welcome.join.message} type="join" guild={props.user["db_guild"]["id"]}/> : ""}
+            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Leave Message" defVal={welcome.leave.message} type="leave" guild={props.user["db_guild"]["id"]}/> : ""}
+            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Join Private Message" defVal={welcome.join.private}  type="join_p" guild={props.user["db_guild"]["id"]}/> : ""}
+            {Object.keys(props.user).length != 0? <WelcomeComponentEntry  channelText="Join Role" defVal={welcome.join.role} type="join_r" guild={props.user["db_guild"]["id"]}/> : ""}
 
     </div>
   );
