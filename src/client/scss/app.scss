@@ -512,7 +512,7 @@ textarea.resize {
   height: 120px !important;
 }
 .resize-lock {
-  resize: none;
+  resize: none !important;
 }
 
 * {
@@ -1043,4 +1043,8 @@ label {
 
 .center-btn {
   margin-left: 40%;
+}
+
+.auto-height {
+  height: auto;
 }
