@@ -21,16 +21,17 @@ const Main: FC<TyProps> = (props) => {
         toggle = !toggle;
 
         //Send Click Data To API.
-        const apiGet = async (type:string, toggle:boolean) => {
-            y.classList.add("lds-ring");
-            return window.fetch("https://jsonplaceholder.typicode.com/users/1")
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error(response.statusText)
-                }
-                y.classList.remove("lds-ring");
-                return response.json()
-              })
+        const apiGet = async (type: string, toggle: boolean) => {
+          y.classList.add("lds-ring");
+          return window
+            .fetch("https://jsonplaceholder.typicode.com/users/1")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(response.statusText);
+              }
+              y.classList.remove("lds-ring");
+              return response.json();
+            });
         };
         apiGet(props.type, toggle);
 
@@ -61,10 +62,10 @@ const Main: FC<TyProps> = (props) => {
       );
     };
     interface CardProps {
-      data:Array<string>
+      data: Array<string>;
     }
     const Card: FC<CardProps> = (props) => {
-      return(
+      return (
         <div className="is-card">
           <div className="float-right">
             <Button type={props.data[0]} />
@@ -72,8 +73,8 @@ const Main: FC<TyProps> = (props) => {
           <h1 className="title is-5">{props.data[0]}</h1>
           <p className="subtitle is-6 is-indented">{props.data[1]}</p>
         </div>
-      )
-    }
+      );
+    };
     return (
       /*<div>
         <h1 className="title is-4">List Of Available Modules</h1>
@@ -97,39 +98,68 @@ const Main: FC<TyProps> = (props) => {
         <p>Currently Configuring: TheSabreGuild</p>
         <br />
         <br />
-      <div className="columns">
-                <div className="is-card column margin-15">
-          <h1 className="title is-5">Total Members</h1>
-          <p className="subtitle is-6 is-indented">633</p>
-            </div>
-            <div className="is-card column margin-15">
-          <h1 className="title is-5">Total Online Members</h1>
-          <p className="subtitle is-6 is-indented">45</p>
-            </div>
-            </div>
+        <div className="columns">
+          <div className="is-card column margin-15">
+            <h1 className="title is-5">Total Members</h1>
+            <p className="subtitle is-6 is-indented">633</p>
+          </div>
+          <div className="is-card column margin-15">
+            <h1 className="title is-5">Total Online Members</h1>
+            <p className="subtitle is-6 is-indented">45</p>
+          </div>
+        </div>
 
-            <div className="is-card margin-15">
+        <div className="is-card margin-15">
           <h1 className="title is-5">Get Premium</h1>
-          <p className="subtitle is-6 is-indented">Support The Continued Development Of Sabre Bot and Get Some Sweet Cosmetic Upgrades. (Coming Soon)</p>
-            </div>
-            <div className="columns">
-                <div className="is-card column margin-15">
-          <h1 className="title is-5">Prefix</h1>
-          <p className="qs"><input className="field control inputnew thirty" type="text" placeholder="Enter The Prefix You Want Here (e.g !)" maxLength={3} defaultValue="!" /></p><span className="svae"></span><br /><button className="button purple is-grun qs">Save</button>
-            </div>
-            <div className="is-card column margin-15">
+          <p className="subtitle is-6 is-indented">
+            Support The Continued Development Of Sabre Bot and Get Some Sweet
+            Cosmetic Upgrades. (Coming Soon)
+          </p>
+        </div>
+        <div className="columns">
+          <div className="is-card column margin-15">
+            <h1 className="title is-5">Prefix</h1>
+            <p className="qs">
+              <input
+                className="field control inputnew thirty"
+                type="text"
+                placeholder="Enter The Prefix You Want Here (e.g !)"
+                maxLength={3}
+                defaultValue="!"
+              />
+            </p>
+            <span className="svae"></span>
+            <br />
+            <button className="button purple is-grun qs">Save</button>
+          </div>
+          <div className="is-card column margin-15">
             <h1 className="title is-5">Language</h1>
-          <p className="qs"><input className="field control inputnew thirty" type="text" placeholder="Enter The Prefix You Want Here (e.g !)" maxLength={3} defaultValue="!" /></p><span className="svae"></span><br /><button className="button purple is-grun qs">Save</button>
-            </div>
-            </div>
+            <p className="qs">
+              <input
+                className="field control inputnew thirty"
+                type="text"
+                placeholder="Enter The Prefix You Want Here (e.g !)"
+                maxLength={3}
+                defaultValue="!"
+              />
+            </p>
+            <span className="svae"></span>
+            <br />
+            <button className="button purple is-grun qs">Save</button>
+          </div>
+        </div>
 
-            <div className="is-card margin-15">
+        <div className="is-card margin-15">
           <h1 className="title is-5">Need Help?</h1>
-          <p className="subtitle is-6 is-indented">Need help Setting Up Sabre Bot? No Worries We Have Your Back! Just Join Our Support Server And We Will Be Happy To Help!</p>
-          <button className="button purple is-purple qs">Join The Support Server</button>
-            </div>
-            <p>{JSON.stringify(props.user)}</p>
-
+          <p className="subtitle is-6 is-indented">
+            Need help Setting Up Sabre Bot? No Worries We Have Your Back! Just
+            Join Our Support Server And We Will Be Happy To Help!
+          </p>
+          <button className="button purple is-purple qs">
+            Join The Support Server
+          </button>
+        </div>
+        <p>{JSON.stringify(props.user)}</p>
       </div>
     );
   };

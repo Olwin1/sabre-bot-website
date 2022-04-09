@@ -2,7 +2,7 @@ import e from "express";
 import React, { FC, useState, useReducer } from "react";
 import { SketchPicker } from "react-color";
 import axios from "axios";
-import {getCookie} from "../../../cookie-utils";
+import { getCookie } from "../../../cookie-utils";
 interface TyProps {
   user: JSON;
 }
@@ -412,20 +412,24 @@ const Main: FC<TyProps> = (props) => {
             <Fields />
           </Dropdown>
           <Dropdown iter="4" name="Images" isNested={false}>
-          <div>
-            <p>Image URL</p>          <input
-            className="input-embed"
-            onChange={(e) => handleChange(e)}
-            id="imageURL"
-          /></div>
+            <div>
+              <p>Image URL</p>{" "}
+              <input
+                className="input-embed"
+                onChange={(e) => handleChange(e)}
+                id="imageURL"
+              />
+            </div>
           </Dropdown>
           <Dropdown iter="5" name="Footer" isNested={false}>
             <div>
-            <p>Footer</p>          <input
-            className="input-embed"
-            onChange={(e) => handleChange(e)}
-            id="footer"
-          /></div>
+              <p>Footer</p>{" "}
+              <input
+                className="input-embed"
+                onChange={(e) => handleChange(e)}
+                id="footer"
+              />
+            </div>
           </Dropdown>
         </div>
       </div>
@@ -498,31 +502,33 @@ const Main: FC<TyProps> = (props) => {
     // @ts-ignore: Unknown Property Error
     btn.disabled = true;
     const embedJSON = {
-      "title": title,
-      "url": titleHyperlink,
-      "desc": description,
-      "a_url": authorHyperlink,
-      "a_ico": authorIcon,
-      "a": author,
-      "colour": embedColor,
-      "footer": footer,
-      "img": imageURL,
-      "edit": editLink,
-      "fields": embedFields,
-      "fields_t": embedFieldsTitle,
-      "content": content
-    }
-    console.log(embedJSON)
+      title: title,
+      url: titleHyperlink,
+      desc: description,
+      a_url: authorHyperlink,
+      a_ico: authorIcon,
+      a: author,
+      colour: embedColor,
+      footer: footer,
+      img: imageURL,
+      edit: editLink,
+      fields: embedFields,
+      fields_t: embedFieldsTitle,
+      content: content,
+    };
+    console.log(embedJSON);
     axios
-    .post("http://localhost:3000/api/embed", embedJSON, {headers: {"token": "Bearer " + getCookie("token")}})
-    .then((resu) => {
-      console.log(`statusCode: ${resu.status}`);
-      //console.log(resu);
-      console.log(resu)
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+      .post("http://localhost:3000/api/embed", embedJSON, {
+        headers: { token: "Bearer " + getCookie("token") },
+      })
+      .then((resu) => {
+        console.log(`statusCode: ${resu.status}`);
+        //console.log(resu);
+        console.log(resu);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     spinner.style.visibility = "visible";
     setTimeout(() => {
       // @ts-ignore: Unknown Property Error
