@@ -283,7 +283,7 @@ const Main: FC<TyProps> = (props) => {
             <div>
               <div className="select is-primary">
                 <select
-                  defaultValue={defchannel}
+                  defaultValue={props.type=="join"?welcome.join.channel:welcome.leave.channel}
                   onChange={(e) =>
                     (optionsAreaValue = e.target.selectedOptions[0].value)
                   }
