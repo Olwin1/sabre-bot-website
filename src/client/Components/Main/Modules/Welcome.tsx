@@ -68,7 +68,7 @@ const Main: FC<TyProps> = (props) => {
   if (Object.keys(props.user).length != 0) {
     welcome = {
       join: props.user.db_guild.welcome.join as join,
-      leave: props.user.db_guild.welcome.join as leave,
+      leave: props.user.db_guild.welcome.leave as leave,
     } as welcome;
   }
   const WelcomeComponentEntry: FC<WelcomeProps> = (props) => {
@@ -197,6 +197,7 @@ const Main: FC<TyProps> = (props) => {
           console.error(error);
         });
     };
+    console.log(props.type + "||" + props.defVal)
 
     return (
       <div className="columns harlemshake">
@@ -307,6 +308,7 @@ const Main: FC<TyProps> = (props) => {
       </div>
     );
   };
+  Object.keys(props.user).length != 0 ?console.log("join: " + welcome.join.message + " || leave: " + welcome.leave.message):null
 
   return (
     <div>
