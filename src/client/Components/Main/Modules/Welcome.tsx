@@ -64,46 +64,17 @@ const Main: FC<TyProps> = (props) => {
   const roles = props.user.roles as role[];
   roles ? roles.shift() : null;
   let welcome: welcome;
+  let channels: any
 
   if (Object.keys(props.user).length != 0) {
     welcome = {
       join: props.user.db_guild.welcome.join as join,
       leave: props.user.db_guild.welcome.leave as leave,
     } as welcome;
+    channels = props.user.channels
   }
   const WelcomeComponentEntry: FC<WelcomeProps> = (props) => {
     console.log("def val" + props.defVal);
-
-    let channels = [
-      {
-        id: "41771983423143937",
-        guild_id: "41771983423143937",
-        name: "general",
-        type: 0,
-        position: 6,
-        permission_overwrites: [] as any,
-        rate_limit_per_user: 2,
-        nsfw: true,
-        topic: "24/7 chat about how to gank Mike #2",
-        last_message_id: "155117677105512449",
-        parent_id: "399942396007890945",
-        default_auto_archive_duration: 60,
-      },
-      {
-        id: "41771983423143935",
-        guild_id: "41771983423143937",
-        name: "not-general",
-        type: 0,
-        position: 5,
-        permission_overwrites: [],
-        rate_limit_per_user: 2,
-        nsfw: true,
-        topic: "24/7 chat about how to gank Mike #3",
-        last_message_id: "155117677105512449",
-        parent_id: "399942396007890945",
-        default_auto_archive_duration: 60,
-      },
-    ];
     let textAreaValue: string;
     let optionsAreaValue: string;
     if (props.type == "join") {
@@ -288,7 +259,7 @@ const Main: FC<TyProps> = (props) => {
                     (optionsAreaValue = e.target.selectedOptions[0].value)
                   }
                 >
-                  {channels.map((channel) => (
+                  {channels.map((channel: any) => (
                     <option
                       style={{ color: "#cfcfcf" }}
                       value={channel.id}

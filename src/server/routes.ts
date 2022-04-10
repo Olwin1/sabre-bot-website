@@ -204,7 +204,7 @@ router.get("/api/guild", async (req, res) => {
   const user = req.header("userId");
   console.log(2);
   const token = token_b.replace("Bearer ", "");
-  let retval = { guild: {}, roles: {}, db_guild: {} };
+  let retval = { guild: {}, roles: {}, db_guild: {}, channels: {} };
   let tmp = await get_guild(guild);
   for (let member of tmp.members) {
     let new_members = [];
@@ -218,8 +218,8 @@ router.get("/api/guild", async (req, res) => {
   console.log(3);
   await delay(1000);
   axios
-    .get("https://discord.com/api/v9/users/@me/guilds", {
-      headers: { Authorization: token_b },
+    .get("https://discord.com/api/v9/guilds/" + guild + "/channels", {
+      headers: { Authorization: "Bot " + bot_token },
     })
     .then(async (resu) => {
       let wait = 0;
@@ -233,17 +233,8 @@ router.get("/api/guild", async (req, res) => {
         res.json({ error: resu.status });
         return;
       }
-      for (let i in resu.data) {
-        if (resu.data[i]["id"] == guild) {
-          found = true;
-        }
-      }
-      if (!found) {
-        console.log(5);
-        res.json({ error: 804 });
-        return;
-      }
-      console.log(6);
+      retval.channels = resu.data
+
       axios
         .get(
           "https://discord.com/api/v9/guilds/" + guild + "/members/" + user,
