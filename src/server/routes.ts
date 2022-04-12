@@ -47,6 +47,12 @@ const checkExists = async (guildId: any) => {
     return true;
   }
 };
+
+const update_guild = async (guild: any) => {
+    await red.set(guild.id, JSON.stringify(guild))
+
+}
+
 const get_guild = async (guild_id: any) => {
   const value = await red.get(guild_id);
   if (!value) {
@@ -233,7 +239,7 @@ router.get("/api/guild", async (req, res) => {
         res.json({ error: resu.status });
         return;
       }
-      retval.channels = resu.data
+      retval.channels = resu.data;
 
       axios
         .get(
@@ -291,12 +297,33 @@ router.post("/api/welcome", jsonParser, async (req, res, next) => {
   console.log(req.body + " || BODY");
   const guild = await get_guild(req.body.guild);
   if (req.body.type == "join") {
-    if (req.body.endpoint == "message") {
-    } else if (req.body.endpoint == "message_p") {
-    }
-  } else if (req.body.type == "leave") {
-  }
+    guild.welcome.join.channel = req.body.channel
+    guild.welcome.join.message = req.body.message
+    update_guild(guild)
   res.sendStatus(200);
+
+  } else if (req.body.type == "join_p") {
+    guild.welcome.join.private = req.body.message
+    update_guild(guild)
+    res.sendStatus(200);
+
+  } else if (req.body.type == "join_r") {
+
+    guild.welcome.join.role = req.body.message
+    update_guild(guild)
+    res.sendStatus(200);
+
+  } else if (req.body.type == "leave") {
+    guild.welcome.leave.channel = req.body.channel
+    guild.welcome.leave.message = req.body.message
+    update_guild(guild)
+  res.sendStatus(200);
+
+  }
+  else {
+  res.sendStatus(400);
+
+  }
   //console.log(resu);
 });
 
