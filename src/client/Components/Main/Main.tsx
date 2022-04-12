@@ -49,7 +49,7 @@ const Main: FC<TyProps> = (props) => {
       {component.toLowerCase() === "#autoresponder" && <modules.Settings user={props.guild}/>}
       {component.toLowerCase() === "#leveling" && <modules.Settings user={props.guild}/>}
       {component.toLowerCase() === "#autorole" && <modules.Settings user={props.guild}/>}
-      {component.toLowerCase() === "#reeactionroles" && <modules.ReactionRoles user={props.guild}/>}
+      {component.toLowerCase() === "#reactionroles" && <modules.ReactionRoles user={props.guild}/>}
       {component.toLowerCase() === "#music" && <modules.Settings user={props.guild}/>}
 
 
