@@ -57,14 +57,14 @@ const get_guild = async (guild_id: any) => {
   const value = await red.get(guild_id);
   if (!value) {
     let res = await pg.query(
-      "SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick FROM guilds WHERE id=$1",
+      "SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick, reaction_roles FROM guilds WHERE id=$1",
       [guild_id]
     );
     if (!res.rows) {
       // If Guild Is Not Found... Create It
       await pg.query("INSERT INTO guilds (id) VALUES ($1)", [guild_id]);
       res = await pg.query(
-        "SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick FROM guilds WHERE id=$1",
+        "SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick, reaction_roles FROM guilds WHERE id=$1",
         [guild_id]
       );
     }
@@ -111,7 +111,8 @@ const get_guild = async (guild_id: any) => {
         lock: res.rows[0]["modlog_lock"],
         kick: res.rows[0]["modlog_kick"],
       },
-      members: [] as members[],
+        reaction_roles: res.rows[0]["reaction_roles"],
+        members: [] as members[],
     };
 
     res = await pg.query(

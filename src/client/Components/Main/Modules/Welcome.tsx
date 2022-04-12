@@ -74,7 +74,7 @@ const Main: FC<TyProps> = (props) => {
     let tmp = props.user.channels;
     let tmp2 = [];
     for (let x = 0; x < tmp.length; x++) {
-      if (tmp[x].name != "Muted" && tmp[x].type == 0) {
+      if (tmp[x].type == 0) {
         tmp2.push(tmp[x]);
       }
     }
