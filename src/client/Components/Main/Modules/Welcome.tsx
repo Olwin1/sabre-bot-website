@@ -64,14 +64,21 @@ const Main: FC<TyProps> = (props) => {
   const roles = props.user.roles as role[];
   roles ? roles.shift() : null;
   let welcome: welcome;
-  let channels: any
+  let channels: any[];
 
   if (Object.keys(props.user).length != 0) {
     welcome = {
       join: props.user.db_guild.welcome.join as join,
       leave: props.user.db_guild.welcome.leave as leave,
     } as welcome;
-    channels = props.user.channels
+    let tmp = props.user.channels;
+    let tmp2 = [];
+    for (let x = 0; x < tmp.length; x++) {
+      if (tmp[x].name != "Muted" && tmp[x].type == 0) {
+        tmp2.push(tmp[x]);
+      }
+    }
+    channels = tmp2;
   }
   const WelcomeComponentEntry: FC<WelcomeProps> = (props) => {
     console.log("def val" + props.defVal);
@@ -168,7 +175,7 @@ const Main: FC<TyProps> = (props) => {
           console.error(error);
         });
     };
-    console.log(props.type + "||" + props.defVal)
+    console.log(props.type + "||" + props.defVal);
 
     return (
       <div className="columns harlemshake">
@@ -254,7 +261,11 @@ const Main: FC<TyProps> = (props) => {
             <div>
               <div className="select is-primary">
                 <select
-                  defaultValue={props.type=="join"?welcome.join.channel:welcome.leave.channel}
+                  defaultValue={
+                    props.type == "join"
+                      ? welcome.join.channel
+                      : welcome.leave.channel
+                  }
                   onChange={(e) =>
                     (optionsAreaValue = e.target.selectedOptions[0].value)
                   }
@@ -279,7 +290,11 @@ const Main: FC<TyProps> = (props) => {
       </div>
     );
   };
-  Object.keys(props.user).length != 0 ?console.log("join: " + welcome.join.message + " || leave: " + welcome.leave.message):null
+  Object.keys(props.user).length != 0
+    ? console.log(
+        "join: " + welcome.join.message + " || leave: " + welcome.leave.message
+      )
+    : null;
 
   return (
     <div>
