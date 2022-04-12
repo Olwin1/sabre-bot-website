@@ -4,3 +4,4 @@ export { default as Moderation } from "./Moderation";
 export { default as Embed } from "./Embed";
 export { default as Profile } from "./Profile";
 export { default as Welcome } from "./Welcome";
+export { default as ReactionRoles } from "./ReactionRoles";
