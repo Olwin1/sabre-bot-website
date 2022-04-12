@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-
+import React, { FC, useRef, useState } from "react";
+import Picker from 'emoji-picker-react';
 interface TyProps {
   user: any;
 }
@@ -34,8 +34,8 @@ const onEmojiClick = (event: any, emojiObject: any) => {
     const roles = props.user.roles as role[];
     roles ? roles.shift() : null;
     const Card = () => {
-  return (
-    <div className="float-right is-padded">
+        return (
+          <div className="float-right is-padded">
               <div className="select is-primary is-rounded">
                   <select>
                 {roles.map((role:role) => (
@@ -54,12 +54,13 @@ const onEmojiClick = (event: any, emojiObject: any) => {
                   </option>
                 ))}
                 </select>
-      </div>
-    </div>
-  );
-};
-
-const Main: FC<TyProps> = (props) => {
+                </div>
+          </div>
+        );
+      };
+      const addEmoji = (emoji: any) => {
+          console.log(emoji)
+      }
   return (
     <div>
       <h1 className="title is-4">General Options</h1>
@@ -71,7 +72,7 @@ const Main: FC<TyProps> = (props) => {
       ) : (
         ""
       )}
-          </div>
+</div>
         </div>
         <div className="column">
         <textarea
@@ -83,9 +84,14 @@ const Main: FC<TyProps> = (props) => {
               onChange={(e) => (textAreaValue = e.target.value)}
             />
 
-          <div>
-            <Card data={props.user} />
-          </div>
+<div>
+      {chosenEmoji ? (
+        <span>You chose: {chosenEmoji.emoji}</span>
+      ) : (
+        <span>No emoji Chosen</span>
+      )}
+      <Picker onEmojiClick={onEmojiClick} /*pickerStyle={{ width: '100%' }}*//>
+    </div>
         </div>
       </div>
     </div>
