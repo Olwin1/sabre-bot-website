@@ -16,7 +16,7 @@ type role = {
     unicode_emoji: string;
   };
 
-let handleEmojiClick = () => null;
+let handleEmojiClick = ():void => null;
 const Main: FC<TyProps> = (props) => {
 
 //START EMOJIS HERE
