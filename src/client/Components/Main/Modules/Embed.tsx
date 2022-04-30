@@ -2,10 +2,25 @@ import e from "express";
 import React, { FC, useState, useReducer } from "react";
 import { SketchPicker } from "react-color";
 import axios from "axios";
+import Picker from "emoji-picker-react";
 import { getCookie } from "../../../cookie-utils";
+import { isTemplateExpression } from "typescript";
 interface TyProps {
-  user: JSON;
+  user: any;
 }
+type role = {
+  id: string;
+  name: string;
+  permissions: string;
+  position: number;
+  color: number;
+  hoist: boolean;
+  managed: boolean;
+  mentionable: boolean;
+  icon: string;
+  unicode_emoji: string;
+};
+
 interface CardProps {
   data: JSON;
 }
@@ -39,6 +54,8 @@ const Main: FC<TyProps> = (props) => {
   let editLink = "" as string;
   const [editUrlCheck, setEditUrlCheck] = React.useState(false);
   let colour = "#cfcfcf";
+  const roles = props.user.roles as role[];
+  roles ? roles.shift() : null;
 
   const Dropdown: FC<DropProps> = (props) => {
     const handleClick2 = () => {
@@ -322,6 +339,140 @@ const Main: FC<TyProps> = (props) => {
       );
     };
 
+    const EmojiBody = () => {
+      const EmojiBodyInner = () => {
+        const [listEmojis, setListEmojis] = React.useState(null);
+
+        const EmojiSelector = () => {
+          let currentRole: string;
+          const Roles = () => {
+            currentRole = roles[0].id;
+            return (
+              <div className="float-right is-padded">
+                <div className="select is-primary is-rounded">
+                  <select
+                    onChange={(e) =>
+                      (currentRole = e.target.selectedOptions[0].value)
+                    }
+                  >
+                    {roles.map((role: role) => (
+                      <option
+                        style={{
+                          color:
+                            role.color != 0
+                              ? "#" + role.color.toString(16)
+                              : "#cfcfcf",
+                        }}
+                        value={role.id}
+                        key={role.id}
+                        key-id={role.id}
+                      >
+                        {role.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            );
+          };
+          let chosenEmojii: any;
+          const PickerInner = () => {
+            const [chosenEmoji, setChosenEmoji] = React.useState(null);
+            const onEmojiClick = (event: any, emojiObject: any) => {
+              setChosenEmoji(emojiObject);
+              chosenEmojii = emojiObject;
+            };
+            return (
+              <div>
+                {chosenEmoji ? (
+                  <span>You chose: {chosenEmoji.emoji}</span>
+                ) : (
+                  <span>No emoji Chosen</span>
+                )}
+                <Picker
+                  onEmojiClick={
+                    onEmojiClick
+                  } /*pickerStyle={{ width: '100%' }}*/
+                />
+              </div>
+            );
+          };
+          const handleReactionAdd = () => {
+            listEmojis
+              ? console.log(
+                  "|| " +
+                    chosenEmojii +
+                    " || " +
+                    currentRole +
+                    " || EMOJI: " +
+                    listEmojis.some(
+                      (item: any) => item.e.emoji == chosenEmojii.emoji
+                    ) +
+                    "and ROLE: " +
+                    listEmojis.some((item: any) => item.r == currentRole)
+                )
+              : null;
+            if (chosenEmojii && currentRole) {
+              if (listEmojis) {
+                if (
+                  !listEmojis.some(
+                    (item: any) => item.e.emoji == chosenEmojii.emoji
+                  )
+                ) {
+                  console.log("emoji check passewd : " + currentRole);
+                  if (!listEmojis.some((item: any) => item.r == currentRole)) {
+                    console.log("role check pased");
+                    let tmp = listEmojis;
+                    setListEmojis((emojis: any) => [
+                      ...emojis,
+                      { e: chosenEmojii, r: currentRole },
+                    ]);
+                  }
+                }
+              } else {
+                setListEmojis([{ e: chosenEmojii, r: currentRole }]);
+              }
+            }
+          };
+          return (
+            <div>
+              <br />
+              <p>Add Reaction</p>
+              {roles ? <Roles /> : ""}
+              <PickerInner />
+
+              <button
+                className="button is-primary"
+                onClick={() => handleReactionAdd()}
+              >
+                Add Reaction
+              </button>
+            </div>
+          );
+        };
+
+        return (
+          <div className="columns">
+            <EmojiSelector />
+
+            <div className="column"></div>
+            <div className="column">
+              <br />
+              <br />
+              {listEmojis
+                ? listEmojis.map((emoji: any) => (
+                    <p id={emoji.r}>
+                      {emoji.e.emoji} EMOKI W ROle {emoji.r}
+                    </p>
+                  ))
+                : null}
+            </div>
+          </div>
+        );
+      };
+      return <EmojiBodyInner />;
+    };
+
     return (
       <div className="embed-preview" id="colourChange">
         <button
@@ -430,6 +581,9 @@ const Main: FC<TyProps> = (props) => {
                 id="footer"
               />
             </div>
+          </Dropdown>
+          <Dropdown iter="6" name="Reaction Roles" isNested={false}>
+            <EmojiBody />
           </Dropdown>
         </div>
       </div>
