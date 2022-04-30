@@ -1,5 +1,6 @@
 import React, { FC, useRef, useState } from "react";
 import Picker from 'emoji-picker-react';
+import { native } from "pg";
 interface TyProps {
   user: any;
 }
@@ -61,6 +62,9 @@ const onEmojiClick = (event: any, emojiObject: any) => {
       const addEmoji = (emoji: any) => {
           console.log(emoji)
       }
+      const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        textAreaValue = e.target.value
+      }
   return (
     <div>
       <h1 className="title is-4">General Options</h1>
@@ -75,13 +79,12 @@ const onEmojiClick = (event: any, emojiObject: any) => {
 </div>
         </div>
         <div className="column">
-        <textarea
-              id="joinmsginput"
+        <input
+              id="channelidinput"
               className="input is-primary resize-lock auto-height"
-              rows={4}
-              cols={50}
-              maxLength={2000}
-              onChange={(e) => (textAreaValue = e.target.value)}
+              maxLength={20}
+              onChange={(e) => (handleTextChange(e))}
+              pattern="[0-9]"
             />
 
 <div>
