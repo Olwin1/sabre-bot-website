@@ -4,7 +4,7 @@ import { SketchPicker } from "react-color";
 import axios from "axios";
 import Picker from "emoji-picker-react";
 import { getCookie } from "../../../cookie-utils";
-import { isTemplateExpression } from "typescript";
+import { Store } from 'react-notifications-component';
 interface TyProps {
   user: any;
 }
@@ -433,9 +433,39 @@ const Main: FC<TyProps> = (props) => {
                     ]);
                   }
                 }
+                else {
+                  console.log("notif create")
+                  Store.addNotification({
+                  title: "Error",
+                  message: "You cannot use an emoji twice",
+                  type: "danger",
+                  insert: "top",
+                  container: "top-center",
+                  animationIn: ["animate__animated", "animate__fadeIn"],
+                  animationOut: ["animate__animated", "animate__fadeOut"],
+                  dismiss: {
+                    duration: 5000,
+                    onScreen: true
+                  }
+                });}
               } else {
                 setListEmojis([{ e: chosenEmojii, r: currentRole }]);
               }
+            }
+            else {
+              Store.addNotification({
+                title: "Error",
+                message: "You need to specify a role and a reaction",
+                type: "danger",
+                insert: "top",
+                container: "top-center",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                  duration: 5000,
+                  onScreen: true
+                }
+              });
             }
           };
           return (
