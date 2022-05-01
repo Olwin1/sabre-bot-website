@@ -20,6 +20,10 @@ type role = {
   icon: string;
   unicode_emoji: string;
 };
+interface emojiEntryProps {
+  emoji: string;
+  id: string;
+}
 
 interface CardProps {
   data: JSON;
@@ -450,20 +454,30 @@ const Main: FC<TyProps> = (props) => {
             </div>
           );
         };
-
+        const EmojiEntry: FC<emojiEntryProps> = (props) => {
+          return (
+            <div className="emojiEntry" id={props.id}>
+              <div className="inline-flex">
+                <div className="no-right-padding">
+                  <p>{props.emoji}</p>
+                </div>
+                <div className="emojiText">
+                  <p>{props.id}</p>
+                </div>
+              </div>
+            </div>
+          );
+        };
         return (
           <div className="columns">
             <EmojiSelector />
 
-            <div className="column"></div>
             <div className="column">
               <br />
               <br />
               {listEmojis
                 ? listEmojis.map((emoji: any) => (
-                    <p id={emoji.r}>
-                      {emoji.e.emoji} EMOKI W ROle {emoji.r}
-                    </p>
+                    <EmojiEntry id={emoji.r} emoji={emoji.e.emoji}/>
                   ))
                 : null}
             </div>

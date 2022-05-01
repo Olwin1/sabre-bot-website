@@ -1239,3 +1239,42 @@ aside.emoji-picker-react {
 .hidden {
   visibility: hidden;
 }
+
+// Below Is For Emoji Entries
+
+@keyframes strike {
+  from { text-decoration-color: transparent; }
+  to { text-decoration-color: auto; }
+}
+
+.emojiEntry {
+  background-color: #0b0715;
+  color: #cfcfcf;
+  width: fit-content;
+  padding: 5px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.emojiText {
+      -moz-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.3s;
+}
+.emojiText:hover {
+  color: #ff5555;
+  text-decoration: line-through;
+  animation: strike 0.8s linear;
+    -webkit-transform: skewX(-20deg);
+    -moz-transform: skewX(-20deg);
+    -o-transform: skewX(-20deg);
+    transform: skewX(-20deg);
+}
+.no-right-padding {
+  padding-right: 0;
+}
+.inline-flex {
+  display: inline-flex;
+}
+
+//End Of Emoji Entries
