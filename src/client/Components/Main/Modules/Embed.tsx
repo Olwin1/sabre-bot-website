@@ -432,6 +432,21 @@ const Main: FC<TyProps> = (props) => {
                       { e: chosenEmojii, r: currentRole },
                     ]);
                   }
+                  else {
+                    Store.addNotification({
+                      title: "Error",
+                      message: "You cannot assign a role twice",
+                      type: "danger",
+                      insert: "top",
+                      container: "top-center",
+                      animationIn: ["animate__animated", "animate__fadeIn"],
+                      animationOut: ["animate__animated", "animate__fadeOut"],
+                      dismiss: {
+                        duration: 5000,
+                        onScreen: true
+                      }
+                    });
+                  }
                 }
                 else {
                   console.log("notif create")
@@ -451,21 +466,6 @@ const Main: FC<TyProps> = (props) => {
               } else {
                 setListEmojis([{ e: chosenEmojii, r: currentRole }]);
               }
-            }
-            else {
-              Store.addNotification({
-                title: "Error",
-                message: "You need to specify a role and a reaction",
-                type: "danger",
-                insert: "top",
-                container: "top-center",
-                animationIn: ["animate__animated", "animate__fadeIn"],
-                animationOut: ["animate__animated", "animate__fadeOut"],
-                dismiss: {
-                  duration: 5000,
-                  onScreen: true
-                }
-              });
             }
           };
           return (
