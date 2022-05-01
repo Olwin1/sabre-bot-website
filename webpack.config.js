@@ -50,6 +50,14 @@ const clientConfig = {
 				include: [
 					path.resolve(__dirname, './src/client/scss')
 				],
+			},
+			{
+				test: /\.css$/,
+				sideEffects: true,
+				use: ['style-loader', 'css-loader'],
+				include: [
+					path.resolve(__dirname, './node_modules/react-notifications-component/dist')
+				],
 			}
 		]
 	},
