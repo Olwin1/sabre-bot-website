@@ -416,7 +416,8 @@ const Main: FC<TyProps> = (props) => {
                     listEmojis.some((item: any) => item.r == currentRole)
                 )
               : null;
-            if (chosenEmojii && currentRole) {
+            if (currentRole) {
+              if (chosenEmojii) {
               if (listEmojis) {
                 if (
                   !listEmojis.some(
@@ -449,7 +450,6 @@ const Main: FC<TyProps> = (props) => {
                   }
                 }
                 else {
-                  console.log("notif create")
                   Store.addNotification({
                   title: "Error",
                   message: "You cannot use an emoji twice",
@@ -467,6 +467,37 @@ const Main: FC<TyProps> = (props) => {
                 setListEmojis([{ e: chosenEmojii, r: currentRole }]);
               }
             }
+            else {
+              Store.addNotification({
+                title: "Error",
+                message: "You need to select an emoji",
+                type: "danger",
+                insert: "top",
+                container: "top-center",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                  duration: 5000,
+                  onScreen: true
+                }
+              });
+            }
+          }
+          else {
+            Store.addNotification({
+              title: "Error",
+              message: "You need to assign a role",
+              type: "danger",
+              insert: "top",
+              container: "top-center",
+              animationIn: ["animate__animated", "animate__fadeIn"],
+              animationOut: ["animate__animated", "animate__fadeOut"],
+              dismiss: {
+                duration: 5000,
+                onScreen: true
+              }
+            });
+          }
           };
           return (
             <div>
