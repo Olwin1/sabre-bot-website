@@ -44,6 +44,10 @@ interface TxtProps {
   isSmall: boolean;
   isLocked: boolean;
 }
+type emojiData = {
+  emoji: string
+  role: string
+}
 const Main: FC<TyProps> = (props) => {
   let embedFieldsTitle = [] as string[];
   let embedFields = [] as string[];
@@ -58,6 +62,8 @@ const Main: FC<TyProps> = (props) => {
   let titleHyperlink = "" as string;
   let embedColor = "" as string;
   let editLink = "" as string;
+  let emojiData = null as emojiData;
+
   const [editUrlCheck, setEditUrlCheck] = React.useState(false);
   let colour = "#cfcfcf";
   const roles = props.user.roles as role[];
@@ -348,6 +354,7 @@ const Main: FC<TyProps> = (props) => {
     const EmojiBody = () => {
       const EmojiBodyInner = () => {
         const [listEmojis, setListEmojis] = React.useState(null);
+        emojiData = listEmojis
 
         const EmojiSelector = () => {
           let currentRole: string;
@@ -748,6 +755,7 @@ const Main: FC<TyProps> = (props) => {
       fields: embedFields,
       fields_t: embedFieldsTitle,
       content: content,
+      emojiData: emojiData
     };
     console.log(embedJSON);
     axios
