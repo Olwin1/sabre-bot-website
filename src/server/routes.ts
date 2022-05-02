@@ -142,7 +142,38 @@ router.post("/api/embed", jsonParser, async (req, res, next) => {
   const token = token_b.replace("Bearer ", "");
   console.log(`statusCode: ${res.status}`);
   //console.log(resu);
-});
+  const unformatted = req.body
+  let fields = []
+  for(let i = 0; i < unformatted.fields.length; i++) {
+    if(unformatted.fields[i] != "" && unformatted.fields_t[i] != "") {
+    fields.push({"value": unformatted.fields[i], "name": unformatted.fields_t[i]})
+    }
+  }
+  const data = {
+    "content": unformatted.content!=""?unformatted.content:null,
+    "tts": false,
+    "embeds": [{
+      "title": unformatted.title!=""?unformatted.title:null,
+      "description ": unformatted.desc!=""?unformatted.desc:null,
+      "url ": unformatted.url!=""?unformatted.url:null,
+      "color": unformatted.colour.replace("#", "")!=""?parseInt(unformatted.colour.replace("#", ""), 16):null,
+      "footer": {"text": unformatted.footer!=""?unformatted.footer:null, "url": unformatted.a_ico!=""?unformatted.a_ico:null},
+      "image": {"url": unformatted.img!=""?unformatted.img:null},
+      "thumbnail": {"url": unformatted.a_ico!=""?unformatted.a_ico:null},
+      "author": {"name": unformatted.a!=""?unformatted.a:null, "url": unformatted.a_url!=""?unformatted.a_url:null, "icon_url": unformatted.a_ico!=""?unformatted.a_ico:null},
+      "fields": fields
+    }]
+
+  }
+  axios.post("https://discord.com/api/v9/channels/746500764633006150/messages", data, {headers: { Authorization: "Bot " + bot_token },})
+  .then(async (resu) => {
+    console.log("success || : " + resu)
+    res.json(resu)
+}).catch((error) => {
+    console.error(error);
+  });
+
+})
 
 router.get("/api/guilds", async (req, res) => {
   const token_b = req.header("token");
