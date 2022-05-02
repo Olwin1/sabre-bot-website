@@ -121,7 +121,7 @@ const Main: FC<TyProps> = (props) => {
             <h1 className="title is-5">Prefix</h1>
             <p className="qs">
               <input
-                className="field control inputnew thirty"
+                className="control input-embed"
                 type="text"
                 placeholder="Enter The Prefix You Want Here (e.g !)"
                 maxLength={3}
@@ -130,13 +130,13 @@ const Main: FC<TyProps> = (props) => {
             </p>
             <span className="svae"></span>
             <br />
-            <button className="button purple is-grun qs">Save</button>
+            <button className="button is-primary">Save</button>
           </div>
           <div className="is-card column margin-15">
             <h1 className="title is-5">Language</h1>
             <p className="qs">
               <input
-                className="field control inputnew thirty"
+                className="control input-embed"
                 type="text"
                 placeholder="Enter The Prefix You Want Here (e.g !)"
                 maxLength={3}
@@ -145,7 +145,7 @@ const Main: FC<TyProps> = (props) => {
             </p>
             <span className="svae"></span>
             <br />
-            <button className="button purple is-grun qs">Save</button>
+            <button className="button is-primary">Save</button>
           </div>
         </div>
 
@@ -155,7 +155,7 @@ const Main: FC<TyProps> = (props) => {
             Need help Setting Up Sabre Bot? No Worries We Have Your Back! Just
             Join Our Support Server And We Will Be Happy To Help!
           </p>
-          <button className="button purple is-purple qs">
+          <button className="button is-primary">
             Join The Support Server
           </button>
         </div>

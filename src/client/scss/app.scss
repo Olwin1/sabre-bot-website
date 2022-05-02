@@ -5,15 +5,16 @@
 //@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
 
 // Set your brand colors
-$purple: rgba(78, 21, 146, 1);
-$purple-light: #0e091c;
+$text-input-background-color: #2e2c33;
+$inner-inner-background-color: #333038;
+$inner-background-color: #36333b;
+$purple: #a365a0;
 $pink: #fa7c91;
-$brown: #757763;
-$beige-light: #d0d1cd;
 $beige-lighter: #eff0eb;
+$green: #1f8f48;
+$red: #c42d4d;
 
 $text-colour: #cfcfcf;
-$upper-body-color: #15131a;
 
 $gray-medium: rgb(33, 33, 33);
 $gray-dark: #080808;
@@ -24,27 +25,26 @@ $family-primary: "Quicksand",
 sans-serif;
 $family-sans-serif: "Quicksand",
 sans-serif;
-$grey-dark: $brown;
-$grey-light: $beige-light;
 $primary: $purple;
-$link: $pink;
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 $text: $text-colour;
 $text-strong: #fff;
 
-$info: #ac7fdbff;
 
 // Update some of Bulma's component variables
-$body-background-color: #06040b;
+$body-background-color: #403c45;
 $control-border-width: 2px;
-$input-border-color: transparent;
-$input-shadow: none;
-$input-background-color: $upper-body-color;
-$input-disabled-background-color: $upper-body-color;
+//$input-border-color: transparent;
+//$input-shadow: none;
+$input-background-color: $text-input-background-color;
+$input-disabled-background-color: #2C2930;
+$input-disabled-color: #8e8e8e;
+$input-color: #dedede;
 
 //Buttons
 $button-focus-box-shadow-color: $purple;
+$button-background-color: $text-input-background-color;
 
 //Title Properties
 
@@ -149,15 +149,15 @@ br {
 }
 
 .button-login {
-  background: $upper-body-color;
-  box-shadow: 0 0 0 0.125em #4e1592;
+  background: $text-input-background-color;
+  box-shadow: 0 0 0 0.125em $purple;
 }
 
 .button-heading {
   padding: 0 27px;
   outline: none;
   border-radius: 8px;
-  border-color: $upper-body-color;
+  border-color: $text-input-background-color;
   top: 0;
 
   transition: all 0.3s ease-in-out;
@@ -166,14 +166,14 @@ br {
 }
 
 .button-heading:hover {
-  border-color: $upper-body-color;
+  border-color: $text-input-background-color;
   color: #fff;
   transform: scale(1.2);
   top: -10px;
 }
 
 .button-heading:focus {
-  border-color: $upper-body-color;
+  border-color: $text-input-background-color;
   color: #fff;
 }
 
@@ -230,7 +230,7 @@ br {
 }
 
 #main {
-  background-color: #0b0715;
+  background-color: $inner-background-color;
 
   min-width: auto;
   height: fit-content;
@@ -245,16 +245,17 @@ br {
 }
 
 .is-card {
-  background-color: #0e091c;
+  background-color: $inner-inner-background-color;
   border-radius: 30px;
   padding-left: 30px;
+  padding-right: 30px;
   padding-top: 20px;
   margin-bottom: 50px;
   padding-bottom: 20px;
 }
 
 .is-list {
-  background-color: #0b0716;
+  background-color: $text-input-background-color;
   border-radius: 30px;
   padding-left: 30px;
   padding-top: 20px;
@@ -276,7 +277,7 @@ br {
   width: 3rem;
   border-radius: 1.5rem;
   color: #6b7381;
-  background: #1f143f;
+  background: $red;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -290,7 +291,7 @@ br {
 
 .is-ToggleButtonA {
   transition: background-color 0.25s;
-  background-color: #432b87;
+  background-color: $green;
 }
 
 .handle {
@@ -404,7 +405,7 @@ br {
   width: 6rem;
   border-radius: 3rem;
   color: #6b7381;
-  background: #1f143f;
+  background: $red;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
@@ -419,7 +420,7 @@ br {
 
 .is-ModuleButtonA {
   transition: background-color 0.25s;
-  background-color: #432b87;
+  background-color: $green;
 }
 
 .Modulehandle {
@@ -488,8 +489,9 @@ br {
 }
 
 hr {
-  background-color: #1e1337;
+  background-color: $purple;
 }
+
 
 //Scrollbar Setup
 ::-webkit-scrollbar {
@@ -527,7 +529,7 @@ textarea.resize {
   font-size: 16px;
   unicode-bidi: plaintext;
   padding: 0px 9px;
-  background: #0b0715;
+  background: $text-input-background-color;
   border-width: 1px;
   border-style: solid;
   border-color: transparent;
@@ -540,7 +542,7 @@ textarea.resize {
 
 .general:hover,
 .general:focus {
-  border-color: #4e1592;
+  border-color: $purple;
 }
 
 .general-2 {
@@ -636,7 +638,7 @@ textarea {
 
 /* This Is Expander Area */
 .accordion {
-  background-color: $purple-light;
+  background-color: $inner-inner-background-color;
   color: #cfcfcf;
   cursor: pointer;
   padding: 18px;
@@ -684,7 +686,7 @@ textarea {
 
 .panel {
   padding: 0 18px;
-  background-color: $purple-light;
+  background-color: $inner-inner-background-color;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
@@ -706,7 +708,7 @@ textarea {
   font-size: 16px;
   unicode-bidi: plaintext;
   padding: 0px 9px;
-  background: #0b0715;
+  background: $text-input-background-color;
   border-width: 1px;
   border-style: solid;
   border-color: transparent;
@@ -720,7 +722,7 @@ textarea {
 
 .input-embed:hover,
 .input-embed:focus {
-  border-color: #4e1592;
+  border-color: $purple;
 }
 
 .edit-link {
@@ -816,7 +818,7 @@ em {
 }
 
 .sketch-picker {
-  background: #0b0715 !important;
+  background: $inner-background-color !important;
 
 }
 
@@ -847,7 +849,7 @@ em {
 #rc-editable-input-4:focus,
 #rc-editable-input-5:hover,
 #rc-editable-input-5:focus {
-  border-color: #4e1592 !important;
+  border-color: $purple !important;
 }
 
 label {
@@ -1226,7 +1228,7 @@ aside.emoji-picker-react {
   background-color: #06040b !important;
 }
 .emoji-search {
-  background-color: #0b0715 !important;
+  background-color: $text-input-background-color !important;
 }
 
 .emoji-group:before {
@@ -1247,7 +1249,7 @@ aside.emoji-picker-react {
 }
 
 .emojiEntry {
-  background-color: #0b0715;
+  background-color: $text-input-background-color;
   color: #cfcfcf;
   width: fit-content;
   padding: 5px;
