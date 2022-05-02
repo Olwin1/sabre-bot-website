@@ -23,6 +23,8 @@ type role = {
 interface emojiEntryProps {
   emoji: string;
   id: string;
+  name: string;
+  colour: string;
 }
 
 interface CardProps {
@@ -413,7 +415,7 @@ const Main: FC<TyProps> = (props) => {
                       (item: any) => item.e.emoji == chosenEmojii.emoji
                     ) +
                     "and ROLE: " +
-                    listEmojis.some((item: any) => item.r == currentRole)
+                    listEmojis.some((item: any) => item.r.id == currentRole)
                 )
               : null;
             if (currentRole) {
@@ -425,12 +427,13 @@ const Main: FC<TyProps> = (props) => {
                   )
                 ) {
                   console.log("emoji check passewd : " + currentRole);
-                  if (!listEmojis.some((item: any) => item.r == currentRole)) {
+                  if (!listEmojis.some((item: any) => item.r.id == currentRole)) {
                     console.log("role check pased");
                     let tmp = listEmojis;
+                    const found = roles.find(element => element.id == currentRole);
                     setListEmojis((emojis: any) => [
                       ...emojis,
-                      { e: chosenEmojii, r: currentRole },
+                      { e: chosenEmojii, r: found },
                     ]);
                   }
                   else {
@@ -464,7 +467,8 @@ const Main: FC<TyProps> = (props) => {
                   }
                 });}
               } else {
-                setListEmojis([{ e: chosenEmojii, r: currentRole }]);
+                const found = roles.find(element => element.id == currentRole);
+                setListEmojis([{ e: chosenEmojii, r: found }]);
               }
             }
             else {
@@ -523,7 +527,7 @@ const Main: FC<TyProps> = (props) => {
                   <p>{props.emoji}</p>
                 </div>
                 <div className="emojiText">
-                  <p>{props.id}</p>
+                  <p className="emojiTextP" style={{color:props.colour}}>{props.name}</p>
                 </div>
               </div>
             </div>
@@ -538,7 +542,7 @@ const Main: FC<TyProps> = (props) => {
               <br />
               {listEmojis
                 ? listEmojis.map((emoji: any) => (
-                    <EmojiEntry id={emoji.r} emoji={emoji.e.emoji}/>
+                    <EmojiEntry id={emoji.r.id} name={emoji.r.name} colour={emoji.r.color?"#" + emoji.r.color.toString(16):"#cfcfcf"} emoji={emoji.e.emoji}/>
                   ))
                 : null}
             </div>

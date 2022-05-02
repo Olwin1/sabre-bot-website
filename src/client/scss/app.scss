@@ -1260,14 +1260,20 @@ aside.emoji-picker-react {
     -o-transition: all 0.5s;
     transition: all 0.3s;
 }
+$emoji-red: #ff5555;
 .emojiText:hover {
-  color: #ff5555;
+  color: $emoji-red;
   text-decoration: line-through;
   animation: strike 0.8s linear;
     -webkit-transform: skewX(-20deg);
     -moz-transform: skewX(-20deg);
     -o-transform: skewX(-20deg);
     transform: skewX(-20deg);
+}
+.emojiTextP:hover {
+  color: $emoji-red !important;
+  transition: color 0.5s;
+  cursor: pointer;
 }
 .no-right-padding {
   padding-right: 0;
