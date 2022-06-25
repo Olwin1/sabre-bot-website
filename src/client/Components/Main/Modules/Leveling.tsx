@@ -219,11 +219,11 @@ return("Avg: " + display)
     }
     return (
         <div>
-        <div className="columns">
-            <div className="column">
-        <button className="button" onClick={() => handleDec()}>-</button></div>
-        <div className="column"><input className='counter' type="text" placeholder="value..." value={val}  onChange={(e) => {setVal(e.target.value.replace(/[^0-9.]/g, ''))}} /></div>
-    <div className="column"><button className="button"  onClick={() => handleInc()}>+</button></div>
+        <div className="columns counting-div">
+            <div className="column zero-padd">
+        <button className="button counting-button" onClick={() => handleDec()}>-</button></div>
+        <div className="column zero-r-padd zero-l-padd"><input className='counting-input' type="text" placeholder="value..." value={val}  onChange={(e) => {setVal(e.target.value.replace(/[^0-9.]/g, ''))}} /></div>
+    <div className="column zero-padd"><button className="button counting-button"  onClick={() => handleInc()}>+</button></div>
     </div>
     <p>{calcTime()}</p>
     </div>
