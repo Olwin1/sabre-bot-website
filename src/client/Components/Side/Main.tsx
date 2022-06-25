@@ -73,11 +73,8 @@ const Sidebar: FC<SideProp> = (props) => {
             <br />
 
             <Subitem link="moderation" text="Moderation" />
-            <Subitem link="automod" text="Auto-Mod" />
             <Subitem link="welcomer" text="Welcomer" />
-            <Subitem link="autoresponder" text="Auto-responder" />
             <Subitem link="leveling" text="Leveling" />
-            <Subitem link="autorole" text="Auto-Role" />
             <Subitem link="reactionroles" text="Reaction Roles" />
             <Subitem link="music" text="Music" />
 
