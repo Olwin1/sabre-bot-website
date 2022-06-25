@@ -1289,3 +1289,40 @@ $emoji-red: #ff5555;
 .level-card {
   background-color: #0d0dc0;
 }
+
+.zero-l-padd {
+  padding-left: 0px;
+}
+.zero-r-padd {
+  padding-right: 0px;
+}
+.zero-padd {
+  padding: 0px;
+}
+.counting-input {
+  width: 90%;
+  background: transparent;
+  text-align: center;
+  outline: none;
+  border: none;
+}
+.counting-div {
+  width: 151.33px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid $purple;
+  border-radius: 12px;
+  font-size: 14px;
+}
+.counting-button {
+  background-color: $gray-medium;
+    justify-content: center;
+    border-radius: 10px;
+    min-width: 33px;
+    min-height: 33px;
+    font-size: 1rem;
+    align-items: center;
+    border: none;
+    padding: 1px 6px;
+}
