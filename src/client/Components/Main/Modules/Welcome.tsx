@@ -1,6 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC, ReactElement, useState } from "react";
 import axios from "axios";
 import { getCookie } from "../../../cookie-utils";
+import { json } from "body-parser";
 
 interface TyProps {
   user: any;
@@ -71,8 +72,9 @@ const Main: FC<TyProps> = (props) => {
       join: props.user.db_guild.welcome.join as join,
       leave: props.user.db_guild.welcome.leave as leave,
     } as welcome;
+
     let tmp = props.user.channels;
-    let tmp2 = [];
+    let tmp2 = [] as any;
     for (let x = 0; x < tmp.length; x++) {
       if (tmp[x].type == 0) {
         tmp2.push(tmp[x]);
@@ -80,10 +82,16 @@ const Main: FC<TyProps> = (props) => {
     }
     channels = tmp2;
   }
+  else {
+    const l = {channel:"0", message:""} as leave
+    const j = {channel:"0", message:"", private:"", role:""} as join
+    welcome = {join: j, leave: l}
+
+  }
   const WelcomeComponentEntry: FC<WelcomeProps> = (props) => {
     console.log("def val" + props.defVal);
     let textAreaValue: string;
-    let optionsAreaValue: string;
+    let optionsAreaValue: string | null;
     if (props.type == "join") {
       textAreaValue = welcome.join.message;
       optionsAreaValue = welcome.join.channel;
@@ -99,8 +107,8 @@ const Main: FC<TyProps> = (props) => {
       optionsAreaValue = null;
     }
 
-    const [message, setMessage] = React.useState(null);
-    const [message2, setMessage2] = React.useState(null);
+    const [message, setMessage] = React.useState(<div></div>);
+    const [message2, setMessage2] = React.useState(<div></div>);
     //const [messageType, setMessageType] = React.useState('info');
 
     const DELAY = 3500;
@@ -110,7 +118,7 @@ const Main: FC<TyProps> = (props) => {
         return;
       }
 
-      const timer = window.setTimeout(() => setMessage(null), DELAY);
+      const timer = window.setTimeout(() => setMessage(<div></div>), DELAY);
       return () => {
         window.clearTimeout(timer);
       };
