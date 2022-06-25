@@ -10,10 +10,7 @@ interface TyProps {
 interface CardProps {
   children: React.ReactNode;
 }
-interface WelcomeProps {
-  channelText: string;
-  defVal: string;
-  type: string;
+interface LevelingProps {
   guild: string;
 }
 const Card: FC<CardProps> = (props) => {
@@ -89,24 +86,9 @@ const Main: FC<TyProps> = (props) => {
     welcome = {join: j, leave: l}
 
   }
-  const WelcomeComponentEntry: FC<WelcomeProps> = (props) => {
-    console.log("def val" + props.defVal);
+  const LevelingComponent: FC<LevelingProps> = (props) => {
     let textAreaValue: string;
     let optionsAreaValue: string | null;
-    if (props.type == "join") {
-      textAreaValue = welcome.join.message;
-      optionsAreaValue = welcome.join.channel;
-    } else if (props.type == "leave") {
-      textAreaValue = welcome.leave.message;
-      optionsAreaValue = welcome.leave.channel;
-    } else if (props.type == "join_p") {
-      textAreaValue = welcome.join.private;
-      optionsAreaValue = null;
-    } else {
-      let t = "role";
-      textAreaValue = welcome.join.role;
-      optionsAreaValue = null;
-    }
     const messageEmpty = <div></div>
     const [message, setMessage] = React.useState(messageEmpty);
     const [message2, setMessage2] = React.useState(messageEmpty);
@@ -165,26 +147,6 @@ const Main: FC<TyProps> = (props) => {
     //    defchannel = items.leave_channel
 
     //}
-    const handleClick = () => {
-      const body = {
-        type: props.type,
-        message: textAreaValue,
-        channel: optionsAreaValue,
-        guild: props.guild,
-      };
-      axios
-        .post("http://localhost:3000/api/welcome", body, {
-          headers: { token: "Bearer " + getCookie("token") },
-        })
-        .then(async (resu) => {
-          setMessage(<Checkcomponent />);
-        })
-        .catch((error) => {
-          setMessage2(<Failcomponent />);
-          console.error(error);
-        });
-    };
-    console.log(props.type + "||" + props.defVal);
 const Counter = () => {
     const [val, setVal] = React.useState("0")
     const handleDec = () => {
@@ -272,23 +234,15 @@ return("Avg: " + display)
     return (
       <div className="columns level-card">
         <div className="column">
+            <div className="columns">
+                <div className="column">
           <h1 className="sub-header">
             <Counter />
           </h1>
-          {props.type != "join_r" ? (
-            <textarea
-              id="joinmsginput"
-              className="input is-primary resize-lock auto-height"
-              rows={4}
-              cols={50}
-              maxLength={2000}
-              onChange={(e) => (textAreaValue = e.target.value)}
-              defaultValue={props.defVal}
-            />
-          ) : (
+          </div>
+          <div className="column">
             <div className="select is-primary">
               <select
-                defaultValue={props.defVal}
                 onChange={(e) =>
                   (textAreaValue = e.target.selectedOptions[0].value)
                 }
@@ -309,53 +263,28 @@ return("Avg: " + display)
                   </option>
                 ))}
               </select>
-            </div>
-          )}
+            </div></div></div>
+          
         </div>
 
-        <div
-          className={
-            props.type == "join" || props.type == "leave"
-              ? "column"
-              : "column is-one-third"
-          }
-        >
-          <div>
-            <br />
-            <button
-              className="button is-primary center-btn"
-              onClick={() => handleClick()}
-            >
-              Save
-            </button>
-            {message}
-            {message2}
-          </div>
-        </div>
 
-        {props.type == "join" || props.type == "leave" ? (
-          <div className="column">
-            <h1 className="sub-header">
-              {props.channelText.split(" ").length == 2
-                ? props.channelText.split(" ")[0] + " Channel"
-                : props.channelText.split(" ")[0] +
-                  " " +
-                  props.channelText.split(" ")[1] +
-                  " Channel"}
-            </h1>
-            <div>
-              <div className="select is-primary">
+        
+      </div>
+    );
+  };
+  if(Object.keys(props.user).length != 0) {
+let optionsAreaValue: string | null;
+  return (
+    <div>
+      <h1 className="title is-4">Leveling Setup</h1>
+
+      <div className="select is-primary">
                 <select
-                  defaultValue={
-                    props.type == "join"
-                      ? welcome.join.channel
-                      : welcome.leave.channel
-                  }
                   onChange={(e) =>
                     (optionsAreaValue = e.target.selectedOptions[0].value)
                   }
                 >
-                  {channels.map((channel: any) => (
+                  {props.user.channels.map((channel: any) => (
                     <option
                       style={{ color: "#cfcfcf" }}
                       value={channel.id}
@@ -366,67 +295,20 @@ return("Avg: " + display)
                     </option>
                   ))}
                 </select>
-              </div>
-            </div>
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-    );
-  };
-  Object.keys(props.user).length != 0
-    ? console.log(
-        "join: " + welcome.join.message + " || leave: " + welcome.leave.message
-      )
-    : null;
+                </div>
+                <br />
+                <hr />
+                <br />
 
-  return (
-    <div>
-      <h1 className="title is-4">Leveling Setup</h1>
-
-      {Object.keys(props.user).length != 0 ? (
-        <WelcomeComponentEntry
-          channelText="Join Message"
-          defVal={welcome.join.message}
-          type="join"
-          guild={props.user["db_guild"]["id"]}
+        <LevelingComponent guild={props.user["db_guild"]["id"]}
         />
-      ) : (
-        ""
-      )}
-      {Object.keys(props.user).length != 0 ? (
-        <WelcomeComponentEntry
-          channelText="Leave Message"
-          defVal={welcome.leave.message}
-          type="leave"
-          guild={props.user["db_guild"]["id"]}
-        />
-      ) : (
-        ""
-      )}
-      {Object.keys(props.user).length != 0 ? (
-        <WelcomeComponentEntry
-          channelText="Join Private Message"
-          defVal={welcome.join.private}
-          type="join_p"
-          guild={props.user["db_guild"]["id"]}
-        />
-      ) : (
-        ""
-      )}
-      {Object.keys(props.user).length != 0 ? (
-        <WelcomeComponentEntry
-          channelText="Join Role"
-          defVal={welcome.join.role}
-          type="join_r"
-          guild={props.user["db_guild"]["id"]}
-        />
-      ) : (
-        ""
-      )}
     </div>
   );
-};
+}
+else{
+    return(
+        <div><p>Loading...</p></div>
+    )
+};}
 
 export default Main;
