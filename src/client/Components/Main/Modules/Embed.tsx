@@ -1,10 +1,9 @@
-import e from "express";
-import React, { FC, useState, useReducer } from "react";
+import React, { FC, useState } from "react";
 import { SketchPicker } from "react-color";
 import axios from "axios";
 import Picker from "emoji-picker-react";
 import { getCookie } from "../../../cookie-utils";
-import { Store } from 'react-notifications-component';
+import { Store } from "react-notifications-component";
 interface TyProps {
   user: any;
 }
@@ -45,9 +44,9 @@ interface TxtProps {
   isLocked: boolean;
 }
 type emojiData = {
-  emoji: string
-  role: string
-}
+  emoji: string;
+  role: string;
+};
 const Main: FC<TyProps> = (props) => {
   let embedFieldsTitle = [] as string[];
   let embedFields = [] as string[];
@@ -62,7 +61,7 @@ const Main: FC<TyProps> = (props) => {
   let titleHyperlink = "" as string;
   let embedColor = "" as string;
   let editLink = "" as string;
-  let emojiData = null as emojiData;
+  let emojiData: emojiData;
 
   const [editUrlCheck, setEditUrlCheck] = React.useState(false);
   let colour = "#cfcfcf";
@@ -72,59 +71,107 @@ const Main: FC<TyProps> = (props) => {
   const Dropdown: FC<DropProps> = (props) => {
     const handleClick2 = () => {
       let element = document.getElementById("accordion-" + props.iter);
-      if (element.classList.length == 1) {
-        element.classList.add("active");
-      } else {
-        element.classList.remove("active");
-      }
-      // Do Own Panel
-      var panel_parent = document.getElementById(element.nextElementSibling.id);
-      if (panel_parent.style.maxHeight) {
-        panel_parent.style.maxHeight = null;
-      } else {
-        panel_parent.style.maxHeight = panel_parent.scrollHeight + "px";
-
-        if (!props.isNested) {
-          //Do Rest Of Panels
-          var panel = document.getElementById(
-            element.parentElement.parentElement.id
-          );
-          var second = document.getElementById(
-            document.getElementById(panel.firstElementChild.id)
-              .firstElementChild.nextElementSibling.id
-          );
-          var third = document.getElementById(
-            second.parentElement.nextElementSibling.firstElementChild
-              .nextElementSibling.id
-          );
-          var fourth = document.getElementById(
-            third.parentElement.nextElementSibling.firstElementChild
-              .nextElementSibling.id
-          );
-          var fifth = document.getElementById(
-            fourth.parentElement.nextElementSibling.firstElementChild
-              .nextElementSibling.id
-          );
-          var sixth = document.getElementById(
-            fifth.parentElement.nextElementSibling.firstElementChild
-              .nextElementSibling.id
-          );
-          panel.style.maxHeight =
-            panel.scrollHeight +
-            second.scrollHeight +
-            third.scrollHeight +
-            fourth.scrollHeight +
-            fifth.scrollHeight +
-            sixth.scrollHeight +
-            "px";
+      if (element) {
+        if (element.classList.length == 1) {
+          element.classList.add("active");
         } else {
-          let panel = document.getElementById(
-            "panel-" + props.iter.split("-")[0]
+          element.classList.remove("active");
+        }
+        // Do Own Panel
+        if (element.nextElementSibling) {
+          var panel_parent = document.getElementById(
+            element.nextElementSibling.id
           );
-          panel.style.maxHeight = panel.scrollHeight + "px";
-          let temp =
-            parseInt(panel.style.maxHeight) + panel_parent.scrollHeight;
-          panel.style.maxHeight = temp + "px";
+          if (panel_parent) {
+            if (panel_parent.style.maxHeight) {
+              panel_parent.style.maxHeight = "";
+            } else {
+              panel_parent.style.maxHeight = panel_parent.scrollHeight + "px";
+
+              if (!props.isNested && element.parentElement?.parentElement) {
+                //Do Rest Of Panels
+                var panel = document.getElementById(
+                  element.parentElement.parentElement.id
+                );
+                if (panel) {
+                  if (panel.firstElementChild) {
+                    let t = document.getElementById(panel.firstElementChild.id);
+                    if (t) {
+                      if (t.firstElementChild) {
+                        if (t.firstElementChild.nextElementSibling) {
+                          let tt = t.firstElementChild.nextElementSibling;
+                          var second = document.getElementById(tt.id);
+                          if (
+                            second?.parentElement?.nextElementSibling
+                              ?.firstElementChild?.nextElementSibling
+                          ) {
+                            var third = document.getElementById(
+                              second.parentElement.nextElementSibling
+                                .firstElementChild.nextElementSibling.id
+                            );
+                            if (
+                              third?.parentElement?.nextElementSibling
+                                ?.firstElementChild?.nextElementSibling
+                            ) {
+                              var fourth = document.getElementById(
+                                third.parentElement.nextElementSibling
+                                  .firstElementChild.nextElementSibling.id
+                              );
+                              if (
+                                fourth?.parentElement?.nextElementSibling
+                                  ?.firstElementChild?.nextElementSibling
+                              ) {
+                                var fifth = document.getElementById(
+                                  fourth.parentElement.nextElementSibling
+                                    .firstElementChild.nextElementSibling.id
+                                );
+                                if (
+                                  fifth?.parentElement?.nextElementSibling
+                                    ?.firstElementChild?.nextElementSibling
+                                ) {
+                                  var sixth = document.getElementById(
+                                    fifth.parentElement.nextElementSibling
+                                      .firstElementChild.nextElementSibling.id
+                                  );
+                                  if (
+                                    second &&
+                                    third &&
+                                    fourth &&
+                                    fifth &&
+                                    sixth
+                                  ) {
+                                    panel.style.maxHeight =
+                                      panel.scrollHeight +
+                                      second.scrollHeight +
+                                      third.scrollHeight +
+                                      fourth.scrollHeight +
+                                      fifth.scrollHeight +
+                                      sixth.scrollHeight +
+                                      "px";
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  let panel = document.getElementById(
+                    "panel-" + props.iter.split("-")[0]
+                  );
+                  if (panel) {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                    let temp =
+                      parseInt(panel.style.maxHeight) +
+                      panel_parent.scrollHeight;
+                    panel.style.maxHeight = temp + "px";
+                  }
+                }
+              }
+            }
+          }
         }
       }
     };
@@ -202,44 +249,69 @@ const Main: FC<TyProps> = (props) => {
     const [bodyHyperlinkCheck, setBodyHyperlinkCheck] = React.useState(false);
     const handleClick = () => {
       let element = document.getElementById("accordion-" + props.iter);
-      if (element.classList.length == 1) {
+      if (element && element.classList.length == 1) {
         element.classList.add("active");
-      } else {
+      } else if (element) {
         element.classList.remove("active");
       }
+      if (element?.nextElementSibling) {
+        var panel = document.getElementById(element.nextElementSibling.id);
+        if (panel?.style.maxHeight) {
+          panel.style.maxHeight = "";
+        } else if (
+          panel?.firstElementChild?.firstElementChild?.nextElementSibling
+        ) {
+          var second = document.getElementById(
+            panel.firstElementChild.firstElementChild.nextElementSibling.id
+          );
 
-      var panel = document.getElementById(element.nextElementSibling.id);
-      if (panel.style.maxHeight) {
-        panel.style.maxHeight = null;
-      } else {
-        var second = document.getElementById(
-          panel.firstElementChild.firstElementChild.nextElementSibling.id
-        );
-
-        var third = document.getElementById(
-          second.parentElement.nextElementSibling.firstElementChild
-            .nextElementSibling.id
-        );
-        var fourth = document.getElementById(
-          third.parentElement.nextElementSibling.firstElementChild
-            .nextElementSibling.id
-        );
-        var fifth = document.getElementById(
-          fourth.parentElement.nextElementSibling.firstElementChild
-            .nextElementSibling.id
-        );
-        var sixth = document.getElementById(
-          fifth.parentElement.nextElementSibling.firstElementChild
-            .nextElementSibling.id
-        );
-        panel.style.maxHeight =
-          panel.scrollHeight +
-          second.scrollHeight +
-          third.scrollHeight +
-          fourth.scrollHeight +
-          fifth.scrollHeight +
-          sixth.scrollHeight +
-          "px";
+          if (
+            second?.parentElement?.nextElementSibling?.firstElementChild
+              ?.nextElementSibling
+          ) {
+            var third = document.getElementById(
+              second.parentElement.nextElementSibling.firstElementChild
+                .nextElementSibling.id
+            );
+            if (
+              third?.parentElement?.nextElementSibling?.firstElementChild
+                ?.nextElementSibling
+            ) {
+              var fourth = document.getElementById(
+                third.parentElement.nextElementSibling.firstElementChild
+                  .nextElementSibling.id
+              );
+              if (
+                fourth?.parentElement?.nextElementSibling?.firstElementChild
+                  ?.nextElementSibling
+              ) {
+                var fifth = document.getElementById(
+                  fourth.parentElement.nextElementSibling.firstElementChild
+                    .nextElementSibling.id
+                );
+                if (
+                  fifth?.parentElement?.nextElementSibling?.firstElementChild
+                    ?.nextElementSibling
+                ) {
+                  var sixth = document.getElementById(
+                    fifth.parentElement.nextElementSibling.firstElementChild
+                      .nextElementSibling.id
+                  );
+                  if (panel && second && third && fourth && fifth && sixth) {
+                    panel.style.maxHeight =
+                      panel.scrollHeight +
+                      second.scrollHeight +
+                      third.scrollHeight +
+                      fourth.scrollHeight +
+                      fifth.scrollHeight +
+                      sixth.scrollHeight +
+                      "px";
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -299,7 +371,8 @@ const Main: FC<TyProps> = (props) => {
 
       const handleColourChange = (color: any) => {
         setEmbedColour(color.hex);
-        document.getElementById("colourChange").style.borderColor = color.hex;
+        const colChange = document.getElementById("colourChange");
+        colChange ? (colChange.style.borderColor = color.hex) : null;
         //@ts-ignore: Property Does Not Exist.
         document.getElementById("embedColour").value = color.hex;
         embedColor = color.hex;
@@ -353,8 +426,10 @@ const Main: FC<TyProps> = (props) => {
 
     const EmojiBody = () => {
       const EmojiBodyInner = () => {
-        const [listEmojis, setListEmojis] = React.useState(null);
-        emojiData = listEmojis
+        const [listEmojis, setListEmojis] = React.useState(null as any);
+        if (listEmojis) {
+          emojiData = listEmojis;
+        }
 
         const EmojiSelector = () => {
           let currentRole: string;
@@ -390,7 +465,7 @@ const Main: FC<TyProps> = (props) => {
           };
           let chosenEmojii: any;
           const PickerInner = () => {
-            const [chosenEmoji, setChosenEmoji] = React.useState(null);
+            const [chosenEmoji, setChosenEmoji] = React.useState(null as any);
             const onEmojiClick = (event: any, emojiObject: any) => {
               setChosenEmoji(emojiObject);
               chosenEmojii = emojiObject;
@@ -427,26 +502,44 @@ const Main: FC<TyProps> = (props) => {
               : null;
             if (currentRole) {
               if (chosenEmojii) {
-              if (listEmojis) {
-                if (
-                  !listEmojis.some(
-                    (item: any) => item.e.emoji == chosenEmojii.emoji
-                  )
-                ) {
-                  console.log("emoji check passewd : " + currentRole);
-                  if (!listEmojis.some((item: any) => item.r.id == currentRole)) {
-                    console.log("role check pased");
-                    let tmp = listEmojis;
-                    const found = roles.find(element => element.id == currentRole);
-                    setListEmojis((emojis: any) => [
-                      ...emojis,
-                      { e: chosenEmojii, r: found },
-                    ]);
-                  }
-                  else {
+                if (listEmojis) {
+                  if (
+                    !listEmojis.some(
+                      (item: any) => item.e.emoji == chosenEmojii.emoji
+                    )
+                  ) {
+                    console.log("emoji check passewd : " + currentRole);
+                    if (
+                      !listEmojis.some((item: any) => item.r.id == currentRole)
+                    ) {
+                      console.log("role check pased");
+                      let tmp = listEmojis;
+                      const found = roles.find(
+                        (element) => element.id == currentRole
+                      );
+                      setListEmojis((emojis: any) => [
+                        ...emojis,
+                        { e: chosenEmojii, r: found },
+                      ]);
+                    } else {
+                      Store.addNotification({
+                        title: "Error",
+                        message: "You cannot assign a role twice",
+                        type: "danger",
+                        insert: "top",
+                        container: "top-center",
+                        animationIn: ["animate__animated", "animate__fadeIn"],
+                        animationOut: ["animate__animated", "animate__fadeOut"],
+                        dismiss: {
+                          duration: 5000,
+                          onScreen: true,
+                        },
+                      });
+                    }
+                  } else {
                     Store.addNotification({
                       title: "Error",
-                      message: "You cannot assign a role twice",
+                      message: "You cannot use an emoji twice",
                       type: "danger",
                       insert: "top",
                       container: "top-center",
@@ -454,15 +547,20 @@ const Main: FC<TyProps> = (props) => {
                       animationOut: ["animate__animated", "animate__fadeOut"],
                       dismiss: {
                         duration: 5000,
-                        onScreen: true
-                      }
+                        onScreen: true,
+                      },
                     });
                   }
+                } else {
+                  const found = roles.find(
+                    (element) => element.id == currentRole
+                  );
+                  setListEmojis([{ e: chosenEmojii, r: found }]);
                 }
-                else {
-                  Store.addNotification({
+              } else {
+                Store.addNotification({
                   title: "Error",
-                  message: "You cannot use an emoji twice",
+                  message: "You need to select an emoji",
                   type: "danger",
                   insert: "top",
                   container: "top-center",
@@ -470,18 +568,14 @@ const Main: FC<TyProps> = (props) => {
                   animationOut: ["animate__animated", "animate__fadeOut"],
                   dismiss: {
                     duration: 5000,
-                    onScreen: true
-                  }
-                });}
-              } else {
-                const found = roles.find(element => element.id == currentRole);
-                setListEmojis([{ e: chosenEmojii, r: found }]);
+                    onScreen: true,
+                  },
+                });
               }
-            }
-            else {
+            } else {
               Store.addNotification({
                 title: "Error",
-                message: "You need to select an emoji",
+                message: "You need to assign a role",
                 type: "danger",
                 insert: "top",
                 container: "top-center",
@@ -489,26 +583,10 @@ const Main: FC<TyProps> = (props) => {
                 animationOut: ["animate__animated", "animate__fadeOut"],
                 dismiss: {
                   duration: 5000,
-                  onScreen: true
-                }
+                  onScreen: true,
+                },
               });
             }
-          }
-          else {
-            Store.addNotification({
-              title: "Error",
-              message: "You need to assign a role",
-              type: "danger",
-              insert: "top",
-              container: "top-center",
-              animationIn: ["animate__animated", "animate__fadeIn"],
-              animationOut: ["animate__animated", "animate__fadeOut"],
-              dismiss: {
-                duration: 5000,
-                onScreen: true
-              }
-            });
-          }
           };
           return (
             <div>
@@ -534,7 +612,9 @@ const Main: FC<TyProps> = (props) => {
                   <p>{props.emoji}</p>
                 </div>
                 <div className="emojiText">
-                  <p className="emojiTextP" style={{color:props.colour}}>{props.name}</p>
+                  <p className="emojiTextP" style={{ color: props.colour }}>
+                    {props.name}
+                  </p>
                 </div>
               </div>
             </div>
@@ -549,7 +629,16 @@ const Main: FC<TyProps> = (props) => {
               <br />
               {listEmojis
                 ? listEmojis.map((emoji: any) => (
-                    <EmojiEntry id={emoji.r.id} name={emoji.r.name} colour={emoji.r.color?"#" + emoji.r.color.toString(16):"#cfcfcf"} emoji={emoji.e.emoji}/>
+                    <EmojiEntry
+                      id={emoji.r.id}
+                      name={emoji.r.name}
+                      colour={
+                        emoji.r.color
+                          ? "#" + emoji.r.color.toString(16)
+                          : "#cfcfcf"
+                      }
+                      emoji={emoji.e.emoji}
+                    />
                   ))
                 : null}
             </div>
@@ -715,15 +804,25 @@ const Main: FC<TyProps> = (props) => {
       let f = { name: "Field " + count, iter: "3-" + count };
       setFields([...fields, f]);
       let element = document.getElementById("accordion-3");
-      let panel_parent = document.getElementById(element.nextElementSibling.id);
-      let panel = document.getElementById("panel-3");
-      panel.style.maxHeight = panel.scrollHeight + "px";
-      let temp = parseInt(panel.style.maxHeight) + panel_parent.scrollHeight;
-      panel.style.maxHeight = temp + "px";
+      if (element?.nextElementSibling) {
+        let panel_parent = document.getElementById(
+          element.nextElementSibling.id
+        );
+        let panel = document.getElementById("panel-3");
+        if (panel && panel_parent) {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+          let temp =
+            parseInt(panel.style.maxHeight) + panel_parent.scrollHeight;
+          panel.style.maxHeight = temp + "px";
 
-      let panel2 = document.getElementById("panel-1001");
-      let temp2 = parseInt(panel2.style.maxHeight) + panel_parent.scrollHeight;
-      panel2.style.maxHeight = temp2 + "px";
+          let panel2 = document.getElementById("panel-1001");
+          if (panel2) {
+            let temp2 =
+              parseInt(panel2.style.maxHeight) + panel_parent.scrollHeight;
+            panel2.style.maxHeight = temp2 + "px";
+          }
+        }
+      }
     };
 
     return (
@@ -739,43 +838,47 @@ const Main: FC<TyProps> = (props) => {
     console.log("fuck");
     let btn = document.getElementById("sendData");
     let spinner = document.getElementById("sendDataSpinner");
-    // @ts-ignore: Unknown Property Error
-    btn.disabled = true;
-    const embedJSON = {
-      title: title,
-      url: titleHyperlink,
-      desc: description,
-      a_url: authorHyperlink,
-      a_ico: authorIcon,
-      a: author,
-      colour: embedColor,
-      footer: footer,
-      img: imageURL,
-      edit: editLink,
-      fields: embedFields,
-      fields_t: embedFieldsTitle,
-      content: content,
-      emojiData: emojiData
-    };
-    console.log(embedJSON);
-    axios
-      .post("http://localhost:3000/api/embed", embedJSON, {
-        headers: { token: "Bearer " + getCookie("token") },
-      })
-      .then((resu) => {
-        console.log(`statusCode: ${resu.status}`);
-        //console.log(resu);
-        console.log(resu);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    spinner.style.visibility = "visible";
-    setTimeout(() => {
+    if (spinner) {
       // @ts-ignore: Unknown Property Error
-      btn.disabled = false;
-      spinner.style.visibility = "hidden";
-    }, 3000);
+      btn.disabled = true;
+      const embedJSON = {
+        title: title,
+        url: titleHyperlink,
+        desc: description,
+        a_url: authorHyperlink,
+        a_ico: authorIcon,
+        a: author,
+        colour: embedColor,
+        footer: footer,
+        img: imageURL,
+        edit: editLink,
+        fields: embedFields,
+        fields_t: embedFieldsTitle,
+        content: content,
+        emojiData: emojiData,
+      };
+      console.log(embedJSON);
+      axios
+        .post("http://localhost:3000/api/embed", embedJSON, {
+          headers: { token: "Bearer " + getCookie("token") },
+        })
+        .then((resu) => {
+          console.log(`statusCode: ${resu.status}`);
+          //console.log(resu);
+          console.log(resu);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      spinner.style.visibility = "visible";
+      setTimeout(() => {
+        // @ts-ignore: Unknown Property Error
+        btn.disabled = false;
+        if (spinner) {
+          spinner.style.visibility = "hidden";
+        }
+      }, 3000);
+    }
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     editLink = e.target.value;
