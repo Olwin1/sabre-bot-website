@@ -46,7 +46,7 @@ const Main: FC<TyProps> = (props) => {
       {component.toLowerCase() === "#moderation" && <modules.Moderation user={props.guild}/>}
       {component.toLowerCase() === "#welcomer" && <modules.Welcome user={props.guild}/>}
       {/*component.toLowerCase() === "#autoresponder" && <modules.Settings user={props.guild}/>*/}
-      {component.toLowerCase() === "#leveling" && <modules.Settings user={props.guild}/>}
+      {component.toLowerCase() === "#leveling" && <modules.Leveling user={props.guild}/>}
       {component.toLowerCase() === "#reactionroles" && <modules.ReactionRoles user={props.guild}/>}
       {component.toLowerCase() === "#music" && <modules.Settings user={props.guild}/>}
 
