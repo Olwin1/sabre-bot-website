@@ -79,17 +79,15 @@ const Main: FC<TyProps> = (props) => {
       }
     }
     channels = tmp2;
-  }
-  else {
-    const l = {channel:"0", message:""} as leave
-    const j = {channel:"0", message:"", private:"", role:""} as join
-    welcome = {join: j, leave: l}
-
+  } else {
+    const l = { channel: "0", message: "" } as leave;
+    const j = { channel: "0", message: "", private: "", role: "" } as join;
+    welcome = { join: j, leave: l };
   }
   const LevelingComponent: FC<LevelingProps> = (props) => {
     let textAreaValue: string;
     let optionsAreaValue: string | null;
-    const messageEmpty = <div></div>
+    const messageEmpty = <div></div>;
     const [message, setMessage] = React.useState(messageEmpty);
     const [message2, setMessage2] = React.useState(messageEmpty);
     //const [messageType, setMessageType] = React.useState('info');
@@ -147,168 +145,196 @@ const Main: FC<TyProps> = (props) => {
     //    defchannel = items.leave_channel
 
     //}
-const Counter = () => {
-    const [val, setVal] = React.useState("0")
-    const handleDec = () => {
-        let num = parseInt(val) - 1
-        if(num >= 0) {
-        setVal(num.toString(10))
+    const Counter = () => {
+      const [val, setVal] = React.useState("0");
+      const handleDec = () => {
+        let num = parseInt(val) - 1;
+        if (num >= 0) {
+          setVal(num.toString(10));
         }
-    }
-    const handleInc = () => {
-        let num = parseInt(val) + 1
-        setVal(num.toString(10))
-    }
-    const calcTime = () => {
-        let level = 0
-let exp = 0
-let x = exp
-let y = 0
-while (level < parseInt(val)) {
-    x = 5*(level**2)+50*level+100
-    y += x
-    exp += x
-    level += 1
-}
-console.log(level, exp, x)
-const msgs = exp / 17.5
-const mins = Math.round(msgs / 3)
-let display = ""
-if(mins < 60) {
-    display = mins.toString() + " mins"
-}
-else if (mins < 1440) {
-    let hours = Math.trunc(mins / 60)
-    let remaining_mins = mins - hours * 60
-    display = hours + " hours " + remaining_mins + " mins"
-}
-else if (mins < 10080) {
-    let hours = mins / 60
-    let days = Math.trunc(hours / 24)
+      };
+      const handleInc = () => {
+        let num = parseInt(val) + 1;
+        setVal(num.toString(10));
+      };
+      const calcTime = () => {
+        let level = 0;
+        let exp = 0;
+        let x = exp;
+        let y = 0;
+        while (level < parseInt(val)) {
+          x = 5 * level ** 2 + 50 * level + 100;
+          y += x;
+          exp += x;
+          level += 1;
+        }
+        console.log(level, exp, x);
+        const msgs = exp / 17.5;
+        const mins = Math.round(msgs / 3);
+        let display = "";
+        if (mins < 60) {
+          display = mins.toString() + " mins";
+        } else if (mins < 1440) {
+          let hours = Math.trunc(mins / 60);
+          let remaining_mins = mins - hours * 60;
+          display = hours + " hours " + remaining_mins + " mins";
+        } else if (mins < 10080) {
+          let hours = mins / 60;
+          let days = Math.trunc(hours / 24);
 
-    hours = Math.round(hours - days * 24)
-    display = days + " days " +hours + " hours "
-}
-else if (mins < 43800) {
-    let hours = mins / 60
-    let days = hours / 24
-    let weeks = Math.trunc(days / 7)
+          hours = Math.round(hours - days * 24);
+          display = days + " days " + hours + " hours ";
+        } else if (mins < 43800) {
+          let hours = mins / 60;
+          let days = hours / 24;
+          let weeks = Math.trunc(days / 7);
 
-    days = Math.round(days - weeks * 7)
-    display = weeks + " weeks " +days + " days"
-}
-else if (mins < 525600) {
-    let hours = mins / 60
-    let days = hours / 24
-    let weeks = days / 7
-    let months = Math.trunc(weeks / 4.34524)
+          days = Math.round(days - weeks * 7);
+          display = weeks + " weeks " + days + " days";
+        } else if (mins < 525600) {
+          let hours = mins / 60;
+          let days = hours / 24;
+          let weeks = days / 7;
+          let months = Math.trunc(weeks / 4.34524);
 
-    weeks = Math.round(weeks - months * 4.34524)
-    display = months + " months " +weeks + " weeks"
-}
-else {
-    let hours = mins / 60
-    let days = hours / 24
-    let years = Math.trunc(days / 365.25)
-    let months = Math.round(years * 365.25 / 30.4167)
+          weeks = Math.round(weeks - months * 4.34524);
+          display = months + " months " + weeks + " weeks";
+        } else {
+          let hours = mins / 60;
+          let days = hours / 24;
+          let years = Math.trunc(days / 365.25);
+          let months = Math.round((years * 365.25) / 30.4167);
 
-    display = years + " years " +months + " months"
-}
+          display = years + " years " + months + " months";
+        }
 
-return("Avg: " + display)
-    }
-    return (
+        return "Avg: " + display;
+      };
+      return (
         <div>
-        <div className="columns counting-div">
-            <div className="column zero-padd">
-        <button className="button counting-button" onClick={() => handleDec()}>-</button></div>
-        <div className="column zero-r-padd zero-l-padd"><input className='counting-input' type="text" placeholder="value..." value={val}  onChange={(e) => {setVal(e.target.value.replace(/[^0-9.]/g, ''))}} /></div>
-    <div className="column zero-padd"><button className="button counting-button"  onClick={() => handleInc()}>+</button></div>
-    </div>
-    <p>{calcTime()}</p>
-    </div>
-
-    )
-
-}
+          <div className="columns counting-div">
+            <div className="zero-padd">
+              <button
+                className="button counting-button"
+                onClick={() => handleDec()}
+              >
+                -
+              </button>
+            </div>
+            <div className="zero-r-padd zero-l-padd">
+              <input
+                className="counting-input"
+                type="text"
+                placeholder="value..."
+                value={val}
+                onChange={(e) => {
+                  setVal(e.target.value.replace(/[^0-9.]/g, ""));
+                }}
+              />
+            </div>
+            <div className="zero-padd">
+              <button
+                className="button counting-button"
+                onClick={() => handleInc()}
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <p>{calcTime()}</p>
+        </div>
+      );
+    };
     return (
       <div className="columns level-card">
         <div className="column">
-            <div className="columns">
-                <div className="column">
-          <h1 className="sub-header">
-            <Counter />
-          </h1>
-          </div>
-          <div className="column">
-            <div className="select is-primary">
-              <select
-                onChange={(e) =>
-                  (textAreaValue = e.target.selectedOptions[0].value)
-                }
-              >
-                {roles.map((role) => (
-                  <option
-                    style={{
-                      color:
-                        role.color != 0
-                          ? "#" + role.color.toString(16)
-                          : "#cfcfcf",
-                    }}
-                    value={role.id}
-                    key={role.id}
-                    key-id={role.id}
-                  >
-                    {role.name}
-                  </option>
-                ))}
-              </select>
-            </div></div></div>
-          
-        </div>
-
-
-        
-      </div>
-    );
-  };
-  if(Object.keys(props.user).length != 0) {
-let optionsAreaValue: string | null;
-  return (
-    <div>
-      <h1 className="title is-4">Leveling Setup</h1>
-
-      <div className="select is-primary">
+          <div className="columns">
+            <div className="column">
+              <h1 className="sub-header">
+                <Counter />
+              </h1>
+            </div>
+            <div className="column">
+              <div className="select is-primary">
                 <select
                   onChange={(e) =>
-                    (optionsAreaValue = e.target.selectedOptions[0].value)
+                    (textAreaValue = e.target.selectedOptions[0].value)
                   }
                 >
-                  {props.user.channels.map((channel: any) => (
+                  {roles.map((role) => (
                     <option
-                      style={{ color: "#cfcfcf" }}
-                      value={channel.id}
-                      key={channel.id}
-                      key-id={channel.id}
+                      style={{
+                        color:
+                          role.color != 0
+                            ? "#" + role.color.toString(16)
+                            : "#cfcfcf",
+                      }}
+                      value={role.id}
+                      key={role.id}
+                      key-id={role.id}
                     >
-                      {channel.name}
+                      {role.name}
                     </option>
                   ))}
                 </select>
-                </div>
-                <br />
-                <hr />
-                <br />
+              </div>
+            </div>
+            <div className="column">
+              <button className="button">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  if (Object.keys(props.user).length != 0) {
+    let optionsAreaValue: string | null;
+    return (
+      <div>
+        <h1 className="title is-4">Leveling Setup</h1>
 
-        <LevelingComponent guild={props.user["db_guild"]["id"]}
-        />
-    </div>
-  );
-}
-else{
-    return(
-        <div><p>Loading...</p></div>
-    )
-};}
+        <div className="select is-primary">
+          <select
+            onChange={(e) =>
+              (optionsAreaValue = e.target.selectedOptions[0].value)
+            }
+          >
+            {props.user.channels.map((channel: any) => (
+              <option
+                style={{ color: "#cfcfcf" }}
+                value={channel.id}
+                key={channel.id}
+                key-id={channel.id}
+              >
+                {channel.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <br />
+        <hr />
+        <br />
+        <div className="columns leveling-table-top">
+          <div className="column">
+            <b>Level</b>
+          </div>
+          <div className="column">
+            <b>Role Reward</b>
+          </div>
+          <div className="column is-one-fifth">
+            <b>Actions</b>
+          </div>
+        </div>
+        <LevelingComponent guild={props.user["db_guild"]["id"]} />
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+};
 
 export default Main;
