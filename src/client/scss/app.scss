@@ -16,9 +16,9 @@ $red: #c42d4d;
 
 $text-colour: #cfcfcf;
 
-$gray-medium: rgb(33, 33, 33);
+$gray-medium: #212121;
 $gray-dark: #080808;
-$gray-light: rgb(39, 39, 39);
+$gray-light: #272727;
 
 // Update Bulma's global variables
 $family-primary: "Quicksand",
@@ -1287,7 +1287,7 @@ $emoji-red: #ff5555;
 //End Of Emoji Entries
 
 .level-card {
-  background-color: #0d0dc0;
+  background-color: $gray-light;
 }
 
 .zero-l-padd {
@@ -1325,4 +1325,8 @@ $emoji-red: #ff5555;
     align-items: center;
     border: none;
     padding: 1px 6px;
+}
+.leveling-table-top {
+  background-color: $gray-medium;
+  border-radius: 16px 16px 0px 0px;
 }
