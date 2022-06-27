@@ -1330,3 +1330,7 @@ $emoji-red: #ff5555;
   background-color: $gray-medium;
   border-radius: 16px 16px 0px 0px;
 }
+.bottom-card {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
