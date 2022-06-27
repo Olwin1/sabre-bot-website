@@ -12,6 +12,7 @@ interface CardProps {
 }
 interface LevelingProps {
   guild: string;
+  bottom: boolean;
 }
 const Card: FC<CardProps> = (props) => {
   return <div className="is-card column">{props.children}</div>;
@@ -246,7 +247,7 @@ const Main: FC<TyProps> = (props) => {
       );
     };
     return (
-      <div className="columns level-card">
+      <div className={props.bottom?"columns level-card bottom-card":"columns level-card"}>
         <div className="column">
           <div className="columns">
             <div className="column">
@@ -325,7 +326,8 @@ const Main: FC<TyProps> = (props) => {
             <b>Actions</b>
           </div>
         </div>
-        <LevelingComponent guild={props.user["db_guild"]["id"]} />
+        <LevelingComponent guild={props.user["db_guild"]["id"]} bottom={false} />
+        <LevelingComponent guild={props.user["db_guild"]["id"]} bottom={true} />
       </div>
     );
   } else {
