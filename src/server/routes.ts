@@ -139,11 +139,11 @@ var jsonParser = json();
 
 router.post("/api/embed", jsonParser, async (req, res, next) => {
   const token_b = req.header("token");
-  const token = token_b.replace("Bearer ", "");
+  const token = token_b?.replace("Bearer ", "");
   console.log(`statusCode: ${res.status}`);
   //console.log(resu);
   const unformatted = req.body
-  let fields = []
+  let fields = [] as any
   for(let i = 0; i < unformatted.fields.length; i++) {
     if(unformatted.fields[i] != "" && unformatted.fields_t[i] != "") {
     fields.push({"value": unformatted.fields[i], "name": unformatted.fields_t[i]})
@@ -177,7 +177,11 @@ router.post("/api/embed", jsonParser, async (req, res, next) => {
 
 router.get("/api/guilds", async (req, res) => {
   const token_b = req.header("token");
-  const token = token_b.replace("Bearer ", "");
+  const token = token_b?.replace("Bearer ", "");
+  if(!token_b) {
+    res.status(401)
+    return
+  }
   axios
     .get("https://discord.com/api/v9/users/@me/guilds", {
       headers: { Authorization: token_b },
@@ -219,6 +223,10 @@ router.get("/api/guilds", async (req, res) => {
 router.get("/api/user", async (req, res) => {
   const token_b = req.header("token");
   const guild = req.header("guildId");
+  if(!token_b) {
+    res.status(401)
+    return
+  }
   axios
     .get("https://discord.com/api/v9/users/@me/guilds", {
       headers: { Authorization: token_b },
@@ -241,11 +249,11 @@ router.get("/api/guild", async (req, res) => {
   const guild = req.header("guildId");
   const user = req.header("userId");
   console.log(2);
-  const token = token_b.replace("Bearer ", "");
+  const token = token_b?.replace("Bearer ", "");
   let retval = { guild: {}, roles: {}, db_guild: {}, channels: {} };
   let tmp = await get_guild(guild);
   for (let member of tmp.members) {
-    let new_members = [];
+    let new_members = [] as any;
     if (member.u_id == user) {
       new_members.push(member);
       tmp.members = new_members;
