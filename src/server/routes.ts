@@ -12,6 +12,11 @@ type members = {
   infraction_description: string;
   infraction_date: string;
 };
+type rr = {
+  id: string[];
+  level: number[];
+  channel: string;
+};
 const pg = new Client({
   user: "postgres",
   host: "localhost",
@@ -49,22 +54,21 @@ const checkExists = async (guildId: any) => {
 };
 
 const update_guild = async (guild: any) => {
-    await red.set(guild.id, JSON.stringify(guild))
-
-}
+  await red.set(guild.id, JSON.stringify(guild));
+};
 
 const get_guild = async (guild_id: any) => {
   const value = await red.get(guild_id);
   if (!value) {
     let res = await pg.query(
-      "SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick, reaction_roles FROM guilds WHERE id=$1",
+      "SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick, reaction_roles, role_rewards_id, role_rewards_level, role_rewards_channel FROM guilds WHERE id=$1",
       [guild_id]
     );
     if (!res.rows) {
       // If Guild Is Not Found... Create It
       await pg.query("INSERT INTO guilds (id) VALUES ($1)", [guild_id]);
       res = await pg.query(
-        "SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick, reaction_roles FROM guilds WHERE id=$1",
+        "SELECT role_rewards, toggle_moderation,  toggle_automod, toggle_welcomer, toggle_autoresponder, toggle_leveling, toggle_autorole, toggle_reactionroles, toggle_music, toggle_modlog, automod_links, automod_invites, automod_mention, automod_swears, welcome_join_channel, welcome_join_message, welcome_join_role, welcome_join_message_p, welcome_leave_message, welcome_leave_channel, modlog_channel, modlog_bans, modlog_warns, modlog_mutes, modlog_purge, modlog_lock, modlog_kick, reaction_roles, role_rewards_id, role_rewards_level, role_rewards_channel FROM guilds WHERE id=$1",
         [guild_id]
       );
     }
@@ -72,7 +76,7 @@ const get_guild = async (guild_id: any) => {
     console.log("res is: " + JSON.stringify(res));
     const guild = {
       id: guild_id,
-      role_rewards: res.rows[0]["role_rewards"],
+      //role_rewards: res.rows[0]["role_rewards"],
       toggle: {
         moderation: res.rows[0]["toggle_moderation"],
         automod: res.rows[0]["toggle_automod"],
@@ -111,8 +115,13 @@ const get_guild = async (guild_id: any) => {
         lock: res.rows[0]["modlog_lock"],
         kick: res.rows[0]["modlog_kick"],
       },
-        reaction_roles: res.rows[0]["reaction_roles"],
-        members: [] as members[],
+      reaction_roles: res.rows[0]["reaction_roles"],
+      members: [] as members[],
+      role_rewards: {
+        id: res.rows[0]["role_rewards_id"],
+        level: res.rows[0]["role_rewards_level"],
+        channel: res.rows[0]["role_rewards_channel"],
+      } as rr,
     };
 
     res = await pg.query(
@@ -142,45 +151,64 @@ router.post("/api/embed", jsonParser, async (req, res, next) => {
   const token = token_b?.replace("Bearer ", "");
   console.log(`statusCode: ${res.status}`);
   //console.log(resu);
-  const unformatted = req.body
-  let fields = [] as any
-  for(let i = 0; i < unformatted.fields.length; i++) {
-    if(unformatted.fields[i] != "" && unformatted.fields_t[i] != "") {
-    fields.push({"value": unformatted.fields[i], "name": unformatted.fields_t[i]})
+  const unformatted = req.body;
+  let fields = [] as any;
+  for (let i = 0; i < unformatted.fields.length; i++) {
+    if (unformatted.fields[i] != "" && unformatted.fields_t[i] != "") {
+      fields.push({
+        value: unformatted.fields[i],
+        name: unformatted.fields_t[i],
+      });
     }
   }
   const data = {
-    "content": unformatted.content!=""?unformatted.content:null,
-    "tts": false,
-    "embeds": [{
-      "title": unformatted.title!=""?unformatted.title:null,
-      "description ": unformatted.desc!=""?unformatted.desc:null,
-      "url ": unformatted.url!=""?unformatted.url:null,
-      "color": unformatted.colour.replace("#", "")!=""?parseInt(unformatted.colour.replace("#", ""), 16):null,
-      "footer": {"text": unformatted.footer!=""?unformatted.footer:null, "url": unformatted.a_ico!=""?unformatted.a_ico:null},
-      "image": {"url": unformatted.img!=""?unformatted.img:null},
-      "thumbnail": {"url": unformatted.a_ico!=""?unformatted.a_ico:null},
-      "author": {"name": unformatted.a!=""?unformatted.a:null, "url": unformatted.a_url!=""?unformatted.a_url:null, "icon_url": unformatted.a_ico!=""?unformatted.a_ico:null},
-      "fields": fields
-    }]
-
-  }
-  axios.post("https://discord.com/api/v9/channels/746500764633006150/messages", data, {headers: { Authorization: "Bot " + bot_token },})
-  .then(async (resu) => {
-    console.log("success || : " + resu)
-    res.json(resu)
-}).catch((error) => {
-    console.error(error);
-  });
-
-})
+    content: unformatted.content != "" ? unformatted.content : null,
+    tts: false,
+    embeds: [
+      {
+        title: unformatted.title != "" ? unformatted.title : null,
+        "description ": unformatted.desc != "" ? unformatted.desc : null,
+        "url ": unformatted.url != "" ? unformatted.url : null,
+        color:
+          unformatted.colour.replace("#", "") != ""
+            ? parseInt(unformatted.colour.replace("#", ""), 16)
+            : null,
+        footer: {
+          text: unformatted.footer != "" ? unformatted.footer : null,
+          url: unformatted.a_ico != "" ? unformatted.a_ico : null,
+        },
+        image: { url: unformatted.img != "" ? unformatted.img : null },
+        thumbnail: { url: unformatted.a_ico != "" ? unformatted.a_ico : null },
+        author: {
+          name: unformatted.a != "" ? unformatted.a : null,
+          url: unformatted.a_url != "" ? unformatted.a_url : null,
+          icon_url: unformatted.a_ico != "" ? unformatted.a_ico : null,
+        },
+        fields: fields,
+      },
+    ],
+  };
+  axios
+    .post(
+      "https://discord.com/api/v9/channels/746500764633006150/messages",
+      data,
+      { headers: { Authorization: "Bot " + bot_token } }
+    )
+    .then(async (resu) => {
+      console.log("success || : " + resu);
+      res.json(resu);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+});
 
 router.get("/api/guilds", async (req, res) => {
   const token_b = req.header("token");
   const token = token_b?.replace("Bearer ", "");
-  if(!token_b) {
-    res.status(401)
-    return
+  if (!token_b) {
+    res.status(401);
+    return;
   }
   axios
     .get("https://discord.com/api/v9/users/@me/guilds", {
@@ -223,9 +251,9 @@ router.get("/api/guilds", async (req, res) => {
 router.get("/api/user", async (req, res) => {
   const token_b = req.header("token");
   const guild = req.header("guildId");
-  if(!token_b) {
-    res.status(401)
-    return
+  if (!token_b) {
+    res.status(401);
+    return;
   }
   axios
     .get("https://discord.com/api/v9/users/@me/guilds", {
@@ -337,36 +365,39 @@ router.post("/api/welcome", jsonParser, async (req, res, next) => {
   console.log(req.body + " || BODY");
   const guild = await get_guild(req.body.guild);
   if (req.body.type == "join") {
-    guild.welcome.join.channel = req.body.channel
-    guild.welcome.join.message = req.body.message
-    update_guild(guild)
-  res.sendStatus(200);
-
+    guild.welcome.join.channel = req.body.channel;
+    guild.welcome.join.message = req.body.message;
+    update_guild(guild);
+    res.sendStatus(200);
   } else if (req.body.type == "join_p") {
-    guild.welcome.join.private = req.body.message
-    update_guild(guild)
+    guild.welcome.join.private = req.body.message;
+    update_guild(guild);
     res.sendStatus(200);
-
   } else if (req.body.type == "join_r") {
-
-    guild.welcome.join.role = req.body.message
-    update_guild(guild)
+    guild.welcome.join.role = req.body.message;
+    update_guild(guild);
     res.sendStatus(200);
-
   } else if (req.body.type == "leave") {
-    guild.welcome.leave.channel = req.body.channel
-    guild.welcome.leave.message = req.body.message
-    update_guild(guild)
-  res.sendStatus(200);
-
-  }
-  else {
-  res.sendStatus(400);
-
+    guild.welcome.leave.channel = req.body.channel;
+    guild.welcome.leave.message = req.body.message;
+    update_guild(guild);
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(400);
   }
   //console.log(resu);
 });
-
+router.post("/api/levels", jsonParser, async (req, res, next) => {
+  const token_b = req.header("token");
+  console.log(req.body + " || BODY");
+  const guild = await get_guild(req.body.guild);
+  guild.role_rewards.id = req.body.id;
+  guild.role_rewards.level = req.body.levels;
+  guild.role_rewards.channel = req.body.channel;
+  update_guild(guild);
+  res.sendStatus(200);
+  //console.log(resu);
+});
 // This is the client ID and client secret that you obtained
 // while registering the application
 const clientID = "764794183083884546";

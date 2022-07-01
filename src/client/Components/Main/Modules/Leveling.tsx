@@ -3,6 +3,7 @@ import axios from "axios";
 import { getCookie } from "../../../cookie-utils";
 import { json } from "body-parser";
 import e from "express";
+import { Store } from "react-notifications-component";
 
 interface TyProps {
   user: any;
@@ -13,6 +14,8 @@ interface CardProps {
 interface LevelingProps {
   guild: string;
   bottom: boolean;
+  keyy: number;
+  v: lvl;
 }
 const Card: FC<CardProps> = (props) => {
   return <div className="is-card column">{props.children}</div>;
@@ -59,18 +62,50 @@ type leave = {
   channel: string;
   message: string;
 };
+type lvl = {
+  level: number;
+  role: string;
+};
+let ran = false;
 
 const Main: FC<TyProps> = (props) => {
+  let levels_origin = [] as lvl[];
+  const [levels, setLevels] = React.useState(levels_origin);
+  const [refresh, setRefresh] = React.useState(false);
+  console.log(66);
+
+  const [saved, setSaved] = React.useState(true);
   const roles = props.user.roles as role[];
-  roles ? roles.shift() : null;
-  let welcome: welcome;
-  let channels: any[];
+  React.useEffect(() => {
+    roles ? roles.shift() : null;
+  }, []);
 
   if (Object.keys(props.user).length != 0) {
-    welcome = {
-      join: props.user.db_guild.welcome.join as join,
-      leave: props.user.db_guild.welcome.leave as leave,
-    } as welcome;
+    if (props.user.db_guild) {
+      console.log("A");
+      if (props.user.db_guild.role_rewards) {
+        console.log("B");
+        if (
+          props.user.db_guild.role_rewards.level &&
+          props.user.db_guild.role_rewards.id &&
+          !ran
+        ) {
+          console.log("C");
+          for (let i = 0; i < props.user.db_guild.role_rewards.id.length; i++) {
+            levels_origin.push({
+              role: props.user.db_guild.role_rewards.id[i],
+              level: props.user.db_guild.role_rewards.level[i],
+            });
+          }
+          if (levels != levels_origin) {
+            setLevels(levels_origin);
+            ran = true;
+
+            console.log("setted");
+          }
+        }
+      }
+    }
 
     let tmp = props.user.channels;
     let tmp2 = [] as any;
@@ -79,15 +114,10 @@ const Main: FC<TyProps> = (props) => {
         tmp2.push(tmp[x]);
       }
     }
-    channels = tmp2;
-  } else {
-    const l = { channel: "0", message: "" } as leave;
-    const j = { channel: "0", message: "", private: "", role: "" } as join;
-    welcome = { join: j, leave: l };
   }
+  let levels_change = levels;
+
   const LevelingComponent: FC<LevelingProps> = (props) => {
-    let textAreaValue: string;
-    let optionsAreaValue: string | null;
     const messageEmpty = <div></div>;
     const [message, setMessage] = React.useState(messageEmpty);
     const [message2, setMessage2] = React.useState(messageEmpty);
@@ -106,48 +136,23 @@ const Main: FC<TyProps> = (props) => {
       };
     }, [message]);
 
-    const Failcomponent = () => {
-      return (
-        <div>
-          <div className="glitch stylish" data-text="FAILED">
-            FAILED
-          </div>
-        </div>
-      );
-    };
-
-    const Checkcomponent = () => {
-      return (
-        <div id="results" className="search-results">
-          <svg
-            className="checkmark"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 52 52"
-          >
-            <circle
-              className="checkmark__circle"
-              cx="26"
-              cy="26"
-              r="25"
-              fill="none"
-            />
-            <path
-              className="checkmark__check"
-              fill="none"
-              d="M14.1 27.2l7.1 7.2 16.7-16.8"
-            />
-          </svg>
-        </div>
-      );
-    };
-    var defchannel = "";
-
     //if (items.leave_channel != "None") {
     //    defchannel = items.leave_channel
 
     //}
     const Counter = () => {
-      const [val, setVal] = React.useState("0");
+      const [val, setVal] = React.useState(props.v.level.toString());
+      let first = false;
+      React.useEffect(() => {
+        first = true;
+      }, []);
+      React.useEffect(() => {
+        if (!first) {
+          console.log(44);
+
+          saved ? setSaved(false) : null;
+        }
+      });
       const handleDec = () => {
         let num = parseInt(val) - 1;
         if (num >= 0) {
@@ -211,6 +216,7 @@ const Main: FC<TyProps> = (props) => {
 
         return "Avg: " + display;
       };
+      levels_change[props.keyy].level = parseInt(val);
       return (
         <div>
           <div className="columns counting-div">
@@ -228,6 +234,7 @@ const Main: FC<TyProps> = (props) => {
                 type="text"
                 placeholder="value..."
                 value={val}
+                maxLength={3}
                 onChange={(e) => {
                   setVal(e.target.value.replace(/[^0-9.]/g, ""));
                 }}
@@ -246,10 +253,41 @@ const Main: FC<TyProps> = (props) => {
         </div>
       );
     };
+    const deleteComponent = (key: string, keyy: number) => {
+      console.log("W");
+      let levels_change_tmp = [] as lvl[];
+      for (let i = 0; i < levels_change.length; i++) {
+        console.log("X");
+        console.log(i, keyy);
+        if (i != keyy) {
+          console.log("Y");
+          levels_change_tmp.push(levels_change[i]);
+        }
+      }
+      console.log("Z");
+      if (levels_change_tmp.length != levels_change.length) {
+        console.log("|");
+        levels_change = levels_change_tmp;
+        setLevels(levels_change);
+        console.log(33);
+
+        saved ? setSaved(false) : null;
+      }
+    };
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      levels_change[props.keyy].role = e.target.selectedOptions[0].value;
+      saved ? setSaved(false) : null;
+    };
     return (
-      <div className={props.bottom?"columns level-card bottom-card":"columns level-card"}>
+      <div
+        className={
+          props.bottom
+            ? "columns level-card bottom-card is-variable is-8"
+            : "columns level-card is-variable is-8"
+        }
+      >
         <div className="column">
-          <div className="columns">
+          <div className="columns is-8 is-variable">
             <div className="column">
               <h1 className="sub-header">
                 <Counter />
@@ -258,9 +296,8 @@ const Main: FC<TyProps> = (props) => {
             <div className="column">
               <div className="select is-primary">
                 <select
-                  onChange={(e) =>
-                    (textAreaValue = e.target.selectedOptions[0].value)
-                  }
+                  onChange={(e) => handleChange(e)}
+                  defaultValue={props.v.role}
                 >
                   {roles.map((role) => (
                     <option
@@ -273,6 +310,7 @@ const Main: FC<TyProps> = (props) => {
                       value={role.id}
                       key={role.id}
                       key-id={role.id}
+                      id={role.id}
                     >
                       {role.name}
                     </option>
@@ -281,7 +319,12 @@ const Main: FC<TyProps> = (props) => {
               </div>
             </div>
             <div className="column">
-              <button className="button">Delete</button>
+              <button
+                onClick={() => deleteComponent(props.v.role, props.keyy)}
+                className="button"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
@@ -290,16 +333,95 @@ const Main: FC<TyProps> = (props) => {
   };
   if (Object.keys(props.user).length != 0) {
     let optionsAreaValue: string | null;
+    const saveContent = () => {
+      let lvls = [] as number[];
+      let ids = [] as string[];
+      for (let i = 0; i < levels_change.length; i++) {
+        lvls.push(levels_change[i].level);
+        ids.push(levels_change[i].role);
+        setLevels(levels_change);
+        levels_origin = levels;
+        setRefresh(!refresh);
+      }
+      const body = {
+        levels: lvls,
+        id: ids,
+        guild: props.user["db_guild"]["id"],
+        channel: optionsAreaValue != "null" ? optionsAreaValue : null,
+      };
+      if (saved) {
+        return;
+      }
+      axios
+        .post("http://localhost:3000/api/levels", body, {
+          headers: { token: "Bearer " + getCookie("token") },
+        })
+        .then(async (resu) => {
+          levels_origin = levels;
+          !saved ? setSaved(true) : null;
+          Store.addNotification({
+            title: "Success",
+            message: "Role Rewards Saved!",
+            type: "success",
+            insert: "top",
+            container: "top-center",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+              onScreen: true,
+            },
+          });
+        })
+        .catch((error) => {
+          Store.addNotification({
+            title: "Error",
+            message: "Role Rewards Failed To Save!",
+            type: "danger",
+            insert: "top",
+            container: "top-center",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+              onScreen: true,
+            },
+          });
+          console.error(error);
+        });
+    };
+    const addReward = async () => {
+      levels_change.push({ level: 0, role: "0" } as lvl);
+      console.log(levels_change, levels);
+      await setLevels(levels_change);
+      console.log("updated? plsssssss");
+      console.log(22);
+      saved ? setSaved(false) : null;
+      setRefresh(!refresh);
+    };
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      optionsAreaValue = e.target.selectedOptions[0].value;
+      console.log(11);
+      saved ? setSaved(false) : null;
+    };
     return (
       <div>
         <h1 className="title is-4">Leveling Setup</h1>
-
+        <p>Levelup Messages Channel</p>
         <div className="select is-primary">
           <select
-            onChange={(e) =>
-              (optionsAreaValue = e.target.selectedOptions[0].value)
-            }
+            onChange={(e) => {
+              handleChange(e);
+            }}
           >
+            <option
+              style={{ color: "#cfcfcf" }}
+              value={"null"}
+              key={"null"}
+              key-id={"null"}
+            >
+              Current Channel
+            </option>
             {props.user.channels.map((channel: any) => (
               <option
                 style={{ color: "#cfcfcf" }}
@@ -315,7 +437,7 @@ const Main: FC<TyProps> = (props) => {
         <br />
         <hr />
         <br />
-        <div className="columns leveling-table-top">
+        <div className="columns leveling-table-top is-variable is-8">
           <div className="column">
             <b>Level</b>
           </div>
@@ -326,8 +448,30 @@ const Main: FC<TyProps> = (props) => {
             <b>Actions</b>
           </div>
         </div>
-        <LevelingComponent guild={props.user["db_guild"]["id"]} bottom={false} />
-        <LevelingComponent guild={props.user["db_guild"]["id"]} bottom={true} />
+        {levels.map((val, i) => (
+          <LevelingComponent
+            guild={props.user["db_guild"]["id"]}
+            v={val}
+            bottom={levels.length - 1 == i ? true : false}
+            key={i}
+            keyy={i}
+          />
+        ))}
+        <button className="button" onClick={() => addReward()}>
+          Add Reward
+        </button>
+        <div className={!saved ? "save-component" : "save-component hidden"}>
+          <div className="columns">
+            <div className="column save-left">
+              <p className="save-text">Careful! You Have Unsaved Changes</p>
+            </div>
+            <div className="column save-right">
+              <button className="button" onClick={() => saveContent()}>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   } else {

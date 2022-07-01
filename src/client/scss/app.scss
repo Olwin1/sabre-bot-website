@@ -1334,3 +1334,19 @@ $emoji-red: #ff5555;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
 }
+.save-component {
+  position: fixed;
+    left: 10%;
+    bottom: 5px;
+    background-color: $gray-medium;
+    width: 80%;
+    border-radius: 8px;
+    padding: 5px;
+    vertical-align: middle;
+}
+.save-text {
+  padding-top: 8px;
+}
+.save-left {
+  padding-left: 10%;
+}
