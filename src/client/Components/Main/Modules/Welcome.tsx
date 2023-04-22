@@ -2,12 +2,9 @@ import React, { FC, ReactElement, useState } from "react";
 import axios from "axios";
 import { getCookie } from "../../../cookie-utils";
 import { json } from "body-parser";
-
+import { Store } from "react-notifications-component";
 interface TyProps {
   user: any;
-}
-interface CardProps {
-  children: React.ReactNode;
 }
 interface WelcomeProps {
   channelText: string;
@@ -15,24 +12,6 @@ interface WelcomeProps {
   type: string;
   guild: string;
 }
-const Card: FC<CardProps> = (props) => {
-  return <div className="is-card column">{props.children}</div>;
-};
-type welcomeItem = {
-  join_message: string;
-  join_channel: string;
-  private: string;
-  role: string;
-  leave_message: string;
-  leave_channel: string;
-};
-type welcomeType =
-  | "join_message"
-  | "leave_message"
-  | "private"
-  | "join_channel"
-  | "leave_channel"
-  | "role";
 
 type role = {
   id: string;
@@ -89,7 +68,6 @@ const Main: FC<TyProps> = (props) => {
 
   }
   const WelcomeComponentEntry: FC<WelcomeProps> = (props) => {
-    console.log("def val" + props.defVal);
     let textAreaValue: string;
     let optionsAreaValue: string | null;
     if (props.type == "join") {
@@ -102,73 +80,57 @@ const Main: FC<TyProps> = (props) => {
       textAreaValue = welcome.join.private;
       optionsAreaValue = null;
     } else {
-      let t = "role";
       textAreaValue = welcome.join.role;
       optionsAreaValue = null;
     }
 
-    const [message, setMessage] = React.useState(<div></div>);
-    const [message2, setMessage2] = React.useState(<div></div>);
-    //const [messageType, setMessageType] = React.useState('info');
-
-    const DELAY = 3500;
-
-    React.useEffect(() => {
-      if (!message) {
-        return;
-      }
-
-      const timer = window.setTimeout(() => setMessage(<div></div>), DELAY);
-      return () => {
-        window.clearTimeout(timer);
-      };
-    }, [message]);
-
-    const Failcomponent = () => {
-      return (
-        <div>
-          <div className="glitch stylish" data-text="FAILED">
-            FAILED
-          </div>
-        </div>
-      );
-    };
-
-    const Checkcomponent = () => {
-      return (
-        <div id="results" className="search-results">
-          <svg
-            className="checkmark"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 52 52"
-          >
-            <circle
-              className="checkmark__circle"
-              cx="26"
-              cy="26"
-              r="25"
-              fill="none"
-            />
-            <path
-              className="checkmark__check"
-              fill="none"
-              d="M14.1 27.2l7.1 7.2 16.7-16.8"
-            />
-          </svg>
-        </div>
-      );
-    };
-    var defchannel = "";
 
     //if (items.leave_channel != "None") {
     //    defchannel = items.leave_channel
 
     //}
     const handleClick = () => {
+      if(textAreaValue == "" || !textAreaValue) {
+        if(optionsAreaValue && optionsAreaValue != "null") {
+          Store.addNotification({
+                title: "Error",
+                message: "You Cannot Set An Empty Message! (Set Channel To None To Remove Message)",
+                type: "danger",
+                insert: "top",
+                container: "top-center",
+                animationIn: ["animate__animated", "animate__fadeIn"],
+                animationOut: ["animate__animated", "animate__fadeOut"],
+                dismiss: {
+                  duration: 5000,
+                  onScreen: true,
+                },
+              });
+              return
+            }
+      }
+      else if (optionsAreaValue == "null" || !optionsAreaValue) {
+        if(props.type == "join" || props.type == "leave") {
+      Store.addNotification({
+          title: "Error",
+          message: "You Need To Specify a Channel! (Remove Message To Stop Sabre Sending It)",
+          type: "danger",
+          insert: "top",
+          container: "top-center",
+          animationIn: ["animate__animated", "animate__fadeIn"],
+          animationOut: ["animate__animated", "animate__fadeOut"],
+          dismiss: {
+            duration: 5000,
+            onScreen: true,
+          },
+        });
+        return
+      }
+      }
+
       const body = {
         type: props.type,
-        message: textAreaValue,
-        channel: optionsAreaValue,
+        message: textAreaValue!=""?textAreaValue:null,
+        channel: optionsAreaValue!="null"?optionsAreaValue:null,
         guild: props.guild,
       };
       axios
@@ -176,15 +138,37 @@ const Main: FC<TyProps> = (props) => {
           headers: { token: "Bearer " + getCookie("token") },
         })
         .then(async (resu) => {
-          setMessage(<Checkcomponent />);
+          Store.addNotification({
+            title: "Success",
+            message: "Welcome Message Successfully Saved!",
+            type: "success",
+            insert: "top",
+            container: "top-center",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+              onScreen: true,
+            },
+          });
         })
         .catch((error) => {
-          setMessage2(<Failcomponent />);
+          Store.addNotification({
+            title: "Error",
+            message: "Welcome Message Failed To Save!",
+            type: "danger",
+            insert: "top",
+            container: "top-center",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+              onScreen: true,
+            },
+          });
           console.error(error);
         });
     };
-    console.log(props.type + "||" + props.defVal);
-
     return (
       <div className="columns harlemshake">
         <div
@@ -196,7 +180,7 @@ const Main: FC<TyProps> = (props) => {
         >
           <h1 className="sub-header">
             {props.channelText}
-            {props.defVal}
+
           </h1>
           {props.type != "join_r" ? (
             <textarea
@@ -251,8 +235,6 @@ const Main: FC<TyProps> = (props) => {
             >
               Save
             </button>
-            {message}
-            {message2}
           </div>
         </div>
 
@@ -278,6 +260,14 @@ const Main: FC<TyProps> = (props) => {
                     (optionsAreaValue = e.target.selectedOptions[0].value)
                   }
                 >
+                                      <option
+                      style={{ color: "#cfcfcf" }}
+                      value={"null"}
+                      key={"null"}
+                      key-id={"null"}
+                    >
+                      None
+                    </option>
                   {channels.map((channel: any) => (
                     <option
                       style={{ color: "#cfcfcf" }}
@@ -298,42 +288,13 @@ const Main: FC<TyProps> = (props) => {
       </div>
     );
   };
-  Object.keys(props.user).length != 0
-    ? console.log(
-        "join: " + welcome.join.message + " || leave: " + welcome.leave.message
-      )
-    : null;
+
 
   return (
     <div>
-      <h1 className="title is-4">General Options</h1>
-      <div
-        className="userBanner"
-        style={{
-          backgroundImage:
-            "url(https://cdn.discordapp.com/banners/694545991336067072/a_3607f49281eacb763a93e417e7449676.gif?size=1024)",
-          height: "256px",
-        }}
-      >
-        <div className="userBannerText">
-          <h1 className="userName">{props.user.username}</h1>
-        </div>
-      </div>
-      <div className="is-card">
-        <p>Languages</p>
-      </div>
-      <div className="columns">
-        <Card>
-          <p>Credits: {props.user.credits}</p>
-        </Card>
-        <Card>
-          <p>Level: {874}</p>
-        </Card>
-        <Card>
-          <p>Rank: {323}</p>
-        </Card>
-      </div>
-      <p>{JSON.stringify(props.user)}</p>
+      <h1 className="title is-4">Welcome Messages</h1>
+
+      
 
       {Object.keys(props.user).length != 0 ? (
         <WelcomeComponentEntry
@@ -375,6 +336,7 @@ const Main: FC<TyProps> = (props) => {
       ) : (
         ""
       )}
+      <p>{JSON.stringify(props.user)}</p>
     </div>
   );
 };

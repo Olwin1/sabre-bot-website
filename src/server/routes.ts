@@ -21,7 +21,7 @@ const pg = new Client({
   user: "postgres",
   host: "localhost",
   database: "sabre",
-  password: "***REMOVED***",
+  password: "jumper123",
 });
 pg.connect();
 
