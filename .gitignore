@@ -9,3 +9,4 @@ public/js/app.js
 token.ts
 redisPass.ts
 .env
+package-lock.json
