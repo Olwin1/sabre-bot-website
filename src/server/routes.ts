@@ -5,6 +5,8 @@ import { json } from "body-parser";
 import getToken from "../../token";
 import getRedisPass from "../../redisPass";
 import { Client } from "pg";
+import * as dotenv from "dotenv";
+dotenv.config()
 type members = {
   u_id: string;
   g_id: string;
@@ -17,11 +19,12 @@ type rr = {
   level: number[];
   channel: string;
 };
+console.log("THE PASEING IS " + process.env.PASSWORD);
 const pg = new Client({
   user: "postgres",
   host: "localhost",
   database: "sabre",
-  password: "jumper123",
+  password: process.env.PASSWORD,
 });
 pg.connect();
 
@@ -337,7 +340,6 @@ router.get("/api/guild", async (req, res) => {
               await delay(wait * 1000);
               console.log(9);
               console.log(`statusCode Line 165: ${resu.status}`);
-              //console.log(resu);
               retval["roles"] = resu.data;
               res.json(retval);
               console.log(10);
@@ -398,10 +400,6 @@ router.post("/api/levels", jsonParser, async (req, res, next) => {
   res.sendStatus(200);
   //console.log(resu);
 });
-// This is the client ID and client secret that you obtained
-// while registering the application
-const clientID = "764794183083884546";
-const clientSecret = "qskoeh4YUAc-yP2VzHyaJ9ntLPxgXH4S";
 
 // Declare the redirect route
 router.get("/oauth/redirect", (req, res) => {
